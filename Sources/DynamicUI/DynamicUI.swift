@@ -67,6 +67,12 @@ struct InternalDynamicUI: View {
             case "Image":
                 Image(systemName: component.imageURL ?? "")
 
+            case "Divider":
+                Divider()
+
+            case "Spacer":
+                Spacer()
+
             default:
                 EmptyView()
             }

@@ -57,8 +57,8 @@ struct ContentView: View {
 - [x] VStack { ... }
 - [x] HStack { ... }
 - [ ] ZStack
-- [ ] Spacer
-- [ ] Divider
+- [x] Spacer
+- [x] Divider
 - [ ] List
 - [ ] ScrollView
 - [ ] NavigationView
