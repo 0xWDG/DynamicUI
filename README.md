@@ -56,12 +56,12 @@ struct ContentView: View {
 - [ ] Button
 - [x] VStack { ... }
 - [x] HStack { ... }
-- [ ] ZStack
+- [x] ZStack
 - [x] Spacer
 - [x] Divider
-- [ ] List
-- [ ] ScrollView
-- [ ] NavigationView
+- [x] List
+- [x] ScrollView
+- [x] NavigationView
 - [ ] TabView
 - [ ] LazyVStack
 - [ ] LazyHStack
