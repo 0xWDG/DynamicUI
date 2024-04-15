@@ -61,6 +61,34 @@ struct InternalDynamicUI: View {
                     }
                 }
 
+            case "ZStack":
+                ZStack {
+                    if let children = component.children {
+                        AnyView(self.buildView(for: children))
+                    }
+                }
+
+            case "List":
+                List {
+                    if let children = component.children {
+                        AnyView(self.buildView(for: children))
+                    }
+                }
+
+            case "ScrollView":
+                ScrollView {
+                    if let children = component.children {
+                        AnyView(self.buildView(for: children))
+                    }
+                }
+
+            case "NavigationView":
+                NavigationView {
+                    if let children = component.children {
+                        AnyView(self.buildView(for: children))
+                    }
+                }
+
             case "Text":
                 Text(component.text ?? "")
 
