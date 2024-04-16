@@ -1,5 +1,25 @@
+//
+//  Binding.onChange.swift
+//  DynamicUI
+//
+//  Created by Wesley de Groot on 16/04/2024.
+//  https://wesleydegroot.nl
+//
+//  https://github.com/0xWDG/DynamicUI
+//  MIT LICENCE
+
 import Foundation
 
+/// Any Codable supports different `Codable` types as `String`, `Int`, `Data`, `Double` and `Bool`.
+/// This is made so you can use `AnyCodable?` in a codable struct so you can use dynamic types.
+///
+/// Example:
+/// ```swift
+/// struct WithAnyCodable: Codable, Hashable {
+///   let someOptionalString: String?
+///   let someOptionalCodable: AnyCodable?
+/// }
+/// ```
 enum AnyCodable {
     case string(value: String)
     case int(value: Int)

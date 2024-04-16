@@ -1,3 +1,13 @@
+//
+//  DynamicUI.swift
+//  DynamicUI
+//
+//  Created by Wesley de Groot on 16/04/2024.
+//  https://wesleydegroot.nl
+//
+//  https://github.com/0xWDG/DynamicUI
+//  MIT LICENCE
+
 import SwiftUI
 
 public func DynamicUI(json: Data?) -> some View {
@@ -8,11 +18,18 @@ public func DynamicUI(json: Data?) -> some View {
 
 struct InternalDynamicUI: View {
     public var json: Data?
-    @State private var layout: [UIComponent]?
-    @State private var error: String?
-    
+
+    @State
+    private var layout: [UIComponent]?
+
+    @State
+    private var error: String?
+
+    // TODO: REMOVE THIS
     @State private var tfState1 = ""
+    // TODO: REMOVE THIS
     @State private var boolState = false
+    // TODO: REMOVE THIS
     @State private var gauge = 0.5
 
     var body: some View {
