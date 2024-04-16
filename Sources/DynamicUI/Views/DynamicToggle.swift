@@ -17,8 +17,7 @@ public struct DynamicToggle: View {
     init(_ component: UIComponent) {
         self.title = component.title ?? ""
 
-        // Since AnyCodable is custom, we need to check the value this way.
-        self.state = AnyCodable.bool(value: true) == component.defaultValue
+        self.state = component.defaultValue?.toBool() ?? false
     }
 
     public var body: some View {
