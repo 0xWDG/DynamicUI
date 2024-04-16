@@ -11,6 +11,10 @@ struct InternalDynamicUI: View {
     @State private var layout: [UIComponent]?
     @State private var error: String?
     
+    @State private var tfState1 = ""
+    @State private var boolState = false
+    @State private var gauge = 0.5
+
     var body: some View {
         VStack {
             if let layout = layout {
@@ -89,6 +93,13 @@ struct InternalDynamicUI: View {
                     }
                 }
 
+            case "Form":
+                Form {
+                    if let children = component.children {
+                        AnyView(self.buildView(for: children))
+                    }
+                }
+
             case "Text":
                 Text(component.text ?? "")
 
@@ -100,6 +111,92 @@ struct InternalDynamicUI: View {
 
             case "Spacer":
                 Spacer()
+
+            case "Label":
+                Label("\(component.title)", systemImage: component.imageURL ?? "")
+
+            case "TextField":
+                TextField(
+                    "\(component.title)",
+                    text: $tfState1
+                )
+
+            case "SecureField":
+                SecureField(
+                    "\(component.title)",
+                    text: $tfState1
+                )
+
+            case "TextEditor":
+                TextEditor(text: $tfState1)
+
+            case "Toggle":
+                DynamicToggle(component)
+
+            case "Gauge":
+                if #available(macOS 13.0, *) {
+                    Gauge(value: gauge) {
+                        Text("\(component.title)")
+                    }
+                } else {
+                    EmptyView()
+                }
+
+            case "ProgressView":
+                ProgressView("\(component.title)", value: 50, total: 100)
+
+            case "Slider":
+                Slider(value: $gauge) {
+                    Text("\(component.title)")
+                } minimumValueLabel: {
+                    Text("")
+                } maximumValueLabel: {
+                    Text("")
+                }
+
+//            // Static method 'buildExpression' requires that 'VStack<AnyView?>' conform to 'TableRowContent'
+//            case "GroupBox":
+//                GroupBox {
+//                    if let children = component.children {
+//                        AnyView(self.buildView(for: children))
+//                    }
+//                } label: {
+//                    component.title ?? ""
+//                }
+//            // Static method 'buildExpression' requires that 'VStack<AnyView?>' conform to 'TableRowContent'
+//            case "DisclosureGroup":
+//                DisclosureGroup {
+//                    if let children = component.children {
+//                        AnyView(self.buildView(for: children))
+//                    }
+//                } label: {
+//                    component.title ?? ""
+//                }
+
+            case "HSplitView":
+                HSplitView {
+                    if let children = component.children {
+                        AnyView(self.buildView(for: children))
+                    }
+                }
+
+            case "VSplitView":
+                VSplitView {
+                    if let children = component.children {
+                        AnyView(self.buildView(for: children))
+                    }
+                }
+
+//            // Static method 'buildExpression' requires that 'VStack<AnyView?>' conform to 'TableRowContent'
+//            case "Picker":
+//                Picker(component.title ?? "", selection: $bindingPicker) {
+//                    if let children = component.children {
+//                        AnyView(self.buildView(for: children))
+//                    }
+//                }
+
+            // NavigationSplitView
+            // TabView
 
             default:
                 EmptyView()
