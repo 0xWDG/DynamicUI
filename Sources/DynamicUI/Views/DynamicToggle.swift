@@ -1,9 +1,12 @@
 //
 //  DynamicToggle.swift
-//
+//  DynamicUI
 //
 //  Created by Wesley de Groot on 16/04/2024.
+//  https://wesleydegroot.nl
 //
+//  https://github.com/0xWDG/DynamicUI
+//  MIT LICENCE
 
 import SwiftUI
 
