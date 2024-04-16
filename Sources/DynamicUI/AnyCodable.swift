@@ -5,6 +5,7 @@ enum AnyCodable {
     case int(value: Int)
     case data(value: Data)
     case double(value: Double)
+    case bool(value: Bool)
 
     enum AnyCodableError: Error {
         case missingValue
@@ -13,7 +14,7 @@ enum AnyCodable {
 
 extension AnyCodable: Codable, Hashable {
     enum CodingKeys: String, CodingKey {
-        case string, int, data, double
+        case string, int, data, double, bool
     }
 
     init(from decoder: Decoder) throws {
@@ -37,7 +38,12 @@ extension AnyCodable: Codable, Hashable {
             return
         }
 
-        throw AnyCodableError.missingValue
+        if let bool = try? decoder.singleValueContainer().decode(Bool.self) {
+            self = .bool(value: bool)
+            return
+        }
+
+        self = .string(value: "")
     }
 
     func encode(to encoder: Encoder) throws {
@@ -51,6 +57,8 @@ extension AnyCodable: Codable, Hashable {
             try container.encode(value, forKey: .data)
         case .double(let value):
             try container.encode(value, forKey: .double)
+        case .bool(let value):
+            try container.encode(value, forKey: .bool)
         }
     }
 }
