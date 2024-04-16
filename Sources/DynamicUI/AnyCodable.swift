@@ -21,14 +21,77 @@ import Foundation
 /// }
 /// ```
 enum AnyCodable {
-    case string(value: String)
-    case int(value: Int)
-    case data(value: Data)
-    case double(value: Double)
-    case bool(value: Bool)
+    case string(String)
+    case int(Int)
+    case data(Data)
+    case double(Double)
+    case bool(Bool)
+    case none
 
     enum AnyCodableError: Error {
         case missingValue
+    }
+}
+
+extension AnyCodable {
+    /// Convert value to String
+    /// - Returns: value if it is a String
+    public func toString() -> String? {
+        if case let .string(string) = self {
+            return string
+        }
+
+        return nil
+    }
+
+    /// Convert value to Int
+    /// - Returns: value if it is a Integer
+    public func toInt() -> Int? {
+        if case let .int(int) = self {
+            return int
+        }
+
+        return nil
+    }
+
+    /// Convert value to Data
+    /// - Returns: value if it is data
+    public func toData() -> Data? {
+        if case let .data(data) = self {
+            return data
+        }
+
+        return nil
+    }
+
+    /// Convert value to Double
+    /// - Returns: value if it is a double
+    public func toDouble() -> Double? {
+        if case let .double(double) = self {
+            return double
+        }
+
+        return nil
+    }
+
+    /// Convert value to Bool
+    /// - Returns: value if it is a boolean
+    public func toBool() -> Bool? {
+        if case let .bool(bool) = self {
+            return bool
+        }
+
+        return nil
+    }
+
+    /// Check if value is nil
+    /// - Returns: nil if value is none/empty
+    public func isNil() -> Bool {
+        if case let .none = self {
+            return true
+        }
+
+        return false
     }
 }
 
@@ -39,31 +102,33 @@ extension AnyCodable: Codable, Hashable {
 
     init(from decoder: Decoder) throws {
         if let int = try? decoder.singleValueContainer().decode(Int.self) {
-            self = .int(value: int)
+            self = .int(int)
             return
         }
 
         if let string = try? decoder.singleValueContainer().decode(String.self) {
-            self = .string(value: string)
+            self = .string(string)
             return
         }
 
         if let data = try? decoder.singleValueContainer().decode(Data.self) {
-            self = .data(value: data)
+            self = .data(data)
             return
         }
 
         if let double = try? decoder.singleValueContainer().decode(Double.self) {
-            self = .double(value: double)
+            self = .double(double)
             return
         }
 
         if let bool = try? decoder.singleValueContainer().decode(Bool.self) {
-            self = .bool(value: bool)
+            self = .bool(bool)
             return
         }
 
-        self = .string(value: "")
+        // Use `self = .none` if the value can be optional
+        // or `throw AnyCodableError.missingValue` is it may not be optional
+        self = .none
     }
 
     func encode(to encoder: Encoder) throws {
@@ -79,6 +144,8 @@ extension AnyCodable: Codable, Hashable {
             try container.encode(value, forKey: .double)
         case .bool(let value):
             try container.encode(value, forKey: .bool)
+        case .none:
+            _ = ""
         }
     }
 }
