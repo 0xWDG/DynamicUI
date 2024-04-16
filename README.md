@@ -2,7 +2,8 @@
 
 Convert your JSON to a SwiftUI View.
 
-> **WARNING**: \
+> [!WARNING]
+> 
 > This is a work in progress and not yet ready for production use. \
 > Please feel free to contribute, report issues, or request features.
 
