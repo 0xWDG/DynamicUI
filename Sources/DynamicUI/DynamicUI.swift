@@ -10,28 +10,35 @@
 
 import SwiftUI
 
+/// DynamicUI
+///
+/// DynamicUI is a SwiftUI View that can be used to display an interface based on JSON.
+/// - Parameter json: JSON Data
+/// - Returns: A SwiftUI View
 public func DynamicUI(json: Data?) -> some View {
+    // swiftlint:disable:previous identifier_name
     return AnyView(
         InternalDynamicUI(json: json)
     )
 }
 
+/// InternalDynamicUI (internal)
+/// InternalDynamicUI is a SwiftUI View that can be used to display an interface based on JSON.
+/// - Parameter json: JSON Data
+/// - Returns: A SwiftUI View
 struct InternalDynamicUI: View {
+    /// JSON Data
     public var json: Data?
 
     @State
+    /// This state is used to store the layout
     private var layout: [UIComponent]?
 
     @State
+    /// This state is used to store the error message
     private var error: String?
 
-    // TODO: REMOVE THIS
-    @State private var tfState1 = ""
-    // TODO: REMOVE THIS
-    @State private var boolState = false
-    // TODO: REMOVE THIS
-    @State private var gauge = 0.5
-
+    /// Init
     var body: some View {
         VStack {
             if let layout = layout {
@@ -48,11 +55,12 @@ struct InternalDynamicUI: View {
             }
         }
         .onAppear {
-            generate()
+            decodeJSON()
         }
     }
 
-    private func generate() {
+    /// Decode the JSON data
+    private func decodeJSON() {
         do {
             if let json = json {
                 self.layout = try JSONDecoder().decode(
@@ -65,152 +73,108 @@ struct InternalDynamicUI: View {
         }
     }
 
-    private func buildView(for components: [UIComponent]) -> some View {
+    /// Build a SwiftUI View based on the components
+    /// - Parameter components: [UIComponent]
+    /// - Returns: A SwiftUI View
+    func buildView(for components: [UIComponent]) -> some View {
+        // swiftlint:disable:previous cyclomatic_complexity function_body_length
         return ForEach(components, id: \.self) { component in
             switch component.type {
             case "VStack":
-                VStack {
-                    if let children = component.children {
-                        AnyView(buildView(for: children))
-                    }
-                }
+                DynamicVStack(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "HStack":
-                HStack {
-                    if let children = component.children {
-                        AnyView(self.buildView(for: children))
-                    }
-                }
+                DynamicHStack(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "ZStack":
-                ZStack {
-                    if let children = component.children {
-                        AnyView(self.buildView(for: children))
-                    }
-                }
+                DynamicZStack(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "List":
-                List {
-                    if let children = component.children {
-                        AnyView(self.buildView(for: children))
-                    }
-                }
+                DynamicList(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "ScrollView":
-                ScrollView {
-                    if let children = component.children {
-                        AnyView(self.buildView(for: children))
-                    }
-                }
+                DynamicScrollView(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "NavigationView":
-                NavigationView {
-                    if let children = component.children {
-                        AnyView(self.buildView(for: children))
-                    }
-                }
+                DynamicNavigationView(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Form":
-                Form {
-                    if let children = component.children {
-                        AnyView(self.buildView(for: children))
-                    }
-                }
+                DynamicForm(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Text":
-                Text(component.text ?? "")
+                DynamicText(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Image":
-                Image(systemName: component.imageURL ?? "")
+                DynamicImage(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Divider":
                 Divider()
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Spacer":
                 Spacer()
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Label":
-                Label("\(component.title)", systemImage: component.imageURL ?? "")
+                DynamicLabel(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "TextField":
-                TextField(
-                    "\(component.title)",
-                    text: $tfState1
-                )
+                DynamicTextField(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "SecureField":
-                SecureField(
-                    "\(component.title)",
-                    text: $tfState1
-                )
+                DynamicSecureField(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "TextEditor":
-                TextEditor(text: $tfState1)
+                DynamicTextEditor(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Toggle":
                 DynamicToggle(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Gauge":
-                if #available(macOS 13.0, *) {
-                    Gauge(value: gauge) {
-                        Text("\(component.title)")
-                    }
-                } else {
-                    EmptyView()
-                }
+                DynamicGauge(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "ProgressView":
-                ProgressView("\(component.title)", value: 50, total: 100)
+                DynamicProgressView(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Slider":
-                Slider(value: $gauge) {
-                    Text("\(component.title)")
-                } minimumValueLabel: {
-                    Text("")
-                } maximumValueLabel: {
-                    Text("")
-                }
+                DynamicSlider(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
-//            // Static method 'buildExpression' requires that 'VStack<AnyView?>' conform to 'TableRowContent'
-//            case "GroupBox":
-//                GroupBox {
-//                    if let children = component.children {
-//                        AnyView(self.buildView(for: children))
-//                    }
-//                } label: {
-//                    component.title ?? ""
-//                }
-//            // Static method 'buildExpression' requires that 'VStack<AnyView?>' conform to 'TableRowContent'
-//            case "DisclosureGroup":
-//                DisclosureGroup {
-//                    if let children = component.children {
-//                        AnyView(self.buildView(for: children))
-//                    }
-//                } label: {
-//                    component.title ?? ""
-//                }
+            case "GroupBox":
+                DynamicGroupBox(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
+
+            case "DisclosureGroup":
+                DynamicDisclosureGroup(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "HSplitView":
-                HSplitView {
-                    if let children = component.children {
-                        AnyView(self.buildView(for: children))
-                    }
-                }
+                DynamicHSplitView(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "VSplitView":
-                VSplitView {
-                    if let children = component.children {
-                        AnyView(self.buildView(for: children))
-                    }
-                }
+                DynamicVSplitView(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
-//            // Static method 'buildExpression' requires that 'VStack<AnyView?>' conform to 'TableRowContent'
-//            case "Picker":
-//                Picker(component.title ?? "", selection: $bindingPicker) {
-//                    if let children = component.children {
-//                        AnyView(self.buildView(for: children))
-//                    }
-//                }
+            case "Picker":
+                DynamicPicker(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
 
             // NavigationSplitView
             // TabView
@@ -219,5 +183,16 @@ struct InternalDynamicUI: View {
                 EmptyView()
             }
         }
+    }
+}
+
+private struct InternalDynamicUIKey: EnvironmentKey {
+    static let defaultValue: InternalDynamicUI = defaultValue
+}
+
+extension EnvironmentValues {
+    var internalDynamicUIEnvironment: InternalDynamicUI {
+        get { self[InternalDynamicUIKey.self] }
+        set { self[InternalDynamicUIKey.self] = newValue }
     }
 }
