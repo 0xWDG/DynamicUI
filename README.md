@@ -281,7 +281,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 ```JSON
 {
     "type": "GroupBox",
-    "children": [ ...]
+    "children": [ ]
 }
 ```
 </details>
@@ -314,7 +314,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 ```JSON
 {
     "type": "VSplitView",
-    "children": [ ...]
+    "children": [ ]
 }
 ```
 </details>
@@ -337,7 +337,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 ```JSON
 {
     "type": "NavigationSplitView",
-    "children": [ ...]
+    "children": [ ]
 }
 ```
 </details>
@@ -348,7 +348,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 ```JSON
 {
     "type": "TabView",
-    "children": [ ...]
+    "children": [ ]
 }
 ```
 </details>
