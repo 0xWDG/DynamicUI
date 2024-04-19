@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicGroupBox
 /// DynamicGroupBox is a SwiftUI View that can be used to display an GroupBox.
-public struct DynamicGroupBox: View {
+struct DynamicGroupBox: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

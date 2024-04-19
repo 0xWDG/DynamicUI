@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicSlider
 /// The DynamicSlider is a SwiftUI View that can be used to display a slider.
-public struct DynamicSlider: View {
+struct DynamicSlider: View {
     @State private var state: Double
     private let component: UIComponent
 

@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicVSplitView
 /// DynamicVSplitView is a SwiftUI View that can be used to display an VSplitView.
-public struct DynamicVSplitView: View {
+struct DynamicVSplitView: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

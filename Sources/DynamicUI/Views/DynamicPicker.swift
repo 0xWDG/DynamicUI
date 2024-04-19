@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicPicker
 /// DynamicPicker is a SwiftUI View that can be used to display an Picker.
-public struct DynamicPicker: View {
+struct DynamicPicker: View {
     @Environment(\.internalDynamicUIEnvironment)
     private var dynamicUIEnvironment
 

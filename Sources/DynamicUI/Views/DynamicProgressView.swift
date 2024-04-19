@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicProgressView
 /// DynamicProgressView is a SwiftUI View that can be used to display an progress view.
-public struct DynamicProgressView: View {
+struct DynamicProgressView: View {
     private let component: UIComponent
 
     init(_ component: UIComponent) {

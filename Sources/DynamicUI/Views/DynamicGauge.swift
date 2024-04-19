@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicGauge
 /// DynamicGauge is a SwiftUI View that can be used to display an Gauge.
-public struct DynamicGauge: View {
+struct DynamicGauge: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

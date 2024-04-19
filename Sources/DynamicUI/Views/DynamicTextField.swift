@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicTextField
 /// DynamicTextField is a SwiftUI View that can be used to display an TextField.
-public struct DynamicTextField: View {
+struct DynamicTextField: View {
     @State private var state: String
     private let component: UIComponent
 

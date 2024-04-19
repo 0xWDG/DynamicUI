@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicVStack
 /// DynamicVStack is a SwiftUI View that can be used to display an VStack.
-public struct DynamicVStack: View {
+struct DynamicVStack: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

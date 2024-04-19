@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicTextEditor
 /// DynamicTextEditor is a SwiftUI View that can be used to display an TextEditor.
-public struct DynamicTextEditor: View {
+struct DynamicTextEditor: View {
     @State private var state: String
     private let component: UIComponent
 

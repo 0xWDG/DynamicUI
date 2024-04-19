@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicLabel
 /// DynamicLabel is a SwiftUI View that can be used to display an Label.
-public struct DynamicLabel: View {
+struct DynamicLabel: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

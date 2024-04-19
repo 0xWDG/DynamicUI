@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicForm
 /// DynamicForm is a SwiftUI View that can be used to display an Form.
-public struct DynamicForm: View {
+struct DynamicForm: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
