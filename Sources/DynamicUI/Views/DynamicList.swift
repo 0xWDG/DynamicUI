@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicList
 /// DynamicList is a SwiftUI View that can be used to display an List.
-public struct DynamicList: View {
+struct DynamicList: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicToggle
 /// The DynamicToggle is a SwiftUI View that can be used to display a toggle.
-public struct DynamicToggle: View {
+struct DynamicToggle: View {
     @State private var state: Bool
     private let title: String
 

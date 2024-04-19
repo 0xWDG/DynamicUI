@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicSecureField
 /// DynamicSecureField is a SwiftUI View that can be used to display an SecureField.
-public struct DynamicSecureField: View {
+struct DynamicSecureField: View {
     @State private var state: String
     private let component: UIComponent
 

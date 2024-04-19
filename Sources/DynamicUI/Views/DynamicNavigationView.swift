@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicNavigationView
 /// DynamicNavigationView is a SwiftUI View that can be used to display an NavigationView.
-public struct DynamicNavigationView: View {
+struct DynamicNavigationView: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

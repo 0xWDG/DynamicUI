@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicZStack
 /// DynamicZStack is a SwiftUI View that can be used to display an ZStack.
-public struct DynamicZStack: View {
+struct DynamicZStack: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

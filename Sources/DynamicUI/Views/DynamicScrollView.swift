@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicScrollView
 /// DynamicScrollView is a SwiftUI View that can be used to display an ScrollView.
-public struct DynamicScrollView: View {
+struct DynamicScrollView: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

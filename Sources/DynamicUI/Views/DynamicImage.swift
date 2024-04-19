@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicImage
 /// DynamicImage is a SwiftUI View that can be used to display an image.
-public struct DynamicImage: View {
+struct DynamicImage: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

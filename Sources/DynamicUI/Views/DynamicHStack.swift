@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicHStack
 /// DynamicHStack is a SwiftUI View that can be used to display an HStack.
-public struct DynamicHStack: View {
+struct DynamicHStack: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

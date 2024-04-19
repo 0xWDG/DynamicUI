@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicHSplitView
 /// DynamicHSplitView is a SwiftUI View that can be used to display an HSplitView.
-public struct DynamicHSplitView: View {
+struct DynamicHSplitView: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

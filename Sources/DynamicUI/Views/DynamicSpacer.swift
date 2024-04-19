@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicSpacer
 /// DynamicSpacer is a SwiftUI View that can be used to display an Spacer.
-public struct DynamicSpacer: View {
+struct DynamicSpacer: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

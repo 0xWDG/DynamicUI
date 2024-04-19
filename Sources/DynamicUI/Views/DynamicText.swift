@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicText
 /// DynamicText is a SwiftUI View that can be used to display an Text.
-public struct DynamicText: View {
+struct DynamicText: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment

@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicTEMPLATE
 /// DynamicTEMPLATE is a SwiftUI View that can be used to display an TEMPLATE.
-public struct DynamicTEMPLATE: View {
+struct DynamicTEMPLATE: View {
     @Environment(\.internalDynamicUIEnvironment)
     private var dynamicUIEnvironment
 
