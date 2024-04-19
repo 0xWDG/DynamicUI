@@ -42,7 +42,7 @@ struct ContentView: View {
     [
         {
             "type": "Text",
-            "text": "Wait, am i generating views from JSON?"
+            "title": "Wait, am i generating views from JSON?"
         }
     ]
     """.data(using: .utf8)
@@ -65,7 +65,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 ```JSON
 {
     "type": "VStack",
-    "children": [ ... ]
+    "children": [  ]
 }
 ```
 </details>
@@ -76,7 +76,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 ```JSON
 {
     "type": "HStack",
-    "children": [ ... ]
+    "children": [  ]
 }
 ```
 </details>
@@ -87,7 +87,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 ```JSON
 {
     "type": "ZStack",
-    "children": [ ... ]
+    "children": [  ]
 }
 ```
 </details>
@@ -98,7 +98,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 ```JSON
 {
     "type": "List",
-    "children": [ ... ]
+    "children": [  ]
 }
 ```
 </details>
@@ -109,7 +109,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 ```JSON
 {
     "type": "ScrollView",
-    "children": [ ... ]
+    "children": [  ]
 }
 ```
 </details>
@@ -120,7 +120,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 ```JSON
 {
     "type": "NavigationView",
-    "children": [ ... ]
+    "children": [  ]
 }
 ```
 </details>
@@ -131,7 +131,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 ```JSON
 {
     "type": "Form",
-    "children": [ ... ]
+    "children": [  ]
 }
 ```
 </details>
@@ -142,7 +142,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 ```JSON
 {
     "type": "Text",
-    "text": "..."
+    "title": "..."
 }
 ```
 </details>
@@ -263,7 +263,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 </details>
 
 <details>
-<summary>⚠ Slider</summary>
+<summary>Slider</summary>
 
 ```JSON
 {
@@ -276,7 +276,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 </details>
 
 <details>
-<summary><s>⚠ GroupBox</s></summary>
+<summary>GroupBox</summary>
 
 ```JSON
 {
@@ -287,12 +287,12 @@ Items <s>with a strikethrough</s> are not yet supported.
 </details>
 
 <details>
-<summary><s>⚠ DisclosureGroup</s></summary>
+<summary>DisclosureGroup</summary>
 
 ```JSON
 {
     "type": "DisclosureGroup",
-    "children": [ ...]
+    "children": [ ]
 }
 ```
 </details>
@@ -303,7 +303,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 ```JSON
 {
     "type": "HSplitView",
-    "children": [ ...]
+    "children": [ ]
 }
 ```
 </details>
@@ -320,7 +320,7 @@ Items <s>with a strikethrough</s> are not yet supported.
 </details>
 
 <details>
-<summary><s>⚠ Picker</s></summary>
+<summary>⚠ Picker</summary>
 
 ```JSON
 {
