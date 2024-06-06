@@ -19,6 +19,10 @@ jobs:
 
       - name: Build Documentation
         run: |
+          echo "package.dependencies.append(" >> package.swift
+          echo "  .package(url: \"https://github.com/apple/swift-docc-plugin\", from: \"1.0.0\")" >> package.swift
+          echo ")" >> package.swift
+
           swift package --allow-writing-to-directory docs \
           generate-documentation \
           --target DynamicUI \
