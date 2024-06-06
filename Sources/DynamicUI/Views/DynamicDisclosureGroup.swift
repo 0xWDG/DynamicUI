@@ -21,7 +21,7 @@ public struct DynamicDisclosureGroup: View {
     private let component: UIComponent
 
     /// Init
-    init(_ component: UIComponent) {
+    public init(_ component: UIComponent) {
         self.component = component
     }
 
