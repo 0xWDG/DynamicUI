@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicDivider
 /// DynamicDivider is a SwiftUI View that can be used to display an Divider.
-struct DynamicDivider: View {
+public struct DynamicDivider: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
