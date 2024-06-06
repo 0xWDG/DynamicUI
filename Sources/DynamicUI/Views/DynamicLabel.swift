@@ -25,6 +25,6 @@ struct DynamicLabel: View {
     }
 
     public var body: some View {
-        Label(Text("\(component.title)"), systemImage: component.imageURL ?? "")
+        Label(String("\(component.title)"), systemImage: component.imageURL ?? "")
     }
 }
