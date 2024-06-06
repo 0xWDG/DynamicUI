@@ -13,38 +13,38 @@ import SwiftUI
 /// This struct constructs a UI Component from JSON.
 public struct UIComponent: Codable, Hashable {
     /// Type of component
-    let type: String
+    public let type: String
 
     /// Text within component
-    let text: String?
+    public let text: String?
 
     /// Title of component
-    let title: String?
+    public let title: String?
 
     /// Default value of component
-    let defaultValue: AnyCodable?
+    public let defaultValue: AnyCodable?
 
     /// Styling of components (not yet used)
-    let styling: [[String: AnyCodable]]?
+    public let styling: [[String: AnyCodable]]?
 
     /// Parameters of component (not yet used)
-    let parameters: [[String: AnyCodable]]?
+    public let parameters: [[String: AnyCodable]]?
 
     /// Image URL
-    let imageURL: String?
+    public let imageURL: String?
 
     /// Children (used in VStack, HStack, ZStack)
-    let children: [UIComponent]?
+    public let children: [UIComponent]?
 
     /// Minumum value description
-    let minumum: String?
+    public let minumum: String?
 
     /// Minumum value
-    let minimumValue: Double?
+    public let minimumValue: Double?
 
     /// Maximum value description
-    let maximum: String?
+    public let maximum: String?
 
     /// Maximum value
-    let maximumValue: Double?
+    public let maximumValue: Double?
 }

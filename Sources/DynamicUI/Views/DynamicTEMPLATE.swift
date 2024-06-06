@@ -10,22 +10,39 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicTEMPLATE
+/// DynamicUI: TEMPLATE
+/// 
 /// DynamicTEMPLATE is a SwiftUI View that can be used to display an TEMPLATE.
-struct DynamicTEMPLATE: View {
+/// 
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "TEMPLATE",
+///    "title": "Title"
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicTEMPLATE: View {
     @Environment(\.internalDynamicUIEnvironment)
+    /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
 
     @State
+    /// The state of the TEMPLATE
     private var state: Double
 
+    /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicTEMPLATE
     init(_ component: UIComponent) {
         self.state = component.defaultValue?.toDouble() ?? 0
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
         EmptyView()
     }

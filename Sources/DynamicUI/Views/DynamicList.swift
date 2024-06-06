@@ -10,9 +10,21 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicList
+/// DynamicUI: List
+/// 
 /// DynamicList is a SwiftUI View that can be used to display an List.
-struct DynamicList: View {
+/// 
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "List",
+///    "children": [ ]
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicList: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -20,10 +32,12 @@ struct DynamicList: View {
     /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicList
     init(_ component: UIComponent) {
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
          List {
             if let children = component.children {

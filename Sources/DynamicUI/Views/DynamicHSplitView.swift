@@ -10,9 +10,20 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicHSplitView
+/// DynamicUI: HSplitView
+/// 
 /// DynamicHSplitView is a SwiftUI View that can be used to display an HSplitView.
-struct DynamicHSplitView: View {
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "HSplitView",
+///    "children": [ ]
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicHSplitView: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -20,10 +31,12 @@ struct DynamicHSplitView: View {
     /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicHSplitView
     init(_ component: UIComponent) {
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
          HSplitView {
             if let children = component.children {

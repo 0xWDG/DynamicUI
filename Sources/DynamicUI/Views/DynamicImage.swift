@@ -10,9 +10,23 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicImage
+/// DynamicUI: Image
+/// 
 /// DynamicImage is a SwiftUI View that can be used to display an image.
-struct DynamicImage: View {
+/// 
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "Image",
+///    "imageURL": "systemName"
+/// }
+/// ```
+/// 
+/// - Note: The `imageURL` is the systemName of the image.
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicImage: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -20,10 +34,12 @@ struct DynamicImage: View {
     /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicImage
     init(_ component: UIComponent) {
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
         Image(systemName: component.imageURL ?? "")
     }

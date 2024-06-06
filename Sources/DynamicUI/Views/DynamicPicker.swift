@@ -10,22 +10,40 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicPicker
+/// DynamicUI: Picker
+/// 
 /// DynamicPicker is a SwiftUI View that can be used to display an Picker.
-struct DynamicPicker: View {
+/// 
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "Picker",
+///    "title": "Title",
+///    "values": ["...", "...", ]
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicPicker: View {
     @Environment(\.internalDynamicUIEnvironment)
+    /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
 
     @State
+    /// The state of the picker
     private var state: Double
 
+    /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicPicker
     init(_ component: UIComponent) {
         self.state = component.defaultValue?.toDouble() ?? 0
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
         Picker(component.title ?? "", selection: $state) {
             if let children = component.children {

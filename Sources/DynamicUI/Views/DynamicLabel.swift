@@ -10,9 +10,21 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicLabel
+/// DynamicUI: Label
+/// 
 /// DynamicLabel is a SwiftUI View that can be used to display an Label.
-struct DynamicLabel: View {
+/// 
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "Label",
+///    "title": "Title"
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicLabel: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -20,10 +32,12 @@ struct DynamicLabel: View {
     /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicLabel
     init(_ component: UIComponent) {
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
         Label(String("\(component.title)"), systemImage: component.imageURL ?? "")
     }

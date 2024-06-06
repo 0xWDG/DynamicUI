@@ -10,9 +10,22 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicText
+/// DynamicUI: Text
+/// 
 /// DynamicText is a SwiftUI View that can be used to display an Text.
-struct DynamicText: View {
+/// 
+/// 
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "Text",
+///    "title": "Title"
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicText: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -20,10 +33,12 @@ struct DynamicText: View {
     /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicText
     init(_ component: UIComponent) {
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
         Text(component.title ?? "")
     }
