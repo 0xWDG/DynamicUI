@@ -11,7 +11,7 @@
 import SwiftUI
 
 /// This struct constructs a UI Component from JSON.
-struct UIComponent: Codable, Hashable {
+public struct UIComponent: Codable, Hashable {
     /// Type of component
     let type: String
 
