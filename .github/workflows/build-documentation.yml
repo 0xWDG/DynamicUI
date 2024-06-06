@@ -1,0 +1,44 @@
+name: build-documentation
+
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
+
+jobs:
+  build-docc:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create folder for generated documentation
+        run: |
+          mkdir docs
+
+      - name: Build Documentation
+        run: |
+          swift package --allow-writing-to-directory docs \
+          generate-documentation \
+          --target DynamicUI \
+          --disable-indexing \
+          --output-path docs \
+          --transform-for-static-hosting \
+          --hosting-base-path `basename ${{ github.repository }}`
+
+      - name: Init new repo in dist folder and commit generated files
+        run: |
+          cd docs
+          git init -b docs
+          DOCURL=`basename ${{ github.repository }}`
+          echo "{\"meta\":{\"title\":\"$DOCURL Documentation\"}}" > theme-settings.json
+          echo "<script>window.location.href = 'documentation/$DOCURL/'.toLowerCase();</script>" > index.html
+          git add -A .
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -m 'deploy'
+          git push \
+          "https://${{ github.repository_owner }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" \
+          HEAD:docs \
+          --force
