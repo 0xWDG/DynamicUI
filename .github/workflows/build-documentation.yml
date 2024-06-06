@@ -24,7 +24,6 @@ jobs:
           --target DynamicUI \
           --disable-indexing \
           --output-path docs \
-          --symbol-graph-minimum-access-level private \
           --transform-for-static-hosting \
           --hosting-base-path `basename ${{ github.repository }}`
 
