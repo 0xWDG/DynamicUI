@@ -12,7 +12,7 @@ import SwiftUI
 
 /// DynamicUI: DynamicDisclosureGroup
 /// DynamicDisclosureGroup is a SwiftUI View that can be used to display an DisclosureGroup.
-struct DynamicDisclosureGroup: View {
+public struct DynamicDisclosureGroup: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
