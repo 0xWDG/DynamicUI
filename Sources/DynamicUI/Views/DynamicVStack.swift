@@ -10,9 +10,21 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicVStack
+/// DynamicUI: VStack
+/// 
 /// DynamicVStack is a SwiftUI View that can be used to display an VStack.
-struct DynamicVStack: View {
+/// 
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "VStack",
+///    "children": [ ]
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicVStack: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -20,10 +32,12 @@ struct DynamicVStack: View {
     /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicVStack
     init(_ component: UIComponent) {
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
          VStack {
             if let children = component.children {

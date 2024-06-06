@@ -10,8 +10,20 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicForm
+/// DynamicUI: Form
+///
 /// DynamicForm is a SwiftUI View that can be used to display an Form.
+///
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "Form",
+///    "children": [ ]
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
 public struct DynamicForm: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
@@ -20,10 +32,12 @@ public struct DynamicForm: View {
     /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicForm
     init(_ component: UIComponent) {
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
          Form {
             if let children = component.children {

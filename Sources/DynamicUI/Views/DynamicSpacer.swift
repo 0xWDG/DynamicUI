@@ -10,9 +10,20 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicSpacer
+/// DynamicUI: Spacer
+/// 
 /// DynamicSpacer is a SwiftUI View that can be used to display an Spacer.
-struct DynamicSpacer: View {
+/// 
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "Spacer"
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicSpacer: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -20,10 +31,12 @@ struct DynamicSpacer: View {
     /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicSpacer
     init(_ component: UIComponent) {
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
         Spacer()
     }

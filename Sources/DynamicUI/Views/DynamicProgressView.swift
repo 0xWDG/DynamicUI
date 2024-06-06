@@ -10,15 +10,36 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicProgressView
+/// DynamicUI: ProgressView
+/// 
 /// DynamicProgressView is a SwiftUI View that can be used to display an progress view.
-struct DynamicProgressView: View {
+/// 
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "ProgressView",
+///    "title": "Title",
+///    "value": "50",
+///    "total": "100"
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicProgressView: View {
+    @Environment(\.internalDynamicUIEnvironment)
+    /// Internal: dynamicUIEnvironment
+    private var dynamicUIEnvironment
+
+    /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicProgressView
     init(_ component: UIComponent) {
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
         ProgressView(
             "\(component.title ?? "")",

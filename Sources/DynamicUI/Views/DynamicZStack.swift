@@ -10,9 +10,21 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicZStack
+/// DynamicUI: ZStack
+/// 
 /// DynamicZStack is a SwiftUI View that can be used to display an ZStack.
-struct DynamicZStack: View {
+/// 
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "ZStack",
+///    "children": [ ]
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicZStack: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -20,10 +32,12 @@ struct DynamicZStack: View {
     /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicZStack
     init(_ component: UIComponent) {
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
          ZStack {
             if let children = component.children {

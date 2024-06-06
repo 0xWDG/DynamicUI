@@ -20,12 +20,18 @@ import Foundation
 ///   let someOptionalCodable: AnyCodable?
 /// }
 /// ```
-enum AnyCodable {
+public enum AnyCodable {
+    /// String value
     case string(String)
+    /// Integer value
     case int(Int)
+    /// Data value
     case data(Data)
+    /// Double value
     case double(Double)
+    /// Boolean value
     case bool(Bool)
+    /// No value
     case none
 
     enum AnyCodableError: Error {
@@ -87,7 +93,7 @@ extension AnyCodable {
     /// Check if value is nil
     /// - Returns: nil if value is none/empty
     public func isNil() -> Bool {
-        if case let .none = self {
+        if case .none = self {
             return true
         }
 
@@ -100,7 +106,10 @@ extension AnyCodable: Codable, Hashable {
         case string, int, data, double, bool
     }
 
-    init(from decoder: Decoder) throws {
+    /// Decode the values
+    /// 
+    /// - Parameter decoder: 
+    public init(from decoder: Decoder) throws {
         if let int = try? decoder.singleValueContainer().decode(Int.self) {
             self = .int(int)
             return
@@ -131,7 +140,10 @@ extension AnyCodable: Codable, Hashable {
         self = .none
     }
 
-    func encode(to encoder: Encoder) throws {
+    /// Encode the values
+    /// 
+    /// - Parameter encoder: Encoder
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
         case .string(let value):

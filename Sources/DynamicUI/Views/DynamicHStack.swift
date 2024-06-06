@@ -10,9 +10,21 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicHStack
+/// DynamicUI: HStack
+/// 
 /// DynamicHStack is a SwiftUI View that can be used to display an HStack.
-struct DynamicHStack: View {
+/// 
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "HStack",
+///    "children": [ ]
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicHStack: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -20,10 +32,12 @@ struct DynamicHStack: View {
     /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicHStack
     init(_ component: UIComponent) {
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
          HStack {
             if let children = component.children {

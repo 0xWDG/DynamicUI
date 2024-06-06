@@ -10,9 +10,21 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicVSplitView
+/// DynamicUI: VSplitView
+/// 
 /// DynamicVSplitView is a SwiftUI View that can be used to display an VSplitView.
-struct DynamicVSplitView: View {
+/// 
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "VSplitView",
+///    "children": [ ]
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicVSplitView: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -20,10 +32,12 @@ struct DynamicVSplitView: View {
     /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicVSplitView
     init(_ component: UIComponent) {
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
          VSplitView {
             if let children = component.children {

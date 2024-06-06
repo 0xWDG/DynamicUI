@@ -13,13 +13,22 @@ import SwiftUI
 /// DynamicUI
 ///
 /// DynamicUI is a SwiftUI View that can be used to display an interface based on JSON.
-/// - Parameter json: JSON Data
-/// - Returns: A SwiftUI View
-public func DynamicUI(json: Data?) -> some View {
-    // swiftlint:disable:previous identifier_name
-    return AnyView(
-        InternalDynamicUI(json: json)
-    )
+public struct DynamicUI: View {
+    /// JSON data
+    public var json: Data?
+    
+    /// Initialize DynamicUI
+    /// - Parameter json: JSON data
+    public init(json: Data? = nil) {
+        self.json = json
+    }
+
+    /// Generated body for SwiftUI
+    public var body: some View {
+        AnyView(
+            InternalDynamicUI(json: json)
+        )
+    }
 }
 
 /// InternalDynamicUI (internal)
@@ -38,7 +47,7 @@ struct InternalDynamicUI: View {
     /// This state is used to store the error message
     private var error: String?
 
-    /// Init
+    /// Initialize the InternalDynamicUI
     var body: some View {
         VStack {
             if let layout = layout {

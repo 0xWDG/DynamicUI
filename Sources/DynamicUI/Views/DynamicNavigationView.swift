@@ -10,9 +10,21 @@
 
 import SwiftUI
 
-/// DynamicUI: DynamicNavigationView
+/// DynamicUI: NavigationView
+/// 
 /// DynamicNavigationView is a SwiftUI View that can be used to display an NavigationView.
-struct DynamicNavigationView: View {
+/// 
+/// JSON Example:
+/// ```json
+/// {
+///    "type": "Label",
+///    "title": "Title"
+/// }
+/// ```
+/// 
+/// - Note: This is a internal view, you should not use this directly. \
+///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+public struct DynamicNavigationView: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -20,10 +32,12 @@ struct DynamicNavigationView: View {
     /// The component to display
     private let component: UIComponent
 
+    /// Initialize the DynamicNavigationView
     init(_ component: UIComponent) {
         self.component = component
     }
 
+    /// Generated body for SwiftUI
     public var body: some View {
          NavigationView {
             if let children = component.children {
