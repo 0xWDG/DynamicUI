@@ -39,10 +39,14 @@ public struct DynamicGroupBox: View {
 
     /// Generated body for SwiftUI
     public var body: some View {
-         GroupBox {
+#if !os(tvOS) && !os(watchOS)
+        GroupBox {
             if let children = component.children {
-                AnyView(dynamicUIEnvironment.buildView(for: children))
+               AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+#else
+        DynamicVStack(component)
+#endif
     }
 }
