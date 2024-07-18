@@ -35,16 +35,21 @@ public struct DynamicTextEditor: View {
     private var state: String
 
     /// The component to display
-    private let component: UIComponent
+    private let component: DynamicUIComponent
 
     /// Initialize the DynamicTextEditor
-    init(_ component: UIComponent) {
+    init(_ component: DynamicUIComponent) {
         self.state = component.defaultValue?.toString() ?? ""
         self.component = component
     }
 
     /// Generated body for SwiftUI
     public var body: some View {
-        TextEditor(text: $state)
+        TextEditor(text: $state.onChange({ newState in
+            var newComponent = component
+            newComponent.state = .string(state)
+
+            dynamicUIEnvironment.callback(newComponent)
+        }))
     }
 }

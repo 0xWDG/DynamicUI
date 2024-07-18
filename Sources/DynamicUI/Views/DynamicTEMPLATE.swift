@@ -34,10 +34,10 @@ public struct DynamicTEMPLATE: View {
     private var state: Double
 
     /// The component to display
-    private let component: UIComponent
+    private let component: DynamicUIComponent
 
     /// Initialize the DynamicTEMPLATE
-    init(_ component: UIComponent) {
+    init(_ component: DynamicUIComponent) {
         self.state = component.defaultValue?.toDouble() ?? 0
         self.component = component
     }

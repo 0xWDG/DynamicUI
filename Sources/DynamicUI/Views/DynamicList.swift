@@ -30,10 +30,10 @@ public struct DynamicList: View {
     private var dynamicUIEnvironment
 
     /// The component to display
-    private let component: UIComponent
+    private let component: DynamicUIComponent
 
     /// Initialize the DynamicList
-    init(_ component: UIComponent) {
+    init(_ component: DynamicUIComponent) {
         self.component = component
     }
 

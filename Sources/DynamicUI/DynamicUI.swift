@@ -14,34 +14,59 @@ import SwiftUI
 ///
 /// DynamicUI is a SwiftUI View that can be used to display an interface based on JSON.
 public struct DynamicUI: View {
+    /// DynamicUIComponent state change handler
+    public typealias Handler = (DynamicUIComponent) -> Void
+
     /// JSON data
     public var json: Data?
-    
+
+    /// Callback handler for updates
+    public var callback: Handler? = { _ in }
+
     /// Initialize DynamicUI
-    /// - Parameter json: JSON data
-    public init(json: Data? = nil) {
+    ///
+    /// - Parameter json: JSON Data
+    public init(json: Data? = nil, callback: Handler?) {
         self.json = json
+        self.callback = callback
+    }
+
+    /// Initialize DynamicUI
+    /// 
+    /// - Parameter json: JSON String
+    public init(json: String? = nil, callback: Handler?) {
+        self.json = json?.data(using: .utf8)
+        self.callback = callback
     }
 
     /// Generated body for SwiftUI
     public var body: some View {
         AnyView(
-            InternalDynamicUI(json: json)
+            InternalDynamicUI(
+                json: json,
+                callback: callback ?? { _ in }
+            )
         )
     }
 }
 
 /// InternalDynamicUI (internal)
 /// InternalDynamicUI is a SwiftUI View that can be used to display an interface based on JSON.
+///
 /// - Parameter json: JSON Data
+/// - Parameter callback: Callback handler
+///
 /// - Returns: A SwiftUI View
 struct InternalDynamicUI: View {
     /// JSON Data
     public var json: Data?
 
+    /// Callback handler for updates
+    public var callback: (DynamicUIComponent) -> Void
+
     @State
     /// This state is used to store the layout
-    private var layout: [UIComponent]?
+    private var layout: [DynamicUIComponent]?
 
     @State
     /// This state is used to store the error message
@@ -53,10 +78,19 @@ struct InternalDynamicUI: View {
             if let layout = layout {
                 buildView(for: layout)
             } else if let error = error {
+                Image(systemName: "exclamationmark.arrow.triangle.2.circlepath")
+                    .resizable()
+                    .frame(width: 150, height: 150)
+                    .padding(.vertical)
+
                 Text("Failed to generate interface...")
+                    .font(.title)
+                    .padding(.vertical)
+
                 Text(error)
             } else {
                 ProgressView()
+                    .frame(width: 150, height: 150)
                     .controlSize(.large)
                     .padding()
 
@@ -73,7 +107,7 @@ struct InternalDynamicUI: View {
         do {
             if let json = json {
                 self.layout = try JSONDecoder().decode(
-                    [UIComponent].self,
+                    [DynamicUIComponent].self,
                     from: json
                 )
             }
@@ -85,10 +119,14 @@ struct InternalDynamicUI: View {
     /// Build a SwiftUI View based on the components
     /// - Parameter components: [UIComponent]
     /// - Returns: A SwiftUI View
-    func buildView(for components: [UIComponent]) -> some View {
+    func buildView(for components: [DynamicUIComponent]) -> some View {
         // swiftlint:disable:previous cyclomatic_complexity function_body_length
         return ForEach(components, id: \.self) { component in
             switch component.type {
+            case "Button":
+                DynamicButton(component)
+                    .environment(\.internalDynamicUIEnvironment, self)
+
             case "VStack":
                 DynamicVStack(component)
                     .environment(\.internalDynamicUIEnvironment, self)

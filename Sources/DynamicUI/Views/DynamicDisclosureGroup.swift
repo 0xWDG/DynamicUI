@@ -30,10 +30,10 @@ public struct DynamicDisclosureGroup: View {
     private var dynamicUIEnvironment
 
     /// The component to display
-    private let component: UIComponent
+    private let component: DynamicUIComponent
 
     /// Initialize the DynamicDisclosureGroup
-    public init(_ component: UIComponent) {
+    public init(_ component: DynamicUIComponent) {
         self.component = component
     }
 

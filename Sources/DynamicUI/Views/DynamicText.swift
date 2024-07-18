@@ -31,15 +31,15 @@ public struct DynamicText: View {
     private var dynamicUIEnvironment
 
     /// The component to display
-    private let component: UIComponent
+    private let component: DynamicUIComponent
 
     /// Initialize the DynamicText
-    init(_ component: UIComponent) {
+    init(_ component: DynamicUIComponent) {
         self.component = component
     }
 
     /// Generated body for SwiftUI
     public var body: some View {
-        Text(component.title ?? "")
+        Text(.init(component.title ?? ""))
     }
 }

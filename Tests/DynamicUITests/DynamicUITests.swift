@@ -1,7 +1,7 @@
 import XCTest
-@testable import JSONUI
+@testable import DynamicUI
 
-final class JSONUITests: XCTestCase {
+final class DynamicUITests: XCTestCase {
     func testExample() throws {
         // XCTest Documentation
         // https://developer.apple.com/documentation/xctest

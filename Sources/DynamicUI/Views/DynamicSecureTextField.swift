@@ -35,10 +35,10 @@ public struct DynamicSecureField: View {
     private var state: String
 
     /// The component to display
-    private let component: UIComponent
+    private let component: DynamicUIComponent
 
     /// Initialize the DynamicSecureField
-    init(_ component: UIComponent) {
+    init(_ component: DynamicUIComponent) {
         self.state = component.defaultValue?.toString() ?? ""
         self.component = component
     }
