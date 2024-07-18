@@ -1,0 +1,13 @@
+name: Build for iOS
+on:
+  push:
+  pull_request:
+
+jobs:
+  build_iOS:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Swift build (iOS)
+        run: xcrun xcodebuild clean build -quiet -scheme DynamicUI -destination generic/platform=iOS
