@@ -1,0 +1,12 @@
+name: Build for watchOS
+on:
+  pull_request:
+
+jobs:
+  build_watchOS:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Swift build (watchOS)
+        run: xcrun xcodebuild clean build -quiet -scheme DynamicUI -destination generic/platform=watchOS

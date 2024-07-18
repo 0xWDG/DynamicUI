@@ -1,0 +1,12 @@
+name: Run tests on macOS
+on:
+  pull_request:
+
+jobs:
+  test_macOS:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Swift test
+        run: swift test
