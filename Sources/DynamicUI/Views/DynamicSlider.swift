@@ -46,6 +46,7 @@ public struct DynamicSlider: View {
 
     /// Generated body for SwiftUI
     public var body: some View {
+#if !os(tvOS)
         Slider(value: $state.onChange({ newState in
             var newComponent = component
             newComponent.state = .double(newState)
@@ -58,5 +59,8 @@ public struct DynamicSlider: View {
         } maximumValueLabel: {
             Text("\(component.maximum ?? "")")
         }
+#else
+        EmptyView()
+#endif
     }
 }

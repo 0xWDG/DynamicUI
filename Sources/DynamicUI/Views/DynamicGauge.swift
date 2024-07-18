@@ -47,6 +47,7 @@ public struct DynamicGauge: View {
 
     /// Generated body for SwiftUI
     public var body: some View {
+#if !os(tvOS)
         if #available(macOS 13.0, iOS 16.0, *) {
             Gauge(value: state) {
                 Text("\(component.title ?? "")")
@@ -54,5 +55,8 @@ public struct DynamicGauge: View {
         } else {
             EmptyView()
         }
+#else
+        EmptyView()
+#endif
     }
 }
