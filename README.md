@@ -35,6 +35,7 @@ import DynamicUI
 ## Usage
 
 ```swift
+import SwiftUI
 import DynamicUI
 
 struct ContentView: View {
@@ -54,6 +55,9 @@ struct ContentView: View {
     }
 }
 ```
+
+### Playground Application:
+In the directory `Playground` is a Xcode project to build the [Playground Application](#Playground)
 
 ### Supported View Types:
 _Please note:_ Items prefixed with ⚠ may ignore passed parameters.  
@@ -132,6 +136,17 @@ Items <s>with a strikethrough</s> are not yet supported.
 {
     "type": "Form",
     "children": [  ]
+}
+```
+</details>
+
+<details>
+<summary>Button</summary>
+
+```JSON
+{
+    "type": "Button",
+    "title": "Click me!"
 }
 ```
 </details>
@@ -355,7 +370,15 @@ Items <s>with a strikethrough</s> are not yet supported.
 
 ## Images
 
+### Playground
+<a name="Playground">
+<img width="804" alt="image" src="https://github.com/user-attachments/assets/cfd7ba02-88b1-410d-a6ba-54c9ebee06e0">
+
+### V0.0.1 in action
 <img width="835" alt="image" src="https://github.com/0xWDG/DynamicUI/assets/1290461/02e2d735-5496-4b68-a428-9e03815bf4d6">
+
+## Used By
+- [Aurora Editor](https://github.com/AuroraEditor/AuroraEditor) for custom views in extensions.
 
 ## Contact
 
