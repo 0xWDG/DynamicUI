@@ -91,7 +91,9 @@ struct InternalDynamicUI: View {
             } else {
                 ProgressView()
                     .frame(width: 150, height: 150)
+#if !os(tvOS) && !os(watchOS)
                     .controlSize(.large)
+#endif
                     .padding()
 
                 Text("Generating interface...")
