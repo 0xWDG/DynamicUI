@@ -39,10 +39,14 @@ public struct DynamicVSplitView: View {
 
     /// Generated body for SwiftUI
     public var body: some View {
+#if os(macOS)
          VSplitView {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
     }
+#else
+        EmptyView()
+#endif
 }
