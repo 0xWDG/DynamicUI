@@ -6,11 +6,11 @@ import PackageDescription
 let package = Package(
     name: "DynamicUI",
     platforms: [
-        .iOS(.v15), // Untested.
-        .macOS(.v12), // Tested.
-        .tvOS(.v14), // Untested.
-        .watchOS(.v6), // Untested.
-        .macCatalyst(.v15) // Untested.
+        .iOS(.v15),
+        .macOS(.v12),
+        .tvOS(.v14),
+        .watchOS(.v7),
+        .macCatalyst(.v15)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
