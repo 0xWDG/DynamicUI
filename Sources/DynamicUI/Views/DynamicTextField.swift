@@ -35,10 +35,10 @@ public struct DynamicTextField: View {
     private var state: String
 
     /// The component to display
-    private let component: UIComponent
+    private let component: DynamicUIComponent
 
     /// Initialize the DynamicTextField
-    init(_ component: UIComponent) {
+    init(_ component: DynamicUIComponent) {
         self.state = component.defaultValue?.toString() ?? ""
         self.component = component
     }
@@ -47,7 +47,12 @@ public struct DynamicTextField: View {
     public var body: some View {
         TextField(
             "\(component.title ?? "")",
-            text: $state
+            text: $state.onChange({ newState in
+                var newComponent = component
+                newComponent.state = .string(state)
+
+                dynamicUIEnvironment.callback(newComponent)
+            })
         )
     }
 }

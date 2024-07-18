@@ -23,18 +23,25 @@ import Foundation
 public enum AnyCodable {
     /// String value
     case string(String)
+
     /// Integer value
     case int(Int)
+
     /// Data value
     case data(Data)
+
     /// Double value
     case double(Double)
+
     /// Boolean value
     case bool(Bool)
+
     /// No value
     case none
 
+    /// Missing value error
     enum AnyCodableError: Error {
+        /// Missing value
         case missingValue
     }
 }
@@ -145,17 +152,23 @@ extension AnyCodable: Codable, Hashable {
     /// - Parameter encoder: Encoder
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+
         switch self {
         case .string(let value):
             try container.encode(value, forKey: .string)
+
         case .int(let value):
             try container.encode(value, forKey: .int)
+
         case .data(let value):
             try container.encode(value, forKey: .data)
+
         case .double(let value):
             try container.encode(value, forKey: .double)
+
         case .bool(let value):
             try container.encode(value, forKey: .bool)
+
         case .none:
             _ = ""
         }

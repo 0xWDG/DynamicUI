@@ -33,14 +33,14 @@ public struct DynamicGauge: View {
     private var dynamicUIEnvironment
 
     /// The component to display
-    private let component: UIComponent
+    private let component: DynamicUIComponent
 
     @State
     /// The state of the Gauge
     private var state: Double
 
     /// Initialize the DynamicGauge
-    init(_ component: UIComponent) {
+    init(_ component: DynamicUIComponent) {
         self.state = component.defaultValue?.toDouble() ?? 0
         self.component = component
     }

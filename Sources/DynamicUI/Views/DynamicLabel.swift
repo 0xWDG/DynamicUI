@@ -30,15 +30,22 @@ public struct DynamicLabel: View {
     private var dynamicUIEnvironment
 
     /// The component to display
-    private let component: UIComponent
+    private let component: DynamicUIComponent
 
     /// Initialize the DynamicLabel
-    init(_ component: UIComponent) {
+    init(_ component: DynamicUIComponent) {
         self.component = component
     }
 
     /// Generated body for SwiftUI
     public var body: some View {
-        Label(String("\(component.title)"), systemImage: component.imageURL ?? "")
+        if let systemImage = component.imageURL {
+            Label(
+                component.title ?? "Label",
+                systemImage: systemImage
+            )
+        } else {
+            DynamicText(component)
+        }
     }
 }
