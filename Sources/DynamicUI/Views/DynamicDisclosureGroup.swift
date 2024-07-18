@@ -39,10 +39,14 @@ public struct DynamicDisclosureGroup: View {
 
     /// Generated body for SwiftUI
     public var body: some View {
+#if !os(tvOS) && !os(watchOS)
         DisclosureGroup("\(component.title ?? "")") {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+#else
+        DynamicVStack(component)
+#endif
     }
 }
