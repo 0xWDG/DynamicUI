@@ -26,8 +26,14 @@ public struct DynamicUIComponent: Codable, Hashable {
     /// Component identifier
     ///
     /// The component identifier can be used to have an identifier if you need react on callback calls
-    /// This is optional but recommended if you use a callback function
+    /// This is optional but recommended if you use a event handler function
     public let identifier: String?
+
+    /// Event handler
+    /// 
+    /// The event handler is called when the component is interacted with.
+    /// This can be a button press, a slider change, etc.
+    public let eventHandler: String?
 
     /// Default value of component
     public let defaultValue: AnyCodable?
