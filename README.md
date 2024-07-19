@@ -1,6 +1,8 @@
 # DynamicUI
 
-Convert your JSON to a SwiftUI View.
+Create a SwiftUI user interface through a JSON file. The JSON file will contain the structure of the user interface, and the program will create the user interface based on the JSON file.
+
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F0xWDG%2FDynamicUI%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/0xWDG/DynamicUI) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F0xWDG%2FDynamicUI%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/0xWDG/DynamicUI)
 
 > [!WARNING]
 >
