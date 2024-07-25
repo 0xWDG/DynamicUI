@@ -39,10 +39,11 @@ public struct DynamicNavigationView: View {
 
     /// Generated body for SwiftUI
     public var body: some View {
-         NavigationView {
+        NavigationView {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .dynamicUIModifiers(component.modifiers)
     }
 }

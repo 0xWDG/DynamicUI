@@ -41,5 +41,6 @@ public struct DynamicText: View {
     /// Generated body for SwiftUI
     public var body: some View {
         Text(.init(component.title ?? ""))
+            .dynamicUIModifiers(component.modifiers)
     }
 }

@@ -18,7 +18,10 @@ import SwiftUI
 /// ```json
 /// {
 ///    "type": "Button",
-///    "title": "Title"
+///    "title": "Title",
+///    "modifiers": {
+///        "foregroundColor": "blue"
+///    }
 /// }
 /// ```
 ///
@@ -49,5 +52,6 @@ public struct DynamicButton: View {
         }, label: {
             Text(component.title ?? "Button")
         })
+        .dynamicUIModifiers(component.modifiers)
     }
 }

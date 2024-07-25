@@ -39,10 +39,11 @@ public struct DynamicZStack: View {
 
     /// Generated body for SwiftUI
     public var body: some View {
-         ZStack {
+        ZStack {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .dynamicUIModifiers(component.modifiers)
     }
 }

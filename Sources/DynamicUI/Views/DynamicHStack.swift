@@ -39,10 +39,11 @@ public struct DynamicHStack: View {
 
     /// Generated body for SwiftUI
     public var body: some View {
-         HStack {
+        HStack {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .dynamicUIModifiers(component.modifiers)
     }
 }

@@ -46,5 +46,6 @@ public struct DynamicProgressView: View {
             value: component.defaultValue?.toDouble() ?? 0,
             total: component.maximumValue ?? 100
         )
+        .dynamicUIModifiers(component.modifiers)
     }
 }

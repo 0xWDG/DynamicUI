@@ -39,10 +39,11 @@ public struct DynamicScrollView: View {
 
     /// Generated body for SwiftUI
     public var body: some View {
-         ScrollView {
+        ScrollView {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .dynamicUIModifiers(component.modifiers)
     }
 }

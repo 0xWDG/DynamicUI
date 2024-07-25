@@ -45,5 +45,6 @@ public struct DynamicTEMPLATE: View {
     /// Generated body for SwiftUI
     public var body: some View {
         EmptyView()
+            .dynamicUIModifiers(component.modifiers)
     }
 }

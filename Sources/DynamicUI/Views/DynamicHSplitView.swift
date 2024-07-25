@@ -39,13 +39,15 @@ public struct DynamicHSplitView: View {
     /// Generated body for SwiftUI
     public var body: some View {
 #if os(macOS)
-         HSplitView {
+        HSplitView {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .dynamicUIModifiers(component.modifiers)
 #else
         EmptyView()
+            .dynamicUIModifiers(component.modifiers)
 #endif
     }
 }

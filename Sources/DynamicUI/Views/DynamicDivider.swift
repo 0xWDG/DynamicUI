@@ -39,5 +39,6 @@ public struct DynamicDivider: View {
     /// Generated body for SwiftUI
     public var body: some View {
         Divider()
+            .dynamicUIModifiers(component.modifiers)
     }
 }

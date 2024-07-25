@@ -52,8 +52,9 @@ public struct DynamicPicker: View {
             dynamicUIEnvironment.callback(newComponent)
         })) {
             if let children = component.children {
-               AnyView(dynamicUIEnvironment.buildView(for: children))
+                AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .dynamicUIModifiers(component.modifiers)
     }
 }
