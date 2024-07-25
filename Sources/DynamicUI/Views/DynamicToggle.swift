@@ -29,30 +29,30 @@ struct DynamicToggle: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     var dynamicUIEnvironment
-    
+
     @State
     /// The state of the Toggle
     private var state: Bool
-    
+
     /// The title of the Toggle
     private let title: String
-    
+
     /// The component to display
     private let component: DynamicUIComponent
-    
+
     /// Initialize the DynamicToggle
     init(_ component: DynamicUIComponent) {
         self.title = component.title ?? ""
         self.state = component.defaultValue?.toBool() ?? false
         self.component = component
     }
-    
+
     /// Generated body for SwiftUI
     public var body: some View {
         Toggle(isOn: $state.onChange({ newState in
             var newComponent = component
             newComponent.state = .bool(newState)
-            
+
             dynamicUIEnvironment.callback(newComponent)
         })) {
             Text(title)

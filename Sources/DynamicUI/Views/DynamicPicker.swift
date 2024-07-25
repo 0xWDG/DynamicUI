@@ -29,26 +29,26 @@ public struct DynamicPicker: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
-    
+
     @State
     /// The state of the picker
     private var state: Double
-    
+
     /// The component to display
     private let component: DynamicUIComponent
-    
+
     /// Initialize the DynamicPicker
     init(_ component: DynamicUIComponent) {
         self.state = component.defaultValue?.toDouble() ?? 0
         self.component = component
     }
-    
+
     /// Generated body for SwiftUI
     public var body: some View {
         Picker(component.title ?? "", selection: $state.onChange({ newState in
             var newComponent = component
             newComponent.state = .double(newState)
-            
+
             dynamicUIEnvironment.callback(newComponent)
         })) {
             if let children = component.children {

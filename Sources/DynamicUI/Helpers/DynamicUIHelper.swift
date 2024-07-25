@@ -10,6 +10,7 @@
 
 import SwiftUI
 
+// swiftlint:disable cyclomatic_complexity function_body_length
 /// DynamicUIHelper
 ///
 /// DynamicUIHelper helps to translate Strings to native SwiftUI .context
@@ -95,7 +96,7 @@ public class DynamicUIHelper {
             return .primary
         }
     }
-    
+
     /// Translate a string font weight to a native ``Font.Weight``
     ///
     /// - Parameter input: Font weight as string
@@ -135,3 +136,5 @@ public class DynamicUIHelper {
         }
     }
 }
+
+// swiftlint:enable cyclomatic_complexity function_body_length

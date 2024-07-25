@@ -27,15 +27,15 @@ public struct DynamicHSplitView: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
-    
+
     /// The component to display
     private let component: DynamicUIComponent
-    
+
     /// Initialize the DynamicHSplitView
     init(_ component: DynamicUIComponent) {
         self.component = component
     }
-    
+
     /// Generated body for SwiftUI
     public var body: some View {
 #if os(macOS)

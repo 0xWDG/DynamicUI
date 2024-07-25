@@ -28,20 +28,20 @@ public struct DynamicTEMPLATE: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
-    
+
     @State
     /// The state of the TEMPLATE
     private var state: Double
-    
+
     /// The component to display
     private let component: DynamicUIComponent
-    
+
     /// Initialize the DynamicTEMPLATE
     init(_ component: DynamicUIComponent) {
         self.state = component.defaultValue?.toDouble() ?? 0
         self.component = component
     }
-    
+
     /// Generated body for SwiftUI
     public var body: some View {
         EmptyView()

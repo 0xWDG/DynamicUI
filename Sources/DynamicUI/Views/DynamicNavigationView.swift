@@ -28,15 +28,15 @@ public struct DynamicNavigationView: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
-    
+
     /// The component to display
     private let component: DynamicUIComponent
-    
+
     /// Initialize the DynamicNavigationView
     init(_ component: DynamicUIComponent) {
         self.component = component
     }
-    
+
     /// Generated body for SwiftUI
     public var body: some View {
         NavigationView {
