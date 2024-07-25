@@ -42,11 +42,13 @@ public struct DynamicGroupBox: View {
 #if !os(tvOS) && !os(watchOS)
         GroupBox {
             if let children = component.children {
-               AnyView(dynamicUIEnvironment.buildView(for: children))
+                AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .dynamicUIModifiers(component.modifiers)
 #else
         DynamicVStack(component)
+            .dynamicUIModifiers(component.modifiers)
 #endif
     }
 }

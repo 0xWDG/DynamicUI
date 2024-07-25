@@ -13,7 +13,7 @@ import SwiftUI
 /// DynamicUI: DisclosureGroup
 ///
 /// DynamicDisclosureGroup is a SwiftUI View that can be used to display an DisclosureGroup.
-/// 
+///
 /// JSON Example:
 /// ```json
 /// {
@@ -21,7 +21,7 @@ import SwiftUI
 ///    "children": [ ]
 /// }
 /// ```
-/// 
+///
 /// - Note: This is a internal view, you should not use this directly. \
 ///         Use ``DynamicUI`` instead. this function is public to generate documentation.
 public struct DynamicDisclosureGroup: View {
@@ -45,6 +45,7 @@ public struct DynamicDisclosureGroup: View {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .dynamicUIModifiers(component.modifiers)
 #else
         DynamicVStack(component)
 #endif

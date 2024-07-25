@@ -49,5 +49,6 @@ public struct DynamicSecureField: View {
             "\(component.title ?? "")",
             text: $state
         )
+        .dynamicUIModifiers(component.modifiers)
     }
 }

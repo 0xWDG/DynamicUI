@@ -42,5 +42,6 @@ public struct DynamicImage: View {
     /// Generated body for SwiftUI
     public var body: some View {
         Image(systemName: component.imageURL ?? "")
+            .dynamicUIModifiers(component.modifiers)
     }
 }

@@ -59,6 +59,7 @@ public struct DynamicSlider: View {
         } maximumValueLabel: {
             Text("\(component.maximum ?? "")")
         }
+        .dynamicUIModifiers(component.modifiers)
 #else
         EmptyView()
 #endif

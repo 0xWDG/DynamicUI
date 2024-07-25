@@ -39,10 +39,11 @@ public struct DynamicList: View {
 
     /// Generated body for SwiftUI
     public var body: some View {
-         List {
+        List {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .dynamicUIModifiers(component.modifiers)
     }
 }

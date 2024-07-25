@@ -39,10 +39,11 @@ public struct DynamicForm: View {
 
     /// Generated body for SwiftUI
     public var body: some View {
-         Form {
+        Form {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .dynamicUIModifiers(component.modifiers)
     }
 }

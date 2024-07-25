@@ -57,5 +57,6 @@ struct DynamicToggle: View {
         })) {
             Text(title)
         }
+        .dynamicUIModifiers(component.modifiers)
     }
 }

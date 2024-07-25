@@ -45,6 +45,7 @@ public struct DynamicVSplitView: View {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .dynamicUIModifiers(component.modifiers)
 #else
         EmptyView()
 #endif
