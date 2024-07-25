@@ -18,7 +18,8 @@ extension View {
     /// - Parameter modifiers: The modifiers to apply
     /// 
     /// - Returns: The modified view
-    public func dynamicUIModifiers(_ modifiers: [String : AnyCodable]?) -> some View {
+    public func dynamicUIModifiers(_ modifiers: [String: AnyCodable]?) -> some View {
+        // swiftlint:disable:previous cyclomatic_complexity
         guard let modifiers = modifiers else {
             return AnyView(self)
         }
@@ -44,7 +45,7 @@ extension View {
                 if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
                     guard let string = value.toString(),
                           let weight = helper.translateFontWeight(string) else { return }
-                    tempView = AnyView(tempView.fontWeight(.none))
+                    tempView = AnyView(tempView.fontWeight(weight))
                 }
 
             case "font":
@@ -53,7 +54,8 @@ extension View {
 
             case "frame":
 //                guard let color:
-                // minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealWidth: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                // minWidth: <#0#>, idealWidth: <#100#>, maxWidth: <#.infinity#>, 
+                // minHeight: <#0#>, idealHeight: <#100#>, maxHeight: <#.infinity#>, alignment: <#.center#>)
                 // width: <#0#> height: <#0#>
                 tempView = AnyView(tempView)
 
