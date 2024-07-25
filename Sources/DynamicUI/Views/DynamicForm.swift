@@ -28,21 +28,22 @@ public struct DynamicForm: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
-
+    
     /// The component to display
     private let component: DynamicUIComponent
-
+    
     /// Initialize the DynamicForm
     init(_ component: DynamicUIComponent) {
         self.component = component
     }
-
+    
     /// Generated body for SwiftUI
     public var body: some View {
-         Form {
+        Form {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .dynamicUIModifiers(component.modifiers)
     }
 }

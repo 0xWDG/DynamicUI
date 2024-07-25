@@ -46,14 +46,29 @@ struct ContentView: View {
     [
         {
             "type": "Text",
-            "title": "Wait, am i generating views from JSON?"
+            "title": "Wait, am i generating views from JSON?",
+            "modifiers": {"foregroundStyle":"red","opacity":0.6}
+        },
+        {
+            "type": "Button",
+            "title": "Click me",
+            "eventHandler": "customHandler"
+        },
+        {
+            "type": "Toggle",
+            "title": "Toggle me",
+            "identifier": "my.toggle.1"
         }
     ]
     """.data(using: .utf8)
 
     var body: some View {
         DynamicUI(
-            json: json
+            json: json,
+            callback: { component in
+                // This contains everything passed as a component (type, title, identifier, ...)
+                print(component)
+            }
         )
     }
 }

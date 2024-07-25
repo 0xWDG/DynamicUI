@@ -1,5 +1,5 @@
 //
-//  UIComponent.swift
+//  DynamicUIComponent.swift
 //  DynamicUI
 //
 //  Created by Wesley de Groot on 16/04/2024.
@@ -38,11 +38,11 @@ public struct DynamicUIComponent: Codable, Hashable {
     /// Default value of component
     public let defaultValue: AnyCodable?
 
-    /// Styling of components (not yet used)
-    public let styling: [[String: AnyCodable]]?
+    /// Modifiers to components (not yet used)
+    public let modifiers: [String: AnyCodable]?
 
     /// Parameters of component (not yet used)
-    public let parameters: [[String: AnyCodable]]?
+    public let parameters: [String: AnyCodable]?
 
     /// Image URL
     public let imageURL: String?

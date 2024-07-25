@@ -11,7 +11,7 @@
 import SwiftUI
 
 /// DynamicUI: Gauge
-/// 
+///
 /// ⚠ DynamicGauge is a SwiftUI View that can be used to display an Gauge.
 ///
 /// JSON Example:
@@ -22,9 +22,9 @@ import SwiftUI
 ///    "defaultValue": 0.5
 /// }
 /// ```
-/// 
-/// - Warning: This component is not finished yet.  
-/// 
+///
+/// - Warning: This component is not finished yet.
+///
 /// - Note: This is a internal view, you should not use this directly. \
 ///         Use ``DynamicUI`` instead. this function is public to generate documentation.
 public struct DynamicGauge: View {
@@ -52,6 +52,7 @@ public struct DynamicGauge: View {
             Gauge(value: state) {
                 Text("\(component.title ?? "")")
             }
+            .dynamicUIModifiers(component.modifiers)
         } else {
             EmptyView()
         }

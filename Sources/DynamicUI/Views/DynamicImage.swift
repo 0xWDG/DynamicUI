@@ -30,17 +30,18 @@ public struct DynamicImage: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
-
+    
     /// The component to display
     private let component: DynamicUIComponent
-
+    
     /// Initialize the DynamicImage
     init(_ component: DynamicUIComponent) {
         self.component = component
     }
-
+    
     /// Generated body for SwiftUI
     public var body: some View {
         Image(systemName: component.imageURL ?? "")
+            .dynamicUIModifiers(component.modifiers)
     }
 }

@@ -30,15 +30,15 @@ public struct DynamicProgressView: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
-
+    
     /// The component to display
     private let component: DynamicUIComponent
-
+    
     /// Initialize the DynamicProgressView
     init(_ component: DynamicUIComponent) {
         self.component = component
     }
-
+    
     /// Generated body for SwiftUI
     public var body: some View {
         ProgressView(
@@ -46,5 +46,6 @@ public struct DynamicProgressView: View {
             value: component.defaultValue?.toDouble() ?? 0,
             total: component.maximumValue ?? 100
         )
+        .dynamicUIModifiers(component.modifiers)
     }
 }

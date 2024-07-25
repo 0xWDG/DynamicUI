@@ -28,25 +28,27 @@ public struct DynamicGroupBox: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
-
+    
     /// The component to display
     private let component: DynamicUIComponent
-
+    
     /// Initialize the DynamicGroupBox
     init(_ component: DynamicUIComponent) {
         self.component = component
     }
-
+    
     /// Generated body for SwiftUI
     public var body: some View {
 #if !os(tvOS) && !os(watchOS)
         GroupBox {
             if let children = component.children {
-               AnyView(dynamicUIEnvironment.buildView(for: children))
+                AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .dynamicUIModifiers(component.modifiers)
 #else
         DynamicVStack(component)
+            .dynamicUIModifiers(component.modifiers)
 #endif
     }
 }

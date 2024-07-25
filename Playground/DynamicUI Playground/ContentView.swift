@@ -20,15 +20,18 @@ struct ContentView: View {
             "children": [
             {
                 "type": "Button",
-                "title": "Click me"
+                "title": "Click me",
+                "eventHandler": "customHandler"
             },
             {
                 "type": "Toggle",
-                "title": "Toggle me"
+                "title": "Toggle me",
+                "identifier": "my.toggle.1"
             },
             {
                 "type": "Text",
-                "title": "_Wait_, am i generating views from JSON?"
+                "title": "_Wait_, am i generating views from JSON?",
+                "modifiers": {"foregroundStyle":"red","opacity":0.5},
             },
             {
                 "type": "Label",
