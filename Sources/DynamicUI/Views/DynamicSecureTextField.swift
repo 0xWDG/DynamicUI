@@ -29,25 +29,26 @@ public struct DynamicSecureField: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     var dynamicUIEnvironment
-
+    
     @State
     /// The state of the SecureField
     private var state: String
-
+    
     /// The component to display
     private let component: DynamicUIComponent
-
+    
     /// Initialize the DynamicSecureField
     init(_ component: DynamicUIComponent) {
         self.state = component.defaultValue?.toString() ?? ""
         self.component = component
     }
-
+    
     /// Generated body for SwiftUI
     public var body: some View {
         SecureField(
             "\(component.title ?? "")",
             text: $state
         )
+        .dynamicUIModifiers(component.modifiers)
     }
 }

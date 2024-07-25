@@ -29,20 +29,20 @@ public struct DynamicTextField: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     var dynamicUIEnvironment
-
+    
     @State
     /// The state of the TextField
     private var state: String
-
+    
     /// The component to display
     private let component: DynamicUIComponent
-
+    
     /// Initialize the DynamicTextField
     init(_ component: DynamicUIComponent) {
         self.state = component.defaultValue?.toString() ?? ""
         self.component = component
     }
-
+    
     /// Generated body for SwiftUI
     public var body: some View {
         TextField(
@@ -50,9 +50,10 @@ public struct DynamicTextField: View {
             text: $state.onChange({ newState in
                 var newComponent = component
                 newComponent.state = .string(state)
-
+                
                 dynamicUIEnvironment.callback(newComponent)
             })
         )
+        .dynamicUIModifiers(component.modifiers)
     }
 }

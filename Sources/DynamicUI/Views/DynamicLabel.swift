@@ -11,9 +11,9 @@
 import SwiftUI
 
 /// DynamicUI: Label
-/// 
+///
 /// DynamicLabel is a SwiftUI View that can be used to display an Label.
-/// 
+///
 /// JSON Example:
 /// ```json
 /// {
@@ -21,7 +21,7 @@ import SwiftUI
 ///    "title": "Title"
 /// }
 /// ```
-/// 
+///
 /// - Note: This is a internal view, you should not use this directly. \
 ///         Use ``DynamicUI`` instead. this function is public to generate documentation.
 public struct DynamicLabel: View {
@@ -44,8 +44,10 @@ public struct DynamicLabel: View {
                 component.title ?? "Label",
                 systemImage: systemImage
             )
+            .dynamicUIModifiers(component.modifiers)
         } else {
             DynamicText(component)
+                .dynamicUIModifiers(component.modifiers)
         }
     }
 }
