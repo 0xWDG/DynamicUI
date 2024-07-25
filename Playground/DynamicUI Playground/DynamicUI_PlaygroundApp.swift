@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct DynamicUI_PlaygroundApp: App {
+struct DynamicUIPlaygroundApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

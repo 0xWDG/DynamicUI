@@ -16,7 +16,7 @@ extension View {
     /// This function adds modifiers to a DynamicUIView
     ///
     /// - Parameter modifiers: The modifiers to apply
-    /// 
+    ///
     /// - Returns: The modified view
     public func dynamicUIModifiers(_ modifiers: [String: AnyCodable]?) -> some View {
         // swiftlint:disable:previous cyclomatic_complexity
@@ -30,42 +30,43 @@ extension View {
         modifiers.forEach { key, value in
             switch key {
             case "foregroundStyle":
-                guard let string = value.toString(),
-                      let color = helper.translateColor(string) else { return }
+                guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *),
+                      let string = value.toString(),
+                      let color = helper.translateColor(string) else { break }
                 tempView = AnyView(tempView.foregroundStyle(color))
 
             case "backgroundStyle":
-                if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
-                    guard let string = value.toString(),
-                          let color = helper.translateColor(string) else { return }
-                    tempView = AnyView(tempView.backgroundStyle(color))
-                }
+                guard #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *),
+                      let string = value.toString(),
+                      let color = helper.translateColor(string) else { break }
+                tempView = AnyView(tempView.backgroundStyle(color))
 
             case "fontWeight":
-                if #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) {
-                    guard let string = value.toString(),
-                          let weight = helper.translateFontWeight(string) else { return }
-                    tempView = AnyView(tempView.fontWeight(weight))
-                }
+                guard #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *),
+                      let string = value.toString(),
+                      let weight = helper.translateFontWeight(string) else { break }
+                tempView = AnyView(tempView.fontWeight(weight))
 
             case "font":
-//                guard let color:
-                    tempView = AnyView(tempView.font(.none))
+                guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *) else { break }
+                tempView = AnyView(tempView.font(.none))
 
             case "frame":
-//                guard let color:
-                // minWidth: <#0#>, idealWidth: <#100#>, maxWidth: <#.infinity#>, 
+                //                guard let color:
+                // minWidth: <#0#>, idealWidth: <#100#>, maxWidth: <#.infinity#>,
                 // minHeight: <#0#>, idealHeight: <#100#>, maxHeight: <#.infinity#>, alignment: <#.center#>)
                 // width: <#0#> height: <#0#>
-                tempView = AnyView(tempView)
+                guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *) else { break }
+                tempView = AnyView(tempView.frame())
 
             case "padding":
-                if let length = value.toInt() {
-                    tempView = AnyView(tempView.padding(CGFloat(integerLiteral: length)))
-                }
+                guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
+                      let length = value.toInt() else { break }
+                tempView = AnyView(tempView.padding(CGFloat(integerLiteral: length)))
 
             case "opacity":
-                guard let opacity = value.toDouble() else { break }
+                guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
+                      let opacity = value.toDouble() else { break }
                 tempView = AnyView(tempView.opacity(opacity))
 
             default:
