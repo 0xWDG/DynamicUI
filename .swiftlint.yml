@@ -2,6 +2,9 @@ excluded:
   - "*resource_bundle_accessor*" # SwiftPM Generated
   - ".build/*"
 
+disabled_rules:
+  - todo
+
 opt_in_rules:
    - missing_docs
    - empty_count
