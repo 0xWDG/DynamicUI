@@ -22,7 +22,7 @@ Install using Swift Package Manager
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/0xWDG/DynamicUI.git", .branch("main")),
+    .package(url: "https://github.com/0xWDG/DynamicUI.git", branch: "main"),
 ],
 targets: [
     .target(name: "MyTarget", dependencies: [
