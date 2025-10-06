@@ -15,7 +15,12 @@ public struct DynamicUIModifier: ViewModifier {
     let modifiers: [String: AnyCodable]?
     let helper = DynamicUIHelper()
 
-    // TODO: Ideally make this a @ViewBuilder and remove the need of AnyView
+    // TODO: Ideally, this function would use @ViewBuilder to avoid type erasure with AnyView,
+    //       which would improve type safety and allow for more natural SwiftUI composition.
+    //       However, applying modifiers dynamically based on a dictionary of keys and values
+    //       currently requires type erasure, since @ViewBuilder expects a static view hierarchy.
+    //       Investigate approaches to apply modifiers in a type-safe way without AnyView,
+    //       possibly by refactoring how modifiers are represented or applied.
     public func body(content: Content) -> some View {
         // swiftlint:disable:next cyclomatic_complexity
         var tempView = AnyView(content)
