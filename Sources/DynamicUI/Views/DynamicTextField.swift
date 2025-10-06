@@ -51,7 +51,7 @@ struct DynamicTextField: View {
                 var newComponent = component
                 newComponent.state = .string(state)
 
-                dynamicUIEnvironment.callback(newComponent)
+                dynamicUIEnvironment.component = newComponent
             })
         )
         .dynamicUIModifiers(component.modifiers)

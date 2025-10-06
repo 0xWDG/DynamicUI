@@ -59,13 +59,56 @@ struct ContentView: View {
     ]
     """.data(using: .utf8)
 
+    @State private var component: DynamicUIComponent?
+    @State private var error: Error?
+
+    var body: some View {
+        DynamicUI(
+            json: json,
+            callback: $component,
+            error: $error
+        )
+    }
+}
+```
+
+## Usage (Legacy)
+
+```swift
+import SwiftUI
+import DynamicUI
+
+struct ContentView: View {
+    let json = """
+    [
+        {
+            "type": "Text",
+            "title": "Wait, am i generating views from JSON?",
+            "modifiers": {"foregroundStyle":"red","opacity":0.6}
+        },
+        {
+            "type": "Button",
+            "title": "Click me",
+            "eventHandler": "customHandler"
+        },
+        {
+            "type": "Toggle",
+            "title": "Toggle me",
+            "identifier": "my.toggle.1"
+        }
+    ]
+    """.data(using: .utf8)
+
+    @State private var error: Error?
+
     var body: some View {
         DynamicUI(
             json: json,
             callback: { component in
                 // This contains everything passed as a component (type, title, identifier, ...)
                 print(component)
-            }
+            },
+            error: $error
         )
     }
 }
@@ -74,6 +117,7 @@ struct ContentView: View {
 ### Playground Application:
 
 In the directory `Playground` is a Xcode project to build the [Playground Application](#Playground)
+The playground application is available for macOS, iOS, watchOS, tvOS and visionOS.
 
 ### Supported View Types:
 

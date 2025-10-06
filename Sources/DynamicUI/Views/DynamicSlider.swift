@@ -51,7 +51,7 @@ struct DynamicSlider: View {
             var newComponent = component
             newComponent.state = .double(newState)
 
-            dynamicUIEnvironment.callback(newComponent)
+            dynamicUIEnvironment.component = newComponent
         })) {
             Text("\(component.title ?? "")")
         } minimumValueLabel: {

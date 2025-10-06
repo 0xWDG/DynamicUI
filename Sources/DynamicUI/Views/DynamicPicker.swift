@@ -49,7 +49,7 @@ struct DynamicPicker: View {
             var newComponent = component
             newComponent.state = .double(newState)
 
-            dynamicUIEnvironment.callback(newComponent)
+            dynamicUIEnvironment.component = newComponent
         })) {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
