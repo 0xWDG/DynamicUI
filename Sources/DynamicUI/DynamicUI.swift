@@ -18,46 +18,82 @@ public struct DynamicUI: View {
     /// DynamicUIComponent state change handler
     public typealias Callback = (DynamicUIComponent) -> Void
 
-    /// On error handler
-    public typealias OnError = (Error) -> Void
-
     /// JSON data to generate the interface from
     private var json: Data?
 
-    /// Callback handler for interactions with the DynamicUIComponents
-    internal var callback: Callback
+    /// Legacy callback support
+    private var legacyCallback: Callback?
 
-    /// Callback handler for errors
-    private let onError: OnError
+    /// Callback for interactions with the DynamicUIComponents
+    @Binding
+    var component: DynamicUIComponent?
+
+    /// This state is used to store the error message
+    @Binding
+    private var error: Error?
 
     /// This state is used to store the layout
     @State
     private var layout: [DynamicUIComponent]?
 
-    /// This state is used to store the error message
-    @State
-    private var error: Error?
+    /// Initialize DynamicUI
+    ///
+    /// - Parameter json: JSON Data
+    /// - Parameter component: Binding for the dynamic UI element
+    /// - Parameter error: Error message
+    public init(json: Data, component: Binding<DynamicUIComponent?>, error: Binding<Error?>? = nil) {
+        self.json = json
+        self._component = component
+        self._error = error ?? .constant(nil)
+    }
+
+    /// Initialize DynamicUI
+    ///
+    /// - Parameter json: JSON String
+    /// - Parameter component: Binding for the dynamic UI element
+    /// - Parameter error: Error message
+    public init(json: String, component: Binding<DynamicUIComponent?>, error: Binding<Error?>? = nil) {
+        self.json = json.data(using: .utf8)
+        self._component = component
+        self._error = error ?? .constant(nil)
+    }
 
     /// Initialize DynamicUI
     ///
     /// - Parameter json: JSON Data
     /// - Parameter callback: Callback handler for updates
-    /// - Parameter onError: Callback handler for errors
-    public init(json: Data, callback: Callback?, onError: OnError? = nil) {
+    /// - Parameter error: Error message
+    public init(json: Data, callback: @escaping Callback, error: Binding<Error?>? = nil) {
         self.json = json
-        self.callback = callback ?? { _ in }
-        self.onError = onError ?? { _ in }
+        self.legacyCallback = callback
+        self._component = Binding<DynamicUIComponent?>(
+            get: { nil },
+            set: { value in
+                if let value {
+                    callback(value)
+                }
+            }
+        )
+        self._error = error ?? .constant(nil)
     }
 
     /// Initialize DynamicUI
-    /// 
+    ///
     /// - Parameter json: JSON String
     /// - Parameter callback: Callback handler for updates
-    /// - Parameter onError: Callback handler for errors
-    public init(json: String, callback: Callback?, onError: OnError? = nil) {
+    /// - Parameter error: Error message
+    public init(json: String, callback: @escaping Callback, error: Binding<Error?>? = nil) {
         self.json = json.data(using: .utf8)
-        self.callback = callback ?? { _ in }
-        self.onError = onError ?? { _ in }
+        self.legacyCallback = callback
+        self._component = Binding<DynamicUIComponent?>(
+            get: { nil },
+            set: { value in
+                if let value {
+                    callback(value)
+                }
+            }
+        )
+        self._error = error ?? .constant(nil)
     }
 
     /// Initialize the DynamicUI
@@ -96,6 +132,8 @@ public struct DynamicUI: View {
 
     /// Decode the JSON data
     private func decodeJSON() {
+        self.error = nil
+
         do {
             if let json = json {
                 self.layout = try JSONDecoder().decode(
@@ -104,7 +142,6 @@ public struct DynamicUI: View {
                 )
             }
         } catch {
-            onError(error)
             self.error = error
         }
     }

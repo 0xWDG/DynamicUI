@@ -48,7 +48,7 @@ struct DynamicButton: View {
     /// Generated body for SwiftUI
     var body: some View {
         Button(action: {
-            dynamicUIEnvironment.callback(component)
+            dynamicUIEnvironment.component = component
         }, label: {
             Text(component.title ?? "Button")
         })

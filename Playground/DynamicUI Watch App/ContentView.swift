@@ -1,8 +1,8 @@
 //
 //  ContentView.swift
-//  DynamicUI Playground
+//  DynamicUI Watch App
 //
-//  Created by Wesley de Groot on 18/07/2024.
+//  Created by Wesley de Groot on 06/10/2025.
 //
 
 import SwiftUI
@@ -44,44 +44,22 @@ struct ContentView: View {
     """
 
     @State
-    private var log: String = "\n\n\n"
-
-    @State
     private var component: DynamicUIComponent?
 
     @State
     private var error: Error?
 
+    @State
+    private var log: String = ""
+
     var body: some View {
-        VStack(spacing: 1) {
-            HStack(spacing: 1) {
-                TextEditor(text: $text)
-                    .frame(maxWidth: .infinity)
-                    .border(error == nil ? .green : .red)
-
-                Divider()
-
-                DynamicUI(
-                    json: text,
-                    component: $component,
-                    error: $error
-                )
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .id(text) // To update if text is changed
-                .border(.purple)
-            }
-            Divider()
-            VStack {
-                Text(log)
-                    .frame(maxWidth: .infinity)
-                    .minimumScaleFactor(0.1)
-            }
-            .border(.blue)
-            .frame(height: 75)
-            .frame(maxWidth: .infinity)
-        }
-        .onChange(of: component) {
-            log = "\(component)"
+        ScrollView {
+            DynamicUI(
+                json: text,
+                component: $component,
+                error: $error
+            )
+            Text("\(String(describing: component))")
         }
     }
 }
