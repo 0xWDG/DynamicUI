@@ -21,7 +21,7 @@ public struct DynamicUIModifier: ViewModifier {
     //       Investigate approaches to apply modifiers in a type-safe way without AnyView,
     //       possibly by refactoring how modifiers are represented or applied.
     public func body(content: Content) -> some View {
-        // swiftlint:disable:next cyclomatic_complexity
+        // swiftlint:disable:previous cyclomatic_complexity function_body_length
         var tempView = AnyView(content)
 
         modifiers?.forEach { key, value in
