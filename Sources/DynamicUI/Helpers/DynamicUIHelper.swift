@@ -21,7 +21,7 @@ public class DynamicUIHelper {
     /// - Parameter input: Color as string
     ///
     /// - Returns: SwiftUI ``Color``
-    public func translateColor(_ input: String) -> Color? {
+    static func translateColor(_ input: String) -> Color? {
         switch input.lowercased() {
         case "red":
             return .red
@@ -102,7 +102,7 @@ public class DynamicUIHelper {
     /// - Parameter input: Font weight as string
     /// 
     /// - Returns: Translated ``Font.Weight``
-    func translateFontWeight(_ input: String) -> Font.Weight? {
+    static func translateFontWeight(_ input: String) -> Font.Weight? {
         switch input {
         case "ultraLight":
             return .ultraLight
@@ -136,7 +136,7 @@ public class DynamicUIHelper {
         }
     }
 
-    func translateAlignment(_ input: String?) -> Alignment {
+    static func translateAlignment(_ input: String?) -> Alignment {
         switch input {
         case "leading":
             return .leading
