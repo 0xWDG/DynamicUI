@@ -6,11 +6,6 @@ Create a SwiftUI user interface through a JSON file. The JSON file will contain 
 [![Swift Package Manager](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://swift.org/package-manager)
 ![License](https://img.shields.io/github/license/0xWDG/Inspect)
 
-> [!WARNING]
->
-> This is a work in progress and not yet ready for production use. \
-> Please feel free to contribute, report issues, or request features.
-
 ## Requirements
 
 - Swift 5.9+ (Xcode 15+)
