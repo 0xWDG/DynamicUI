@@ -16,18 +16,18 @@ import SwiftUI
 /// DynamicUI is a SwiftUI View that can be used to display an interface based on JSON.
 public struct DynamicUI: View {
     /// DynamicUIComponent state change handler
-    public typealias DynamicUIHandler = (DynamicUIComponent) -> Void
+    public typealias Handler = (DynamicUIComponent) -> Void
 
     /// JSON data
     public var json: Data?
 
     /// Callback handler for updates
-    public var callback: DynamicUIHandler? = { _ in }
+    public var callback: Handler? = { _ in }
 
     /// Initialize DynamicUI
     ///
     /// - Parameter json: JSON Data
-    public init(json: Data? = nil, callback: DynamicUIHandler?) {
+    public init(json: Data? = nil, callback: Handler?) {
         self.json = json
         self.callback = callback
     }
@@ -35,7 +35,7 @@ public struct DynamicUI: View {
     /// Initialize DynamicUI
     /// 
     /// - Parameter json: JSON String
-    public init(json: String? = nil, callback: DynamicUIHandler?) {
+    public init(json: String? = nil, callback: Handler?) {
         self.json = json?.data(using: .utf8)
         self.callback = callback
     }
