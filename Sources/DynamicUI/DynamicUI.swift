@@ -132,6 +132,8 @@ public struct DynamicUI: View {
 
     /// Decode the JSON data
     private func decodeJSON() {
+        self.error = nil
+
         do {
             if let json = json {
                 self.layout = try JSONDecoder().decode(
@@ -139,7 +141,6 @@ public struct DynamicUI: View {
                     from: json
                 )
             }
-            self.error = nil
         } catch {
             self.error = error
         }
