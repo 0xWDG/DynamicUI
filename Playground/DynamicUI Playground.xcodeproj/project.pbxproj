@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,7 +12,33 @@
 		2B2D6CD62C4990A9008E0692 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B2D6CD52C4990A9008E0692 /* Assets.xcassets */; };
 		2B2D6CD92C4990A9008E0692 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B2D6CD82C4990A9008E0692 /* Preview Assets.xcassets */; };
 		2B2D6CE32C4990D7008E0692 /* DynamicUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2B2D6CE22C4990D7008E0692 /* DynamicUI */; };
+		2BEC27212E942FEA002A29EF /* DynamicUI Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2BEC27012E942FE9002A29EF /* DynamicUI Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2BEC27312E94305F002A29EF /* DynamicUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2BEC27302E94305F002A29EF /* DynamicUI */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2BEC271F2E942FEA002A29EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2B2D6CC62C4990A7008E0692 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2BEC27002E942FE9002A29EF;
+			remoteInfo = "DynamicUI Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2BEC27222E942FEA002A29EF /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				2BEC27212E942FEA002A29EF /* DynamicUI Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2B2D6CCE2C4990A7008E0692 /* DynamicUI Playground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DynamicUI Playground.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,7 +48,12 @@
 		2B2D6CD82C4990A9008E0692 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2B2D6CDA2C4990A9008E0692 /* DynamicUI_Playground.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DynamicUI_Playground.entitlements; sourceTree = "<group>"; };
 		2B2D6CE02C4990C8008E0692 /* DynamicUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = DynamicUI; path = ..; sourceTree = "<group>"; };
+		2BEC27012E942FE9002A29EF /* DynamicUI Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DynamicUI Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		2BEC27022E942FE9002A29EF /* DynamicUI Watch App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "DynamicUI Watch App"; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		2B2D6CCB2C4990A7008E0692 /* Frameworks */ = {
@@ -30,6 +61,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B2D6CE32C4990D7008E0692 /* DynamicUI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BEC26FE2E942FE9002A29EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BEC27312E94305F002A29EF /* DynamicUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +80,7 @@
 			children = (
 				2B2D6CE02C4990C8008E0692 /* DynamicUI */,
 				2B2D6CD02C4990A7008E0692 /* DynamicUI Playground */,
+				2BEC27022E942FE9002A29EF /* DynamicUI Watch App */,
 				2B2D6CCF2C4990A7008E0692 /* Products */,
 				2B2D6CE12C4990D7008E0692 /* Frameworks */,
 			);
@@ -50,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				2B2D6CCE2C4990A7008E0692 /* DynamicUI Playground.app */,
+				2BEC27012E942FE9002A29EF /* DynamicUI Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,10 +132,12 @@
 				2B2D6CCA2C4990A7008E0692 /* Sources */,
 				2B2D6CCB2C4990A7008E0692 /* Frameworks */,
 				2B2D6CCC2C4990A7008E0692 /* Resources */,
+				2BEC27222E942FEA002A29EF /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2BEC27202E942FEA002A29EF /* PBXTargetDependency */,
 			);
 			name = "DynamicUI Playground";
 			packageProductDependencies = (
@@ -104,6 +147,29 @@
 			productReference = 2B2D6CCE2C4990A7008E0692 /* DynamicUI Playground.app */;
 			productType = "com.apple.product-type.application";
 		};
+		2BEC27002E942FE9002A29EF /* DynamicUI Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2BEC27292E942FEA002A29EF /* Build configuration list for PBXNativeTarget "DynamicUI Watch App" */;
+			buildPhases = (
+				2BEC26FD2E942FE9002A29EF /* Sources */,
+				2BEC26FE2E942FE9002A29EF /* Frameworks */,
+				2BEC26FF2E942FE9002A29EF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				2BEC27022E942FE9002A29EF /* DynamicUI Watch App */,
+			);
+			name = "DynamicUI Watch App";
+			packageProductDependencies = (
+				2BEC27302E94305F002A29EF /* DynamicUI */,
+			);
+			productName = "DynamicUI Watch App";
+			productReference = 2BEC27012E942FE9002A29EF /* DynamicUI Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -111,11 +177,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1540;
+				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					2B2D6CCD2C4990A7008E0692 = {
 						CreatedOnToolsVersion = 15.4;
+					};
+					2BEC27002E942FE9002A29EF = {
+						CreatedOnToolsVersion = 26.0.1;
 					};
 				};
 			};
@@ -133,6 +202,7 @@
 			projectRoot = "";
 			targets = (
 				2B2D6CCD2C4990A7008E0692 /* DynamicUI Playground */,
+				2BEC27002E942FE9002A29EF /* DynamicUI Watch App */,
 			);
 		};
 /* End PBXProject section */
@@ -144,6 +214,13 @@
 			files = (
 				2B2D6CD92C4990A9008E0692 /* Preview Assets.xcassets in Resources */,
 				2B2D6CD62C4990A9008E0692 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2BEC26FF2E942FE9002A29EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,7 +236,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2BEC26FD2E942FE9002A29EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2BEC27202E942FEA002A29EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2BEC27002E942FE9002A29EF /* DynamicUI Watch App */;
+			targetProxy = 2BEC271F2E942FEA002A29EF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		2B2D6CDB2C4990A9008E0692 /* Debug */ = {
@@ -291,10 +383,12 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DynamicUI Playground/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4V2D72S45C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UILaunchStoryboardName = Launchscreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -302,8 +396,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.wesleydegroot.DynamicUI-Playground";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3,7";
 			};
 			name = Debug;
 		};
@@ -318,10 +415,12 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DynamicUI Playground/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4V2D72S45C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UILaunchStoryboardName = Launchscreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -329,8 +428,80 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "nl.wesleydegroot.DynamicUI-Playground";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3,7";
+			};
+			name = Release;
+		};
+		2BEC27232E942FEA002A29EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4V2D72S45C;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "DynamicUI-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = DynamicUI;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "nl.wesleydegroot.DynamicUI-Playground";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.wesleydegroot.DynamicUI-Playground.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Debug;
+		};
+		2BEC27242E942FEA002A29EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4V2D72S45C;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "DynamicUI-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = DynamicUI;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "nl.wesleydegroot.DynamicUI-Playground";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "nl.wesleydegroot.DynamicUI-Playground.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Release;
 		};
@@ -355,10 +526,23 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		2BEC27292E942FEA002A29EF /* Build configuration list for PBXNativeTarget "DynamicUI Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2BEC27232E942FEA002A29EF /* Debug */,
+				2BEC27242E942FEA002A29EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		2B2D6CE22C4990D7008E0692 /* DynamicUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DynamicUI;
+		};
+		2BEC27302E94305F002A29EF /* DynamicUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DynamicUI;
 		};

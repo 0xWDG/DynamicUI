@@ -53,7 +53,7 @@ struct DynamicToggle: View {
             var newComponent = component
             newComponent.state = .bool(newState)
 
-            dynamicUIEnvironment.callback(newComponent)
+            dynamicUIEnvironment.component = newComponent
         })) {
             Text(title)
         }
