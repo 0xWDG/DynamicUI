@@ -51,17 +51,27 @@ public struct DynamicUIModifier: ViewModifier {
 
             case "frame":
                 guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *) else { break }
-                tempView = AnyView(
-                    tempView.frame(
-                        minWidth: nil,
-                        idealWidth: nil,
-                        maxWidth: nil,
-                        minHeight: nil,
-                        idealHeight: nil,
-                        maxHeight: nil,
-                        alignment: .center
+                if let frameDict = value.value as? [String: AnyCodable] {
+                    let minWidth = frameDict["minWidth"]?.toDouble().map { CGFloat($0) }
+                    let idealWidth = frameDict["idealWidth"]?.toDouble().map { CGFloat($0) }
+                    let maxWidth = frameDict["maxWidth"]?.toDouble().map { CGFloat($0) }
+                    let minHeight = frameDict["minHeight"]?.toDouble().map { CGFloat($0) }
+                    let idealHeight = frameDict["idealHeight"]?.toDouble().map { CGFloat($0) }
+                    let maxHeight = frameDict["maxHeight"]?.toDouble().map { CGFloat($0) }
+                    let alignmentString = frameDict["alignment"]?.toString()
+                    let alignment = alignmentString.flatMap { helper.translateAlignment($0) } ?? .center
+                    tempView = AnyView(
+                        tempView.frame(
+                            minWidth: minWidth,
+                            idealWidth: idealWidth,
+                            maxWidth: maxWidth,
+                            minHeight: minHeight,
+                            idealHeight: idealHeight,
+                            maxHeight: maxHeight,
+                            alignment: alignment
+                        )
                     )
-                )
+                }
 
             case "padding":
                 guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
