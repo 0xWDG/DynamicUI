@@ -124,8 +124,7 @@ extension View {
         .dynamicUIModifiers([
             "frame": .dictionary([
                 "width": .double(150),
-                "height": .double(100),
-                "alignment": .string("leading")
+                "height": .double(100)
             ]),
             "foregroundStyle": .string("red")
         ])
