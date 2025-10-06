@@ -87,9 +87,7 @@ public struct DynamicUI: View {
             }
         }
         .onAppear {
-            Task {
-                decodeJSON()
-            }
+            decodeJSON()
         }
     }
 
