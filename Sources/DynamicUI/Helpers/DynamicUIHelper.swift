@@ -147,8 +147,6 @@ public class DynamicUIHelper {
         default:
             return .center
         }
-
-        return .center
     }
 }
 
