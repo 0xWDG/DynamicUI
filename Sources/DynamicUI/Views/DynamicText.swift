@@ -24,8 +24,8 @@ import SwiftUI
 /// ```
 /// 
 /// - Note: This is a internal view, you should not use this directly. \
-///         Use ``DynamicUI`` instead. this function is public to generate documentation.
-public struct DynamicText: View {
+///         Use ``DynamicUI`` instead.
+struct DynamicText: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -39,7 +39,7 @@ public struct DynamicText: View {
     }
 
     /// Generated body for SwiftUI
-    public var body: some View {
+    var body: some View {
         Text(.init(component.title ?? ""))
             .dynamicUIModifiers(component.modifiers)
     }

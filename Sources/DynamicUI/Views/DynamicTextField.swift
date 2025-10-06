@@ -24,8 +24,8 @@ import SwiftUI
 /// ```
 /// 
 /// - Note: This is a internal view, you should not use this directly. \
-///         Use ``DynamicUI`` instead. this function is public to generate documentation.
-public struct DynamicTextField: View {
+///         Use ``DynamicUI`` instead.
+struct DynamicTextField: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     var dynamicUIEnvironment
@@ -44,7 +44,7 @@ public struct DynamicTextField: View {
     }
 
     /// Generated body for SwiftUI
-    public var body: some View {
+    var body: some View {
         TextField(
             "\(component.title ?? "")",
             text: $state.onChange({ _ in

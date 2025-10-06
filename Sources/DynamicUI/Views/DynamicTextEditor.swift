@@ -24,8 +24,8 @@ import SwiftUI
 /// ```
 /// 
 /// - Note: This is a internal view, you should not use this directly. \
-///         Use ``DynamicUI`` instead. this function is public to generate documentation.
-public struct DynamicTextEditor: View {
+///         Use ``DynamicUI`` instead.
+struct DynamicTextEditor: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     var dynamicUIEnvironment
@@ -44,7 +44,7 @@ public struct DynamicTextEditor: View {
     }
 
     /// Generated body for SwiftUI
-    public var body: some View {
+    var body: some View {
 #if os(iOS) && os(macOS)
         TextEditor(text: $state.onChange({ _ in
             var newComponent = component

@@ -25,8 +25,8 @@ import SwiftUI
 /// - Note: The `imageURL` is the systemName of the image.
 /// 
 /// - Note: This is a internal view, you should not use this directly. \
-///         Use ``DynamicUI`` instead. this function is public to generate documentation.
-public struct DynamicImage: View {
+///         Use ``DynamicUI`` instead.
+struct DynamicImage: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -40,7 +40,7 @@ public struct DynamicImage: View {
     }
 
     /// Generated body for SwiftUI
-    public var body: some View {
+    var body: some View {
         Image(systemName: component.imageURL ?? "")
             .dynamicUIModifiers(component.modifiers)
     }
