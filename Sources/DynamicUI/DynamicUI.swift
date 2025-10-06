@@ -16,19 +16,19 @@ import SwiftUI
 /// DynamicUI is a SwiftUI View that can be used to display an interface based on JSON.
 public struct DynamicUI: View {
     /// DynamicUIComponent state change handler
-    public typealias Handler = (DynamicUIComponent) -> Void
+    public typealias Callback = (DynamicUIComponent) -> Void
 
     /// On error handler
-    public typealias ErrorHandler = (Error) -> Void
+    public typealias OnError = (Error) -> Void
 
     /// JSON data to generate the interface from
     private var json: Data?
 
     /// Callback handler for interactions with the DynamicUIComponents
-    internal var callback: Handler
+    internal var callback: Callback
 
     /// Callback handler for errors
-    private let onError: (Error) -> Void
+    private let onError: OnError
 
     /// This state is used to store the layout
     @State
@@ -43,7 +43,7 @@ public struct DynamicUI: View {
     /// - Parameter json: JSON Data
     /// - Parameter callback: Callback handler for updates
     /// - Parameter onError: Callback handler for errors
-    public init(json: Data? = nil, callback: Handler?, onError: ErrorHandler? = nil) {
+    public init(json: Data, callback: Callback?, onError: OnError? = nil) {
         self.json = json
         self.callback = callback ?? { _ in }
         self.onError = onError ?? { _ in }
@@ -54,8 +54,8 @@ public struct DynamicUI: View {
     /// - Parameter json: JSON String
     /// - Parameter callback: Callback handler for updates
     /// - Parameter onError: Callback handler for errors
-    public init(json: String? = nil, callback: Handler?, onError: ErrorHandler? = nil) {
-        self.json = json?.data(using: .utf8)
+    public init(json: String, callback: Callback?, onError: OnError? = nil) {
+        self.json = json.data(using: .utf8)
         self.callback = callback ?? { _ in }
         self.onError = onError ?? { _ in }
     }
