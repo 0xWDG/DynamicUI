@@ -13,7 +13,6 @@ import SwiftUI
 public struct DynamicUIModifier: ViewModifier {
     /// The modifiers to apply
     let modifiers: [String: AnyCodable]?
-    let helper = DynamicUIHelper()
 
     // TODO: Ideally, this function would use @ViewBuilder to avoid type erasure with AnyView,
     //       which would improve type safety and allow for more natural SwiftUI composition.
@@ -30,19 +29,19 @@ public struct DynamicUIModifier: ViewModifier {
             case "foregroundStyle", "foregroundColor":
                 guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *),
                       let string = value.toString(),
-                      let color = helper.translateColor(string) else { break }
+                      let color = DynamicUIHelper.translateColor(string) else { break }
                 tempView = AnyView(tempView.foregroundStyle(color))
 
             case "backgroundStyle", "backgroundColor":
                 guard #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *),
                       let string = value.toString(),
-                      let color = helper.translateColor(string) else { break }
+                      let color = DynamicUIHelper.translateColor(string) else { break }
                 tempView = AnyView(tempView.backgroundStyle(color))
 
             case "fontWeight":
                 guard #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *),
                       let string = value.toString(),
-                      let weight = helper.translateFontWeight(string) else { break }
+                      let weight = DynamicUIHelper.translateFontWeight(string) else { break }
                 tempView = AnyView(tempView.fontWeight(weight))
 
             case "font":
@@ -60,7 +59,7 @@ public struct DynamicUIModifier: ViewModifier {
                     let minHeight = frameDict["minHeight"]?.toDouble().map { CGFloat($0) }
                     let idealHeight = frameDict["idealHeight"]?.toDouble().map { CGFloat($0) }
                     let maxHeight = frameDict["maxHeight"]?.toDouble().map { CGFloat($0) }
-                    let alignment = helper.translateAlignment(frameDict["alignment"]?.toString())
+                    let alignment = DynamicUIHelper.translateAlignment(frameDict["alignment"]?.toString())
 
                     if width != nil || height != nil {
                         tempView = AnyView(
