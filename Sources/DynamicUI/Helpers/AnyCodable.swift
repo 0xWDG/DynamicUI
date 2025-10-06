@@ -10,7 +10,8 @@
 
 import Foundation
 
-/// Any Codable supports different `Codable` types as `String`, `Int`, `Data`, `Double` and `Bool`.
+/// Any Codable supports different `Codable` types as `String`, `Int`, `Data`, `Double`, `Bool`,
+/// and nested dictionaries `[String: AnyCodable]`.
 /// This is made so you can use `AnyCodable?` in a codable struct so you can use dynamic types.
 ///
 /// Example:
@@ -35,6 +36,9 @@ public enum AnyCodable {
 
     /// Boolean value
     case bool(Bool)
+
+    /// Dictionary value
+    case dictionary([String: AnyCodable])
 
     /// No value
     case none
@@ -97,6 +101,16 @@ extension AnyCodable {
         return nil
     }
 
+    /// Convert value to Dictionary
+    /// - Returns: value if it is a dictionary
+    public func toDictionary() -> [String: AnyCodable]? {
+        if case let .dictionary(dict) = self {
+            return dict
+        }
+
+        return nil
+    }
+
     /// Check if value is nil
     /// - Returns: nil if value is none/empty
     public func isNil() -> Bool {
@@ -108,15 +122,16 @@ extension AnyCodable {
     }
 }
 
-extension AnyCodable: Codable, Hashable {
+extension AnyCodable: Codable, Equatable, Hashable {
     enum CodingKeys: String, CodingKey {
-        case string, int, data, double, bool
+        case string, int, data, double, bool, dictionary
     }
 
     /// Decode the values
-    /// 
-    /// - Parameter decoder: 
+    ///
+    /// - Parameter decoder:
     public init(from decoder: Decoder) throws {
+        // Try to decode in order of most specific/common JSON types.
         if let int = try? decoder.singleValueContainer().decode(Int.self) {
             self = .int(int)
             return
@@ -142,13 +157,18 @@ extension AnyCodable: Codable, Hashable {
             return
         }
 
+        if let dict = try? decoder.singleValueContainer().decode([String: AnyCodable].self) {
+            self = .dictionary(dict)
+            return
+        }
+
         // Use `self = .none` if the value can be optional
-        // or `throw AnyCodableError.missingValue` is it may not be optional
+        // or `throw AnyCodableError.missingValue` if it may not be optional
         self = .none
     }
 
     /// Encode the values
-    /// 
+    ///
     /// - Parameter encoder: Encoder
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -169,8 +189,48 @@ extension AnyCodable: Codable, Hashable {
         case .bool(let value):
             try container.encode(value, forKey: .bool)
 
+        case .dictionary(let value):
+            try container.encode(value, forKey: .dictionary)
+
         case .none:
             _ = ""
+        }
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case .string(let value):
+            hasher.combine(0)
+            hasher.combine(value)
+
+        case .int(let value):
+            hasher.combine(1)
+            hasher.combine(value)
+
+        case .data(let value):
+            hasher.combine(2)
+            hasher.combine(value)
+
+        case .double(let value):
+            hasher.combine(3)
+            hasher.combine(value)
+
+        case .bool(let value):
+            hasher.combine(4)
+            hasher.combine(value)
+
+        case .dictionary(let dict):
+            hasher.combine(5)
+            // Ensure deterministic hashing by sorting keys
+            for key in dict.keys.sorted() {
+                hasher.combine(key)
+                if let value = dict[key] {
+                    hasher.combine(value)
+                }
+            }
+
+        case .none:
+            hasher.combine(6)
         }
     }
 }

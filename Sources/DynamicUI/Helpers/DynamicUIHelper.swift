@@ -136,7 +136,7 @@ public class DynamicUIHelper {
         }
     }
 
-    func translateAlignment(_ input: String?) -> Alignment? {
+    func translateAlignment(_ input: String?) -> Alignment {
         switch input {
         case "leading":
             return .leading
@@ -145,10 +145,10 @@ public class DynamicUIHelper {
         case "trailing":
             return .trailing
         default:
-            return nil
+            return .center
         }
 
-        return nil
+        return .center
     }
 }
 
