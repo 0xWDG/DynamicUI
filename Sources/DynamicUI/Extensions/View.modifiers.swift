@@ -51,26 +51,38 @@ public struct DynamicUIModifier: ViewModifier {
 
             case "frame":
                 guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *) else { break }
-                // Cast from 'AnyCodable' to unrelated type '[String : AnyCodable]' always fails
-                if let frameDict = value as? [String: AnyCodable] {
-                    let minWidth = frameDict["frame.minWidth"]?.toDouble().map { CGFloat($0) }
-                    let idealWidth = frameDict["frame.idealWidth"]?.toDouble().map { CGFloat($0) }
-                    let maxWidth = frameDict["frame.maxWidth"]?.toDouble().map { CGFloat($0) }
-                    let minHeight = frameDict["frame.minHeight"]?.toDouble().map { CGFloat($0) }
-                    let idealHeight = frameDict["frame.idealHeight"]?.toDouble().map { CGFloat($0) }
-                    let maxHeight = frameDict["frame.maxHeight"]?.toDouble().map { CGFloat($0) }
-                    let alignment = helper.translateAlignment(frameDict["frame.alignment"]?.toString()) ?? .leading
-                    tempView = AnyView(
-                        tempView.frame(
-                            minWidth: minWidth,
-                            idealWidth: idealWidth,
-                            maxWidth: maxWidth,
-                            minHeight: minHeight,
-                            idealHeight: idealHeight,
-                            maxHeight: maxHeight,
-                            alignment: alignment
+                if let frameDict = value.toDictionary() {
+                    let width = frameDict["width"]?.toDouble().map { CGFloat($0) }
+                    let height = frameDict["height"]?.toDouble().map { CGFloat($0) }
+                    let minWidth = frameDict["minWidth"]?.toDouble().map { CGFloat($0) }
+                    let idealWidth = frameDict["idealWidth"]?.toDouble().map { CGFloat($0) }
+                    let maxWidth = frameDict["maxWidth"]?.toDouble().map { CGFloat($0) }
+                    let minHeight = frameDict["minHeight"]?.toDouble().map { CGFloat($0) }
+                    let idealHeight = frameDict["idealHeight"]?.toDouble().map { CGFloat($0) }
+                    let maxHeight = frameDict["maxHeight"]?.toDouble().map { CGFloat($0) }
+                    let alignment = helper.translateAlignment(frameDict["alignment"]?.toString())
+
+                    if width != nil || height != nil {
+                        tempView = AnyView(
+                            tempView.frame(
+                                width: width,
+                                height: height,
+                                alignment: alignment
+                            )
                         )
-                    )
+                    } else {
+                        tempView = AnyView(
+                            tempView.frame(
+                                minWidth: minWidth,
+                                idealWidth: idealWidth,
+                                maxWidth: maxWidth,
+                                minHeight: minHeight,
+                                idealHeight: idealHeight,
+                                maxHeight: maxHeight,
+                                alignment: alignment
+                            )
+                        )
+                    }
                 }
 
             case "padding":
@@ -109,6 +121,13 @@ extension View {
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 #Preview {
     Text("Test")
-        .dynamicUIModifiers(["foregroundStyle": .string("red")])
+        .dynamicUIModifiers([
+            "frame": .dictionary([
+                "width": .double(150),
+                "height": .double(100),
+                "alignment": .string("leading")
+            ]),
+            "foregroundStyle": .string("red")
+        ])
 }
 #endif
