@@ -26,8 +26,8 @@ import SwiftUI
 /// ```
 ///
 /// - Note: This is a internal view, you should not use this directly. \
-///         Use ``DynamicUI`` instead. this function is public to generate documentation.
-public struct DynamicButton: View {
+///         Use ``DynamicUI`` instead.
+struct DynamicButton: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -46,7 +46,7 @@ public struct DynamicButton: View {
     }
 
     /// Generated body for SwiftUI
-    public var body: some View {
+    var body: some View {
         Button(action: {
             dynamicUIEnvironment.callback(component)
         }, label: {

@@ -22,8 +22,8 @@ import SwiftUI
 /// ```
 /// 
 /// - Note: This is a internal view, you should not use this directly. \
-///         Use ``DynamicUI`` instead. this function is public to generate documentation.
-public struct DynamicHSplitView: View {
+///         Use ``DynamicUI`` instead.
+struct DynamicHSplitView: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -37,7 +37,7 @@ public struct DynamicHSplitView: View {
     }
 
     /// Generated body for SwiftUI
-    public var body: some View {
+    var body: some View {
 #if os(macOS)
         HSplitView {
             if let children = component.children {

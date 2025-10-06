@@ -24,8 +24,8 @@ import SwiftUI
 /// ```
 /// 
 /// - Note: This is a internal view, you should not use this directly. \
-///         Use ``DynamicUI`` instead. this function is public to generate documentation.
-public struct DynamicPicker: View {
+///         Use ``DynamicUI`` instead.
+struct DynamicPicker: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -44,7 +44,7 @@ public struct DynamicPicker: View {
     }
 
     /// Generated body for SwiftUI
-    public var body: some View {
+    var body: some View {
         Picker(component.title ?? "", selection: $state.onChange({ newState in
             var newComponent = component
             newComponent.state = .double(newState)

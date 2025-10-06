@@ -24,7 +24,7 @@ import SwiftUI
 /// ```
 /// 
 /// - Note: This is a internal view, you should not use this directly. \
-///         Use ``DynamicUI`` instead. this function is public to generate documentation.
+///         Use ``DynamicUI`` instead.
 struct DynamicToggle: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
@@ -48,7 +48,7 @@ struct DynamicToggle: View {
     }
 
     /// Generated body for SwiftUI
-    public var body: some View {
+    var body: some View {
         Toggle(isOn: $state.onChange({ newState in
             var newComponent = component
             newComponent.state = .bool(newState)
