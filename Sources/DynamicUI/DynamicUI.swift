@@ -42,11 +42,9 @@ public struct DynamicUI: View {
 
     /// Generated body for SwiftUI
     public var body: some View {
-        AnyView(
-            InternalDynamicUI(
-                json: json,
-                callback: callback ?? { _ in }
-            )
+        InternalDynamicUI(
+            json: json,
+            callback: callback ?? { _ in }
         )
     }
 }
