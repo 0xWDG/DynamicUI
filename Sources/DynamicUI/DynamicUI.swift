@@ -18,61 +18,47 @@ public struct DynamicUI: View {
     /// DynamicUIComponent state change handler
     public typealias Handler = (DynamicUIComponent) -> Void
 
-    /// JSON data
-    public var json: Data?
+    /// JSON data to generate the interface from
+    private var json: Data?
 
-    /// Callback handler for updates
-    public var callback: Handler? = { _ in }
+    /// Callback handler for interactions with the DynamicUIComponents
+    internal var callback: Handler
+
+    /// Callback handler for errors
+    private let onError: (Error) -> Void
+
+    /// This state is used to store the layout
+    @State
+    private var layout: [DynamicUIComponent]?
+
+    /// This state is used to store the error message
+    @State
+    private var error: Error?
 
     /// Initialize DynamicUI
     ///
     /// - Parameter json: JSON Data
-    public init(json: Data? = nil, callback: Handler?) {
+    /// - Parameter callback: Callback handler for updates
+    /// - Parameter onError: Callback handler for errors
+    public init(json: Data? = nil, callback: Handler?, onError: ((Error) -> Void)? = nil) {
         self.json = json
-        self.callback = callback
+        self.callback = callback ?? { _ in }
+        self.onError = onError ?? { _ in }
     }
 
     /// Initialize DynamicUI
     /// 
     /// - Parameter json: JSON String
-    public init(json: String? = nil, callback: Handler?) {
+    /// - Parameter callback: Callback handler for updates
+    /// - Parameter onError: Callback handler for errors
+    public init(json: String? = nil, callback: Handler?, onError: ((Error) -> Void)? = nil) {
         self.json = json?.data(using: .utf8)
-        self.callback = callback
+        self.callback = callback ?? { _ in }
+        self.onError = onError ?? { _ in }
     }
 
-    /// Generated body for SwiftUI
+    /// Initialize the DynamicUI
     public var body: some View {
-        InternalDynamicUI(
-            json: json,
-            callback: callback ?? { _ in }
-        )
-    }
-}
-
-/// InternalDynamicUI (internal)
-/// InternalDynamicUI is a SwiftUI View that can be used to display an interface based on JSON.
-///
-/// - Parameter json: JSON Data
-/// - Parameter callback: Callback handler
-///
-/// - Returns: A SwiftUI View
-struct InternalDynamicUI: View {
-    /// JSON Data
-    public var json: Data?
-
-    /// Callback handler for updates
-    public var callback: (DynamicUIComponent) -> Void
-
-    @State
-    /// This state is used to store the layout
-    private var layout: [DynamicUIComponent]?
-
-    @State
-    /// This state is used to store the error message
-    private var error: String?
-
-    /// Initialize the InternalDynamicUI
-    var body: some View {
         VStack {
             if let layout = layout {
                 buildView(for: layout)
@@ -86,7 +72,9 @@ struct InternalDynamicUI: View {
                     .font(.title)
                     .padding(.vertical)
 
-                Text(error)
+#if DEBUG
+                Text(error.localizedDescription)
+#endif
             } else {
                 ProgressView()
                     .frame(width: 150, height: 150)
@@ -113,7 +101,8 @@ struct InternalDynamicUI: View {
                 )
             }
         } catch {
-            self.error = "Error decoding JSON: \(error)"
+            onError(error)
+            self.error = error
         }
     }
 
@@ -235,11 +224,11 @@ struct InternalDynamicUI: View {
 }
 
 private struct InternalDynamicUIKey: EnvironmentKey {
-    static let defaultValue: InternalDynamicUI = defaultValue
+    static let defaultValue: DynamicUI = defaultValue
 }
 
 extension EnvironmentValues {
-    var internalDynamicUIEnvironment: InternalDynamicUI {
+    var internalDynamicUIEnvironment: DynamicUI {
         get { self[InternalDynamicUIKey.self] }
         set { self[InternalDynamicUIKey.self] = newValue }
     }

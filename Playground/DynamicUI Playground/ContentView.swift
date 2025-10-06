@@ -58,6 +58,8 @@ struct ContentView: View {
                     json: $text.wrappedValue,
                     callback: { component in
                         log = "\(component)"
+                    }, onError: { error in
+                        print("We have an error: \(error).")
                     })
                     .frame(minWidth: 350, minHeight: 450)
                     .id(data)
