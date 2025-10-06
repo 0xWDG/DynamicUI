@@ -135,6 +135,19 @@ public class DynamicUIHelper {
             return .regular
         }
     }
+
+    func translateAlignment(_ input: String?) -> Alignment {
+        switch input {
+        case "leading":
+            return .leading
+        case "center":
+            return .center
+        case "trailing":
+            return .trailing
+        default:
+            return .center
+        }
+    }
 }
 
 // swiftlint:enable cyclomatic_complexity function_body_length
