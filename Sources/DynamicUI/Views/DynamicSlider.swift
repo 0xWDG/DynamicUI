@@ -25,8 +25,8 @@ import SwiftUI
 /// ```
 /// 
 /// - Note: This is a internal view, you should not use this directly. \
-///         Use ``DynamicUI`` instead. this function is public to generate documentation.
-public struct DynamicSlider: View {
+///         Use ``DynamicUI`` instead.
+struct DynamicSlider: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -45,7 +45,7 @@ public struct DynamicSlider: View {
     }
 
     /// Generated body for SwiftUI
-    public var body: some View {
+    var body: some View {
 #if !os(tvOS)
         Slider(value: $state.onChange({ newState in
             var newComponent = component

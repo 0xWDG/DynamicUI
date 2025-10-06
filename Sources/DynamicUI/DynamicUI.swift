@@ -18,6 +18,9 @@ public struct DynamicUI: View {
     /// DynamicUIComponent state change handler
     public typealias Handler = (DynamicUIComponent) -> Void
 
+    /// On error handler
+    public typealias ErrorHandler = (Error) -> Void
+
     /// JSON data to generate the interface from
     private var json: Data?
 
@@ -40,7 +43,7 @@ public struct DynamicUI: View {
     /// - Parameter json: JSON Data
     /// - Parameter callback: Callback handler for updates
     /// - Parameter onError: Callback handler for errors
-    public init(json: Data? = nil, callback: Handler?, onError: ((Error) -> Void)? = nil) {
+    public init(json: Data? = nil, callback: Handler?, onError: ErrorHandler? = nil) {
         self.json = json
         self.callback = callback ?? { _ in }
         self.onError = onError ?? { _ in }
@@ -51,7 +54,7 @@ public struct DynamicUI: View {
     /// - Parameter json: JSON String
     /// - Parameter callback: Callback handler for updates
     /// - Parameter onError: Callback handler for errors
-    public init(json: String? = nil, callback: Handler?, onError: ((Error) -> Void)? = nil) {
+    public init(json: String? = nil, callback: Handler?, onError: ErrorHandler? = nil) {
         self.json = json?.data(using: .utf8)
         self.callback = callback ?? { _ in }
         self.onError = onError ?? { _ in }
