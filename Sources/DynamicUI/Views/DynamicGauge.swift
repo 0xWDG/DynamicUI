@@ -26,8 +26,8 @@ import SwiftUI
 /// - Warning: This component is not finished yet.
 ///
 /// - Note: This is a internal view, you should not use this directly. \
-///         Use ``DynamicUI`` instead. this function is public to generate documentation.
-public struct DynamicGauge: View {
+///         Use ``DynamicUI`` instead.
+struct DynamicGauge: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -46,7 +46,7 @@ public struct DynamicGauge: View {
     }
 
     /// Generated body for SwiftUI
-    public var body: some View {
+    var body: some View {
 #if !os(tvOS)
         if #available(macOS 13.0, iOS 16.0, *) {
             Gauge(value: state) {

@@ -23,8 +23,8 @@ import SwiftUI
 /// ```
 /// 
 /// - Note: This is a internal view, you should not use this directly. \
-///         Use ``DynamicUI`` instead. this function is public to generate documentation.
-public struct DynamicScrollView: View {
+///         Use ``DynamicUI`` instead.
+struct DynamicScrollView: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -38,7 +38,7 @@ public struct DynamicScrollView: View {
     }
 
     /// Generated body for SwiftUI
-    public var body: some View {
+    var body: some View {
         ScrollView {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))

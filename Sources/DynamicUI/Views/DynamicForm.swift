@@ -23,8 +23,8 @@ import SwiftUI
 /// ```
 /// 
 /// - Note: This is a internal view, you should not use this directly. \
-///         Use ``DynamicUI`` instead. this function is public to generate documentation.
-public struct DynamicForm: View {
+///         Use ``DynamicUI`` instead.
+struct DynamicForm: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -38,7 +38,7 @@ public struct DynamicForm: View {
     }
 
     /// Generated body for SwiftUI
-    public var body: some View {
+    var body: some View {
         Form {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))

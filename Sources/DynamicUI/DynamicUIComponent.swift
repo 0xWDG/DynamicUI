@@ -81,6 +81,3 @@ public struct DynamicUIComponent: Codable, Hashable {
     /// - Note: Do not init state in your UIComponent unless needed.
     public var state: AnyCodable?
 }
-
-@available(*, deprecated, renamed: "DynamicUIComponent", message: "UIComponent is renamed to DynamicUIComponent")
-typealias UIComponent = DynamicUIComponent

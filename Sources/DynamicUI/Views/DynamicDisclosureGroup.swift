@@ -23,8 +23,8 @@ import SwiftUI
 /// ```
 ///
 /// - Note: This is a internal view, you should not use this directly. \
-///         Use ``DynamicUI`` instead. this function is public to generate documentation.
-public struct DynamicDisclosureGroup: View {
+///         Use ``DynamicUI`` instead.
+struct DynamicDisclosureGroup: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -33,12 +33,12 @@ public struct DynamicDisclosureGroup: View {
     private let component: DynamicUIComponent
 
     /// Initialize the DynamicDisclosureGroup
-    public init(_ component: DynamicUIComponent) {
+    init(_ component: DynamicUIComponent) {
         self.component = component
     }
 
     /// Generated body for SwiftUI
-    public var body: some View {
+    var body: some View {
 #if !os(tvOS) && !os(watchOS)
         DisclosureGroup("\(component.title ?? "")") {
             if let children = component.children {

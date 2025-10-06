@@ -14,7 +14,7 @@ import SwiftUI
 /// DynamicUIHelper
 ///
 /// DynamicUIHelper helps to translate Strings to native SwiftUI .context
-public class DynamicUIHelper {
+class DynamicUIHelper {
 
     /// Translate string colors to native ``Color``.
     ///
