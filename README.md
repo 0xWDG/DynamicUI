@@ -65,7 +65,7 @@ struct ContentView: View {
     var body: some View {
         DynamicUI(
             json: json,
-            callback: $component,
+            component: $component,
             error: $error
         )
     }
