@@ -71,9 +71,7 @@ public struct DynamicUI: View {
                 Text("Failed to generate interface...")
                     .font(.title)
                     .padding(.vertical)
-                    .task {
-                        onError(error)
-                    }
+
 #if DEBUG
                 Text(error.localizedDescription)
 #endif
@@ -105,6 +103,7 @@ public struct DynamicUI: View {
                 )
             }
         } catch {
+            onError(error)
             self.error = error
         }
     }
