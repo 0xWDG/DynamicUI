@@ -10,7 +10,7 @@
 
 import SwiftUI
 
-public struct DynamicUIModifier: ViewModifier {
+struct DynamicUIModifier: ViewModifier {
     /// The modifiers to apply
     let modifiers: [String: AnyCodable]?
 
@@ -20,7 +20,7 @@ public struct DynamicUIModifier: ViewModifier {
     //       currently requires type erasure, since @ViewBuilder expects a static view hierarchy.
     //       Investigate approaches to apply modifiers in a type-safe way without AnyView,
     //       possibly by refactoring how modifiers are represented or applied.
-    public func body(content: Content) -> some View {
+    func body(content: Content) -> some View {
         // swiftlint:disable:previous cyclomatic_complexity function_body_length
         var tempView = AnyView(content)
 
@@ -111,7 +111,7 @@ extension View {
     /// - Parameter modifiers: The modifiers to apply
     ///
     /// - Returns: The modified view
-    public func dynamicUIModifiers(_ modifiers: [String: AnyCodable]?) -> some View {
+    func dynamicUIModifiers(_ modifiers: [String: AnyCodable]?) -> some View {
         self.modifier(DynamicUIModifier(modifiers: modifiers))
     }
 }
