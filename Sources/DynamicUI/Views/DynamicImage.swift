@@ -46,4 +46,3 @@ struct DynamicImage: View {
             .dynamicUIModifiers(component.modifiers)
     }
 }
-

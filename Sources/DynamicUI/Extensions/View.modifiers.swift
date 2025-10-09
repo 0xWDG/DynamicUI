@@ -95,7 +95,7 @@ struct DynamicUIModifier: ViewModifier {
                 tempView = AnyView(tempView.disabled(disabled))
 
             case "padding":
-                if let _ = value.toBool() {
+                if value.toBool() != nil {
                     tempView = AnyView(tempView.padding())
                 } else if let padding = value.toDouble() {
                     tempView = AnyView(tempView.padding(padding))
