@@ -62,3 +62,31 @@ struct DynamicGauge: View {
 #endif
     }
 }
+
+#if DEBUG
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+#Preview("Gauge") {
+    let json = """
+        [
+            {
+                "type": "Form",
+                "children": [
+                    {
+                        "type": "Section",
+                        "title": "Gauge example",
+                        "children": [
+                            {
+                                "type": "Gauge",
+                                "title": "Gauge",
+                                "defaultValue": 0.5
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    """
+
+    DynamicUI(json: json, component: .constant(nil))
+}
+#endif
