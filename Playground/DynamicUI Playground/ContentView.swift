@@ -13,30 +13,40 @@ struct ContentView: View {
     var text: String = """
     [
         {
-            "type": "VStack",
+            "type": "Form",
             "children": [
             {
-                "type": "Button",
-                "title": "Click me",
-                "eventHandler": "customHandler"
-            },
-            {
-                "type": "Toggle",
-                "title": "Toggle me",
-                "identifier": "my.toggle.1"
-            },
-            {
-                "type": "Text",
-                "title": "_Wait_, am i generating views from JSON?",
-                "modifiers": {
-                    "foregroundStyle": "red",
-                    "opacity": 0.5
-                },
-            },
-            {
-                "type": "Label",
-                "title": "Shine",
-                "imageURL": "star"
+                "type": "Section",
+                "title": "Form example",
+                "children": [
+                    {
+                        "type": "Text",
+                        "title": "This is inside a form",
+                    },
+                    {
+                        "type": "Button",
+                        "title": "Click me",
+                        "eventHandler": "customHandler"
+                    },
+                    {
+                        "type": "Toggle",
+                        "title": "Toggle me",
+                        "identifier": "my.toggle.1"
+                    },
+                    {
+                        "type": "Text",
+                        "title": "_Wait_, am i generating views from JSON?",
+                        "modifiers": {
+                            "foregroundStyle": "red",
+                            "opacity": 0.5
+                        },
+                    },
+                    {
+                        "type": "Label",
+                        "title": "Shine",
+                        "imageURL": "star"
+                    }
+                ]
             }
             ]
         }
