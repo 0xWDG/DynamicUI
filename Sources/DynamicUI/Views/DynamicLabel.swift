@@ -44,6 +44,7 @@ struct DynamicLabel: View {
                 component.title ?? "Label",
                 systemImage: systemImage
             )
+            .disabled(component.disabled ?? false)
             .dynamicUIModifiers(component.modifiers)
         } else {
             DynamicText(component)

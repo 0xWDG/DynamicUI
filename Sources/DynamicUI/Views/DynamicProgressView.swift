@@ -44,8 +44,37 @@ struct DynamicProgressView: View {
         ProgressView(
             "\(component.title ?? "")",
             value: component.defaultValue?.toDouble() ?? 0,
-            total: component.maximumValue ?? 100
+            total: component.maximumValue ?? 1.0
         )
+        .disabled(component.disabled ?? false)
         .dynamicUIModifiers(component.modifiers)
     }
 }
+
+#if DEBUG
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+#Preview("ProgressView") {
+    let json = """
+        [
+            {
+                "type": "Form",
+                "children": [
+                    {
+                        "type": "Section",
+                        "title": "ProgressView example",
+                        "children": [
+                            {
+                                "type": "ProgressView",
+                                "title": "ProgressView",
+                                "defaultValue": 0.5
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    """
+
+    DynamicUI(json: json, component: .constant(nil))
+}
+#endif

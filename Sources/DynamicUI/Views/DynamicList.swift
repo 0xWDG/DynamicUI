@@ -44,6 +44,43 @@ struct DynamicList: View {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .disabled(component.disabled ?? false)
         .dynamicUIModifiers(component.modifiers)
     }
 }
+
+#if DEBUG
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+#Preview("List") {
+    let json = """
+        [
+            {
+                "type": "List",
+                "children": [
+                    {
+                        "type": "Section",
+                        "title": "List example",
+                        "children": [
+                            {
+                                "type": "Text",
+                                "title": "This is inside a list"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Section",
+                        "children": [
+                            {
+                                "type": "Text",
+                                "title": "This is inside a list"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    """
+
+    DynamicUI(json: json, component: .constant(nil))
+}
+#endif
