@@ -52,6 +52,7 @@ struct DynamicGauge: View {
             Gauge(value: state) {
                 Text("\(component.title ?? "")")
             }
+            .disabled(component.disabled ?? false)
             .dynamicUIModifiers(component.modifiers)
         } else {
             EmptyView()

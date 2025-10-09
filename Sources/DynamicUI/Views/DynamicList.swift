@@ -44,13 +44,14 @@ struct DynamicList: View {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .disabled(component.disabled ?? false)
         .dynamicUIModifiers(component.modifiers)
     }
 }
 
 #if DEBUG
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-#Preview("Section") {
+#Preview("List") {
     let json = """
         [
             {
