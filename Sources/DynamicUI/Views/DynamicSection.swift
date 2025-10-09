@@ -37,20 +37,24 @@ struct DynamicSection: View {
         self.component = component
     }
 
+    /// Helper to create children view
+    @ViewBuilder
+    private var childrenView: some View {
+        if let children = component.children {
+            AnyView(dynamicUIEnvironment.buildView(for: children))
+        }
+    }
+
     /// Generated body for SwiftUI
     var body: some View {
         if let title = component.title, !title.isEmpty {
             Section(header: Text(title)) {
-                if let children = component.children {
-                    AnyView(dynamicUIEnvironment.buildView(for: children))
-                }
+                childrenView
             }
             .dynamicUIModifiers(component.modifiers)
         } else {
             Section {
-                if let children = component.children {
-                    AnyView(dynamicUIEnvironment.buildView(for: children))
-                }
+                childrenView
             }
             .dynamicUIModifiers(component.modifiers)
         }
