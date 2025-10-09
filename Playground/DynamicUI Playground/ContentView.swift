@@ -21,7 +21,7 @@ struct ContentView: View {
                 "children": [
                     {
                         "type": "Text",
-                        "title": "This is inside a form",
+                        "title": "This is inside a form"
                     },
                     {
                         "type": "Button",
