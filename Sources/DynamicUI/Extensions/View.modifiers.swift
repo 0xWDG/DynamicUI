@@ -26,13 +26,13 @@ struct DynamicUIModifier: ViewModifier {
 
         modifiers?.forEach { key, value in
             switch key {
-            case "foregroundStyle", "foregroundColor":
+            case "color", "foregroundStyle", "foregroundColor":
                 guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *),
                       let string = value.toString(),
                       let color = DynamicUIHelper.translateColor(string) else { break }
                 tempView = AnyView(tempView.foregroundStyle(color))
 
-            case "background", "backgroundColor":
+            case "background", "backgroundColor", "backgroundStyle":
                 guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *),
                       let string = value.toString(),
                       let color = DynamicUIHelper.translateColor(string) else { break }
