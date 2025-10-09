@@ -32,6 +32,14 @@ public struct DynamicUI: View {
     @Binding
     private var error: Error?
 
+    /// Internal error state
+    @State
+    private var internalError: Error? {
+        didSet {
+            error = internalError
+        }
+    }
+
     /// This state is used to store the layout
     @State
     private var layout: [DynamicUIComponent]?
@@ -101,7 +109,7 @@ public struct DynamicUI: View {
         VStack {
             if let layout = layout {
                 buildView(for: layout)
-            } else if let error = error {
+            } else if let error = internalError {
                 Image(systemName: "exclamationmark.arrow.triangle.2.circlepath")
                     .resizable()
                     .frame(width: 150, height: 150)
@@ -132,7 +140,7 @@ public struct DynamicUI: View {
 
     /// Decode the JSON data
     private func decodeJSON() {
-        self.error = nil
+        self.internalError = nil
 
         do {
             if let json = json {
@@ -142,7 +150,10 @@ public struct DynamicUI: View {
                 )
             }
         } catch {
-            self.error = error
+            self.internalError = error
+#if DEBUG
+            print(error)
+#endif
         }
     }
 
@@ -199,6 +210,10 @@ public struct DynamicUI: View {
 
             case "Spacer":
                 Spacer()
+                    .environment(\.internalDynamicUIEnvironment, self)
+
+            case "Section":
+                DynamicSection(component)
                     .environment(\.internalDynamicUIEnvironment, self)
 
             case "Label":
