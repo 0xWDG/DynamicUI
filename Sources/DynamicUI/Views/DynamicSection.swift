@@ -29,16 +29,11 @@ struct DynamicSection: View {
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
 
-    @State
-    /// The state of the Section
-    private var state: Double
-
     /// The component to display
     private let component: DynamicUIComponent
 
     /// Initialize the DynamicSection
     init(_ component: DynamicUIComponent) {
-        self.state = component.defaultValue?.toDouble() ?? 0
         self.component = component
     }
 
