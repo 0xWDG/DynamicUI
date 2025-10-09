@@ -51,10 +51,10 @@ public struct DynamicUIComponent: Codable, Hashable {
     public let children: [DynamicUIComponent]?
 
     // TODO: Find a way to move this to parameters
-    /// Minumum value description
+    /// Minimum value description
     ///
     /// - Note: This may be removed in the future in favor of ``UIComponent.parameters``
-    public let minumum: String?
+    public let minimum: String?
 
     // TODO: Find a way to move this to parameters
     /// Minumum value
@@ -73,6 +73,9 @@ public struct DynamicUIComponent: Codable, Hashable {
     ///
     /// - Note: This may be removed in the future in favor of ``UIComponent.parameters``
     public let maximumValue: Double?
+
+    /// Is the component disabled?
+    public var disabled: Bool? = false
 
     /// The current state of an element
     ///

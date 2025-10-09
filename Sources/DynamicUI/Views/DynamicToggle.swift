@@ -57,6 +57,46 @@ struct DynamicToggle: View {
         })) {
             Text(title)
         }
+        .disabled(component.disabled ?? false)
         .dynamicUIModifiers(component.modifiers)
     }
 }
+
+
+#if DEBUG
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+#Preview("Toggle") {
+    let json = """
+        [
+            {
+                "type": "Form",
+                "children": [
+                    {
+                        "type": "Section",
+                        "title": "Form example",
+                        "children": [
+                            {
+                                "type": "Toggle",
+                                "title": "Toggle"
+                            },
+                            {
+                                "type": "Toggle",
+                                "title": "Toggle",
+                                "defaultValue": true
+                            },
+                            {
+                                "type": "Toggle",
+                                "title": "Toggle",
+                                "defaultValue": true,
+                                "disabled": true
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    """
+
+    DynamicUI(json: json, component: .constant(nil))
+}
+#endif

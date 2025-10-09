@@ -39,13 +39,14 @@ struct DynamicSpacer: View {
     /// Generated body for SwiftUI
     var body: some View {
         Spacer()
+            .disabled(component.disabled ?? false)
             .dynamicUIModifiers(component.modifiers)
     }
 }
 
 #if DEBUG
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-#Preview("Section") {
+#Preview("Spacer") {
     let json = """
         [
             {

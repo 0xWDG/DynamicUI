@@ -151,6 +151,9 @@ public struct DynamicUI: View {
             }
         } catch {
             self.internalError = error
+#if DEBUG
+            print(error)
+#endif
         }
     }
 
