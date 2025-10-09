@@ -52,6 +52,7 @@ struct DynamicTextEditor: View {
 
             dynamicUIEnvironment.callback(newComponent)
         }))
+        .disabled(component.disabled ?? false)
         .dynamicUIModifiers(component.modifiers)
 #else
         DynamicTextField(component)

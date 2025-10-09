@@ -20,7 +20,7 @@ import SwiftUI
 ///    "type": "Button",
 ///    "title": "Title",
 ///    "modifiers": {
-///        "foregroundColor": "blue"
+///        "foregroundColor": "purple"
 ///    }
 /// }
 /// ```
@@ -52,6 +52,26 @@ struct DynamicButton: View {
         }, label: {
             Text(component.title ?? "Button")
         })
+        .disabled(component.disabled ?? false)
         .dynamicUIModifiers(component.modifiers)
     }
 }
+
+#if DEBUG
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+#Preview("Button") {
+    let json = """
+        [
+            {
+               "type": "Button",
+               "title": "Title",
+               "modifiers": {
+                   "foregroundColor": "purple"
+               }
+            }
+        ]
+    """
+
+    DynamicUI(json: json, component: .constant(nil))
+}
+#endif
