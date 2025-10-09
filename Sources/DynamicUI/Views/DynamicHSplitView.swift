@@ -70,7 +70,7 @@ struct DynamicHSplitView: View {
                             "type": "VStack",
                             "children": [
                                 {
-                                    "type":"Text",
+                                    "type": "Text",
                                     "title": "Text 1",
                                 }
                             ],
@@ -83,8 +83,8 @@ struct DynamicHSplitView: View {
                             "type": "VStack",
                             "children": [
                                 {
-                                    "type":"Text",
-                                    "title": "Text 1",
+                                    "type": "Text",
+                                    "title": "Text 2",
                                 }
                             ],
                             "padding": true,
