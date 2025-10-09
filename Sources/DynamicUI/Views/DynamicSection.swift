@@ -1,5 +1,5 @@
 //
-//  DynamicTEMPLATE.swift
+//  DynamicSection.swift
 //  DynamicUI
 //
 //  Created by Wesley de Groot on 19/04/2024.

@@ -63,7 +63,10 @@ struct DynamicSpacer: View {
                         "type": "Text",
                         "title": "Right"
                     }
-                ]
+                ],
+                "modifiers": {
+                    "padding": true
+                }
             }
         ]
     """
