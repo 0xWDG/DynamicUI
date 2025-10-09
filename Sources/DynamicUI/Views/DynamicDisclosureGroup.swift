@@ -51,3 +51,31 @@ struct DynamicDisclosureGroup: View {
 #endif
     }
 }
+
+#if DEBUG
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+#Preview("Section") {
+    let json = """
+        [
+            {
+                "type": "Form",
+                "title": "DisclosureGroup",
+                "children": [
+                    {
+                        "type": "DisclosureGroup",
+                        "title": "DisclosureGroup",
+                        "children": [
+                            {
+                                "type": "Text",
+                                "title": "This is inside a form"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    """
+
+    DynamicUI(json: json, component: .constant(nil))
+}
+#endif

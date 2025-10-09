@@ -42,3 +42,33 @@ struct DynamicDivider: View {
             .dynamicUIModifiers(component.modifiers)
     }
 }
+
+#if DEBUG
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+#Preview("Section") {
+    let json = """
+        [
+            {
+                "type": "VStack",
+                "children": [
+                    {
+                        "type": "Text",
+                        "title": "Divider",
+                        "modifiers": {
+                            "foregroundColor": "purple"
+                        }
+                    },
+                    {
+                        "type": "Divider",
+                        "modifiers": {
+                            "foregroundColor": "purple"
+                        }
+                    }
+                ]
+            }
+        ]
+    """
+
+    DynamicUI(json: json, component: .constant(nil))
+}
+#endif
