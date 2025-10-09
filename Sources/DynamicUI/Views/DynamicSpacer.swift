@@ -42,3 +42,31 @@ struct DynamicSpacer: View {
             .dynamicUIModifiers(component.modifiers)
     }
 }
+
+#if DEBUG
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+#Preview("Section") {
+    let json = """
+        [
+            {
+                "type": "HStack",
+                "children": [
+                    {
+                        "type": "Text",
+                        "title": "Left"
+                    },
+                    {
+                        "type": "Spacer"
+                    },
+                    {
+                        "type": "Text",
+                        "title": "Right"
+                    }
+                ]
+            }
+        ]
+    """
+
+    DynamicUI(json: json, component: .constant(nil))
+}
+#endif
