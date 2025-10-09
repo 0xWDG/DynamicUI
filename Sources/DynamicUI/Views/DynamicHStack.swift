@@ -61,7 +61,7 @@ struct DynamicHStack: View {
                         "type": "VStack",
                         "children": [
                             {
-                                "type":"Text",
+                                "type": "Text",
                                 "title": "Text 1",
                             }
                         ],
@@ -74,8 +74,8 @@ struct DynamicHStack: View {
                         "type": "VStack",
                         "children": [
                             {
-                                "type":"Text",
-                                "title": "Text 1",
+                                "type": "Text",
+                                "title": "Text 2",
                             }
                         ],
                         "padding": true,
