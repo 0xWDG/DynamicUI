@@ -48,7 +48,6 @@ struct DynamicLabel: View {
             .dynamicUIModifiers(component.modifiers)
         } else {
             DynamicText(component)
-                .disabled(component.disabled ?? false)
                 .dynamicUIModifiers(component.modifiers)
         }
     }
