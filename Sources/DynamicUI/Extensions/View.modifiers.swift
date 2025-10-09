@@ -32,11 +32,11 @@ struct DynamicUIModifier: ViewModifier {
                       let color = DynamicUIHelper.translateColor(string) else { break }
                 tempView = AnyView(tempView.foregroundStyle(color))
 
-            case "backgroundStyle", "backgroundColor":
-                guard #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *),
+            case "background", "backgroundColor":
+                guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *),
                       let string = value.toString(),
                       let color = DynamicUIHelper.translateColor(string) else { break }
-                tempView = AnyView(tempView.backgroundStyle(color))
+                tempView = AnyView(tempView.background(color))
 
             case "fontWeight":
                 guard #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *),
@@ -84,15 +84,24 @@ struct DynamicUIModifier: ViewModifier {
                     }
                 }
 
-            case "padding":
-                guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
-                      let length = value.toInt() else { break }
-                tempView = AnyView(tempView.padding(CGFloat(integerLiteral: length)))
-
             case "opacity":
                 guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
                       let opacity = value.toDouble() else { break }
                 tempView = AnyView(tempView.opacity(opacity))
+
+            case "disabled":
+                guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
+                      let disabled = value.toBool() else { break }
+                tempView = AnyView(tempView.disabled(disabled))
+
+            case "padding":
+                if value.toBool() != nil {
+                    tempView = AnyView(tempView.padding())
+                } else if let padding = value.toDouble() {
+                    tempView = AnyView(tempView.padding(padding))
+                } else {
+                    break
+                }
 
             default:
                 break
@@ -125,7 +134,8 @@ extension View {
                 "width": .double(150),
                 "height": .double(100)
             ]),
-            "foregroundStyle": .string("red")
+            "foregroundStyle": .string("red"),
+            "disabled": .bool(true)
         ])
 }
 #endif
