@@ -32,14 +32,14 @@ struct DynamicButton: View {
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
 
+    /// The state of the Button
     @State
-    /// The state of the TEMPLATE
     private var state: Double
 
     /// The component to display
     private let component: DynamicUIComponent
 
-    /// Initialize the DynamicTEMPLATE
+    /// Initialize the DynamicButton
     init(_ component: DynamicUIComponent) {
         self.state = component.defaultValue?.toDouble() ?? 0
         self.component = component
