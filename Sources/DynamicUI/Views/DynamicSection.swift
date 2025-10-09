@@ -1,5 +1,5 @@
 //
-//  DynamicGroupBox.swift
+//  DynamicSection.swift
 //  DynamicUI
 //
 //  Created by Wesley de Groot on 19/04/2024.
@@ -10,21 +10,21 @@
 
 import SwiftUI
 
-/// DynamicUI: GroupBox
+/// DynamicUI: Section
 /// 
-/// DynamicGroupBox is a SwiftUI View that can be used to display an GroupBox.
-///
+/// DynamicSection is a SwiftUI View that can be used to display an Section.
+/// 
 /// JSON Example:
 /// ```json
 /// {
-///    "type": "GroupBox",
-///    "children": [ ]
+///    "type": "Section",
+///    "title": "Title"
 /// }
 /// ```
 /// 
 /// - Note: This is a internal view, you should not use this directly. \
 ///         Use ``DynamicUI`` instead.
-struct DynamicGroupBox: View {
+struct DynamicSection: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -32,32 +32,40 @@ struct DynamicGroupBox: View {
     /// The component to display
     private let component: DynamicUIComponent
 
-    /// Initialize the DynamicGroupBox
+    /// Initialize the DynamicSection
     init(_ component: DynamicUIComponent) {
         self.component = component
     }
 
+    /// Helper to create children view
+    @ViewBuilder
+    private var childrenView: some View {
+        if let children = component.children {
+            AnyView(dynamicUIEnvironment.buildView(for: children))
+        }
+    }
+
     /// Generated body for SwiftUI
     var body: some View {
-#if !os(tvOS) && !os(watchOS)
-        GroupBox {
-            if let children = component.children {
-                AnyView(dynamicUIEnvironment.buildView(for: children))
+        if let title = component.title, !title.isEmpty {
+            Section(header: Text(title)) {
+                childrenView
             }
-        }
-        .disabled(component.disabled ?? false)
-        .dynamicUIModifiers(component.modifiers)
-#else
-        DynamicVStack(component)
             .disabled(component.disabled ?? false)
             .dynamicUIModifiers(component.modifiers)
-#endif
+        } else {
+            Section {
+                childrenView
+            }
+            .disabled(component.disabled ?? false)
+            .dynamicUIModifiers(component.modifiers)
+        }
     }
 }
 
 #if DEBUG
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-#Preview("Groupbox") {
+#Preview("Section") {
     let json = """
         [
             {
@@ -65,16 +73,20 @@ struct DynamicGroupBox: View {
                 "children": [
                     {
                         "type": "Section",
-                        "title": "GroupBox example",
+                        "title": "Form example",
                         "children": [
                             {
-                                "type": "GroupBox",
-                                "children": [
-                                    {
-                                        "type":"Text",
-                                        "title": "Text"
-                                    }
-                                ]
+                                "type": "Text",
+                                "title": "This is inside a form"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Section",
+                        "children": [
+                            {
+                                "type": "Text",
+                                "title": "This is inside a form"
                             }
                         ]
                     }

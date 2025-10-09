@@ -1,8 +1,8 @@
 //
-//  DynamicGroupBox.swift
+//  DynamicGroup.swift
 //  DynamicUI
 //
-//  Created by Wesley de Groot on 19/04/2024.
+//  Created by Wesley de Groot on 09/10/2025.
 //  https://wesleydegroot.nl
 //
 //  https://github.com/0xWDG/DynamicUI
@@ -11,20 +11,20 @@
 import SwiftUI
 
 /// DynamicUI: GroupBox
-/// 
+///
 /// DynamicGroupBox is a SwiftUI View that can be used to display an GroupBox.
 ///
 /// JSON Example:
 /// ```json
 /// {
-///    "type": "GroupBox",
+///    "type": "Group",
 ///    "children": [ ]
 /// }
 /// ```
-/// 
+///
 /// - Note: This is a internal view, you should not use this directly. \
 ///         Use ``DynamicUI`` instead.
-struct DynamicGroupBox: View {
+struct DynamicGroup: View {
     @Environment(\.internalDynamicUIEnvironment)
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
@@ -40,7 +40,7 @@ struct DynamicGroupBox: View {
     /// Generated body for SwiftUI
     var body: some View {
 #if !os(tvOS) && !os(watchOS)
-        GroupBox {
+        Group {
             if let children = component.children {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
@@ -57,7 +57,7 @@ struct DynamicGroupBox: View {
 
 #if DEBUG
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
-#Preview("Groupbox") {
+#Preview("Group") {
     let json = """
         [
             {
@@ -65,10 +65,10 @@ struct DynamicGroupBox: View {
                 "children": [
                     {
                         "type": "Section",
-                        "title": "GroupBox example",
+                        "title": "Group example",
                         "children": [
                             {
-                                "type": "GroupBox",
+                                "type": "Group",
                                 "children": [
                                     {
                                         "type":"Text",

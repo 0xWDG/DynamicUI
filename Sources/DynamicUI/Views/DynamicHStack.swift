@@ -44,6 +44,50 @@ struct DynamicHStack: View {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .disabled(component.disabled ?? false)
         .dynamicUIModifiers(component.modifiers)
     }
 }
+
+#if DEBUG
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+#Preview("HStack") {
+    let json = """
+        [
+            {
+                "type": "HStack",
+                "children": [
+                    {
+                        "type": "VStack",
+                        "children": [
+                            {
+                                "type": "Text",
+                                "title": "Text 1",
+                            }
+                        ],
+                        "padding": true,
+                        "modifiers": {
+                            "background": "blue"
+                        }
+                    },
+                    {
+                        "type": "VStack",
+                        "children": [
+                            {
+                                "type": "Text",
+                                "title": "Text 2",
+                            }
+                        ],
+                        "padding": true,
+                        "modifiers": {
+                            "background": "red"
+                        }
+                    }
+                ]
+            }
+        ]
+    """
+
+    DynamicUI(json: json, component: .constant(nil))
+}
+#endif

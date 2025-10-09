@@ -55,13 +55,38 @@ struct DynamicSlider: View {
         })) {
             Text("\(component.title ?? "")")
         } minimumValueLabel: {
-            Text("\(component.minumum ?? "")")
+            Text("\(component.minimum ?? "")")
         } maximumValueLabel: {
             Text("\(component.maximum ?? "")")
         }
+        .disabled(component.disabled ?? false)
         .dynamicUIModifiers(component.modifiers)
 #else
         EmptyView()
 #endif
     }
 }
+
+#if DEBUG
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+#Preview("Slider") {
+    let json = """
+        [
+            {
+                "type": "Form",
+                "children": [
+                    {
+                        "type": "Slider",
+                        "title": "Form example",
+                        "defaultValue": 0.5,
+                        "minimum": "Minimum",
+                        "maximum": "Maximum"
+                    }
+                ]
+            }
+        ]
+    """
+
+    DynamicUI(json: json, component: .constant(nil))
+}
+#endif

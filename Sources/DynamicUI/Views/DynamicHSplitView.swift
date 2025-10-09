@@ -44,10 +44,59 @@ struct DynamicHSplitView: View {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
+        .disabled(component.disabled ?? false)
         .dynamicUIModifiers(component.modifiers)
 #else
-        EmptyView()
-            .dynamicUIModifiers(component.modifiers)
+        HStack {
+            if let children = component.children {
+                AnyView(dynamicUIEnvironment.buildView(for: children))
+            }
+        }
+        .disabled(component.disabled ?? false)
+        .dynamicUIModifiers(component.modifiers)
 #endif
     }
 }
+
+#if DEBUG
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
+#Preview("HSplitView") {
+    let json = """
+    [
+                {
+                    "type": "HSplitView",
+                    "children": [
+                        {
+                            "type": "VStack",
+                            "children": [
+                                {
+                                    "type": "Text",
+                                    "title": "Text 1",
+                                }
+                            ],
+                            "padding": true,
+                            "modifiers": {
+                                "background": "blue"
+                            }
+                        },
+                        {
+                            "type": "VStack",
+                            "children": [
+                                {
+                                    "type": "Text",
+                                    "title": "Text 2",
+                                }
+                            ],
+                            "padding": true,
+                            "modifiers": {
+                                "background": "red"
+                            }
+                        }
+                    ]
+                }
+            ]
+    """
+
+    DynamicUI(json: json, component: .constant(nil))
+}
+#endif

@@ -12,7 +12,7 @@
 		2B2D6CD62C4990A9008E0692 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B2D6CD52C4990A9008E0692 /* Assets.xcassets */; };
 		2B2D6CD92C4990A9008E0692 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B2D6CD82C4990A9008E0692 /* Preview Assets.xcassets */; };
 		2B2D6CE32C4990D7008E0692 /* DynamicUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2B2D6CE22C4990D7008E0692 /* DynamicUI */; };
-		2BEC27212E942FEA002A29EF /* DynamicUI Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2BEC27012E942FE9002A29EF /* DynamicUI Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2BEC27212E942FEA002A29EF /* DynamicUI Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 2BEC27012E942FE9002A29EF /* DynamicUI Watch App.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2BEC27312E94305F002A29EF /* DynamicUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2BEC27302E94305F002A29EF /* DynamicUI */; };
 /* End PBXBuildFile section */
 
@@ -248,6 +248,7 @@
 /* Begin PBXTargetDependency section */
 		2BEC27202E942FEA002A29EF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 2BEC27002E942FE9002A29EF /* DynamicUI Watch App */;
 			targetProxy = 2BEC271F2E942FEA002A29EF /* PBXContainerItemProxy */;
 		};
