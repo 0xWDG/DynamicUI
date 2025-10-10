@@ -45,7 +45,6 @@ struct DynamicHSplitView: View {
             }
         }
         .set(modifiers: component)
-
 #else
         HStack {
             if let children = component.children {
@@ -53,7 +52,6 @@ struct DynamicHSplitView: View {
             }
         }
         .set(modifiers: component)
-
 #endif
     }
 }
