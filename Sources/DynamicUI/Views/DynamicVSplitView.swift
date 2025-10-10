@@ -46,7 +46,6 @@ struct DynamicVSplitView: View {
             }
         }
         .set(modifiers: component)
-
 #else
         EmptyView()
 #endif
