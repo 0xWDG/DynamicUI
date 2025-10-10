@@ -52,13 +52,11 @@ struct DynamicSection: View {
                 childrenView
             }
             .set(modifiers: component)
-
         } else {
             Section {
                 childrenView
             }
             .set(modifiers: component)
-
         }
     }
 }
