@@ -36,7 +36,7 @@ struct ContentView: View {
             {
                 "type": "Label",
                 "title": "Shine",
-                "imageURL": "star"
+                "url": "star"
             }
             ]
         }

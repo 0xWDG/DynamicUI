@@ -18,12 +18,14 @@ import SwiftUI
 /// ```json
 /// {
 ///    "type": "Image",
-///    "imageURL": "systemName"
+///    "url": "systemName"
 /// }
 /// ```
-/// 
-/// - Note: The `imageURL` is the systemName of the image.
-/// 
+///
+/// - Note: The `url` is the systemName of the image.
+///         You can use any systemName from SF Symbols.
+///         For more information, see https://developer.apple.com/sf-symbols/
+///
 /// - Note: This is a internal view, you should not use this directly. \
 ///         Use ``DynamicUI`` instead.
 struct DynamicImage: View {
@@ -41,7 +43,8 @@ struct DynamicImage: View {
 
     /// Generated body for SwiftUI
     var body: some View {
-        Image(systemName: component.imageURL ?? "")
+        Image(systemName: component.url ?? "")
+            .accessibilityLabel(component.title ?? "")
             .disabled(component.disabled ?? false)
             .dynamicUIModifiers(component.modifiers)
     }

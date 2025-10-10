@@ -33,3 +33,10 @@ The form includes a section with three toggles, each illustrating different conf
     }
 ]
 ```
+
+### Parameters
+
+| Parameter | Type        | Description                       |
+| --------- | ----------- | --------------------------------- |
+| children  | Array       | The child elements of the form.   |
+| modifiers | Object      | The visual modifiers for the form. |
