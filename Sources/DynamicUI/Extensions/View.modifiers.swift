@@ -123,19 +123,45 @@ extension View {
     func dynamicUIModifiers(_ modifiers: [String: AnyCodable]?) -> some View {
         self.modifier(DynamicUIModifier(modifiers: modifiers))
     }
+
+    /// Set Modifiers
+    ///
+    /// This function sets the modifiers for a DynamicUIView
+    ///
+    /// - Parameter modifiers: The modifiers to set
+    ///
+    /// - Returns: The modified view
+    func set(modifiers: DynamicUIComponent) -> some View {
+        var tempView = AnyView(self)
+
+        if let identifier = modifiers.identifier {
+            tempView = AnyView(tempView.id(identifier))
+        }
+
+        if let disabled = modifiers.disabled {
+            tempView = AnyView(tempView.disabled(disabled))
+        }
+
+        return tempView.dynamicUIModifiers(modifiers.modifiers)
+    }
 }
 
 #if DEBUG
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)
 #Preview {
-    Text("Test")
-        .dynamicUIModifiers([
-            "frame": .dictionary([
-                "width": .double(150),
-                "height": .double(100)
-            ]),
-            "foregroundStyle": .string("red"),
-            "disabled": .bool(true)
-        ])
+    let json = """
+        [
+            {
+               "type": "Text",
+               "title": "Title",
+               "disabled": true,
+               "modifiers": {
+                   "foregroundColor": "purple"
+               }
+            }
+        ]
+    """
+
+    DynamicUI(json: json, component: .constant(nil))
 }
 #endif
