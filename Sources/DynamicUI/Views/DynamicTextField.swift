@@ -54,7 +54,6 @@ struct DynamicTextField: View {
                 dynamicUIEnvironment.component = newComponent
             })
         )
-        .disabled(component.disabled ?? false)
-        .dynamicUIModifiers(component.modifiers)
+        .set(modifiers: component)
     }
 }

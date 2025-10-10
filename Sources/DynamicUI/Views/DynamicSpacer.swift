@@ -39,8 +39,7 @@ struct DynamicSpacer: View {
     /// Generated body for SwiftUI
     var body: some View {
         Spacer()
-            .disabled(component.disabled ?? false)
-            .dynamicUIModifiers(component.modifiers)
+            .set(modifiers: component)
     }
 }
 

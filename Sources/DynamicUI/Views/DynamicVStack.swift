@@ -44,7 +44,6 @@ struct DynamicVStack: View {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
-        .disabled(component.disabled ?? false)
-        .dynamicUIModifiers(component.modifiers)
+        .set(modifiers: component)
     }
 }

@@ -41,8 +41,7 @@ struct DynamicText: View {
     /// Generated body for SwiftUI
     var body: some View {
         Text(.init(component.title ?? ""))
-            .disabled(component.disabled ?? false)
-            .dynamicUIModifiers(component.modifiers)
+            .set(modifiers: component)
     }
 }
 

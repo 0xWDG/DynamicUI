@@ -45,18 +45,16 @@ struct DynamicTextEditor: View {
 
     /// Generated body for SwiftUI
     var body: some View {
-#if os(iOS) && os(macOS)
+#if os(iOS) || os(macOS)
         TextEditor(text: $state.onChange({ _ in
             var newComponent = component
             newComponent.state = .string(state)
 
-            dynamicUIEnvironment.callback(newComponent)
+            dynamicUIEnvironment.component = newComponent
         }))
-        .disabled(component.disabled ?? false)
-        .dynamicUIModifiers(component.modifiers)
+        .set(modifiers: component)
 #else
         DynamicTextField(component)
-            .dynamicUIModifiers(component.modifiers)
 #endif
     }
 }
