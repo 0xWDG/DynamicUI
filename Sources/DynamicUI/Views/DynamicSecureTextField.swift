@@ -49,7 +49,6 @@ struct DynamicSecureField: View {
             "\(component.title ?? "")",
             text: $state
         )
-        .disabled(component.disabled ?? false)
-        .dynamicUIModifiers(component.modifiers)
+        .set(modifiers: component)
     }
 }
