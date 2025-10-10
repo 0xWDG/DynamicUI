@@ -57,8 +57,7 @@ struct DynamicToggle: View {
         })) {
             Text(title)
         }
-        .disabled(component.disabled ?? false)
-        .dynamicUIModifiers(component.modifiers)
+        .set(modifiers: component)
     }
 }
 

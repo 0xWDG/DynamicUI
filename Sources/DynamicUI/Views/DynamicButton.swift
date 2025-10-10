@@ -52,8 +52,7 @@ struct DynamicButton: View {
         }, label: {
             Text(component.title ?? "Button")
         })
-        .disabled(component.disabled ?? false)
-        .dynamicUIModifiers(component.modifiers)
+        .set(modifiers: component)
     }
 }
 
@@ -65,6 +64,7 @@ struct DynamicButton: View {
             {
                "type": "Button",
                "title": "Title",
+               "disabled": true,
                "modifiers": {
                    "foregroundColor": "purple"
                }

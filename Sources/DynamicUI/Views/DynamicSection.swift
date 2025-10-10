@@ -51,14 +51,14 @@ struct DynamicSection: View {
             Section(header: Text(title)) {
                 childrenView
             }
-            .disabled(component.disabled ?? false)
-            .dynamicUIModifiers(component.modifiers)
+            .set(modifiers: component)
+
         } else {
             Section {
                 childrenView
             }
-            .disabled(component.disabled ?? false)
-            .dynamicUIModifiers(component.modifiers)
+            .set(modifiers: component)
+
         }
     }
 }
