@@ -5,7 +5,7 @@ This example demonstrates how to define a `Group` using DynamicUI's JSON schema.
 ```json
 [
     {
-       "type": "Group"
+       "type": "Group",
        "children": [
               {
                 "type": "Text",
