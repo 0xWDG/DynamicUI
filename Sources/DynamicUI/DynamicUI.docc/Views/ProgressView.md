@@ -20,7 +20,7 @@ This example demonstrates how to define a `ProgressView` using DynamicUI's JSON 
 
 | Parameter | Type        | Description                       |
 | --------- | ----------- | --------------------------------- |
-| title     | String      | The title of the button.         |
+| title     | String      | The title of the ProgressView.         |
 | defaultValue | Double    | The default value of the progress. |
 | maximumValue | Double    | The maximum value of the progress. |
-| modifiers | Object      | The visual modifiers for the button. |
+| modifiers | Object      | The visual modifiers for the ProgressView. |
