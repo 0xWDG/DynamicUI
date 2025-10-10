@@ -44,8 +44,8 @@ public struct DynamicUIComponent: Codable, Hashable {
     /// Parameters of component (not yet used)
     public let parameters: [String: AnyCodable]?
 
-    /// Image URL
-    public let imageURL: String?
+    /// URL
+    public let url: String?
 
     /// Children (used in VStack, HStack, ZStack)
     public let children: [DynamicUIComponent]?
