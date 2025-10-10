@@ -46,7 +46,6 @@ struct DynamicGroupBox: View {
             }
         }
         .set(modifiers: component)
-
 #else
         DynamicVStack(component)
 #endif
