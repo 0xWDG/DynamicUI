@@ -64,7 +64,6 @@ struct DynamicButton: View {
             {
                "type": "Button",
                "title": "Title",
-               "disabled": true,
                "modifiers": {
                    "foregroundColor": "purple"
                }
