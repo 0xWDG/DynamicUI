@@ -44,7 +44,7 @@ struct DynamicHSplitView: View {
                 AnyView(dynamicUIEnvironment.buildView(for: children))
             }
         }
-        .disabled(component.disabled ?? false)
+        .set(modifiers: component)
 
 #else
         HStack {
