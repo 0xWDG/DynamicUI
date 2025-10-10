@@ -46,7 +46,6 @@ struct DynamicGroup: View {
             }
         }
         .set(modifiers: component)
-
 #else
         DynamicVStack(component)
 #endif
