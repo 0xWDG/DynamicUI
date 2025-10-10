@@ -53,7 +53,6 @@ struct DynamicGauge: View {
                 Text("\(component.title ?? "")")
             }
             .set(modifiers: component)
-
         } else {
             EmptyView()
         }
