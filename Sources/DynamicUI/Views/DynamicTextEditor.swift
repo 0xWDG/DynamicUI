@@ -53,7 +53,6 @@ struct DynamicTextEditor: View {
             dynamicUIEnvironment.component = newComponent
         }))
         .set(modifiers: component)
-
 #else
         DynamicTextField(component)
 #endif
