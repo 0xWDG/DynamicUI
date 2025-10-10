@@ -52,8 +52,7 @@ struct DynamicButton: View {
         }, label: {
             Text(component.title ?? "Button")
         })
-        .disabled(component.disabled ?? false)
-        .dynamicUIModifiers(component.modifiers)
+        .set(modifiers: component)
     }
 }
 

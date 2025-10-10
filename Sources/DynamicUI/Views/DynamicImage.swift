@@ -45,7 +45,6 @@ struct DynamicImage: View {
     var body: some View {
         Image(systemName: component.url ?? "")
             .accessibilityLabel(component.title ?? "")
-            .disabled(component.disabled ?? false)
-            .dynamicUIModifiers(component.modifiers)
+            .set(modifiers: component)
     }
 }
