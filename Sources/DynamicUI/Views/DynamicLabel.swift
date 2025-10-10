@@ -45,7 +45,6 @@ struct DynamicLabel: View {
                 systemImage: systemImage
             )
             .set(modifiers: component)
-
         } else {
             DynamicText(component)
         }
