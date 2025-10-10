@@ -63,4 +63,5 @@ fastlane/test_output
 iOSInjectionProject/
 
 ### Generated docs
+.build/
 docs/

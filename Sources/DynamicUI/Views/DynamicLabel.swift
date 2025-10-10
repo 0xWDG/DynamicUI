@@ -39,7 +39,7 @@ struct DynamicLabel: View {
 
     /// Generated body for SwiftUI
     var body: some View {
-        if let systemImage = component.imageURL {
+        if let systemImage = component.url {
             Label(
                 component.title ?? "Label",
                 systemImage: systemImage
