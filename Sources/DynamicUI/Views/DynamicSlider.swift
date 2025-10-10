@@ -60,7 +60,6 @@ struct DynamicSlider: View {
             Text("\(component.maximum ?? "")")
         }
         .set(modifiers: component)
-
 #else
         EmptyView()
 #endif
