@@ -22,7 +22,7 @@ struct DynamicUIModifier: ViewModifier {
     //       possibly by refactoring how modifiers are represented or applied.
     func body(content: Content) -> some View {
         // swiftlint:disable:previous cyclomatic_complexity function_body_length
-        var tempView = AnyView(content)
+        var tempView = content
 
         modifiers?.forEach { key, value in
             switch key {
@@ -30,23 +30,23 @@ struct DynamicUIModifier: ViewModifier {
                 guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *),
                       let string = value.toString(),
                       let color = DynamicUIHelper.translateColor(string) else { break }
-                tempView = AnyView(tempView.foregroundStyle(color))
+                tempView = tempView.foregroundStyle(color)
 
             case "background", "backgroundColor", "backgroundStyle":
                 guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *),
                       let string = value.toString(),
                       let color = DynamicUIHelper.translateColor(string) else { break }
-                tempView = AnyView(tempView.background(color))
+                tempView = tempView.background(color)
 
             case "fontWeight":
                 guard #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *),
                       let string = value.toString(),
                       let weight = DynamicUIHelper.translateFontWeight(string) else { break }
-                tempView = AnyView(tempView.fontWeight(weight))
+                tempView = tempView.fontWeight(weight)
 
             case "font":
                 guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *) else { break }
-                tempView = AnyView(tempView.font(.none))
+                tempView = tempView.font(.none)
 
             case "frame":
                 guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *) else { break }
@@ -62,24 +62,20 @@ struct DynamicUIModifier: ViewModifier {
                     let alignment = DynamicUIHelper.translateAlignment(frameDict["alignment"]?.toString())
 
                     if width != nil || height != nil {
-                        tempView = AnyView(
-                            tempView.frame(
-                                width: width,
-                                height: height,
-                                alignment: alignment
-                            )
+                        tempView = tempView.frame(
+                            width: width,
+                            height: height,
+                            alignment: alignment
                         )
                     } else {
-                        tempView = AnyView(
-                            tempView.frame(
-                                minWidth: minWidth,
-                                idealWidth: idealWidth,
-                                maxWidth: maxWidth,
-                                minHeight: minHeight,
-                                idealHeight: idealHeight,
-                                maxHeight: maxHeight,
-                                alignment: alignment
-                            )
+                        tempView = tempView.frame(
+                            minWidth: minWidth,
+                            idealWidth: idealWidth,
+                            maxWidth: maxWidth,
+                            minHeight: minHeight,
+                            idealHeight: idealHeight,
+                            maxHeight: maxHeight,
+                            alignment: alignment
                         )
                     }
                 }
@@ -87,18 +83,18 @@ struct DynamicUIModifier: ViewModifier {
             case "opacity":
                 guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
                       let opacity = value.toDouble() else { break }
-                tempView = AnyView(tempView.opacity(opacity))
+                tempView = tempView.opacity(opacity)
 
             case "disabled":
                 guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *),
                       let disabled = value.toBool() else { break }
-                tempView = AnyView(tempView.disabled(disabled))
+                tempView = tempView.disabled(disabled)
 
             case "padding":
                 if value.toBool() != nil {
-                    tempView = AnyView(tempView.padding())
+                    tempView = tempView.padding()
                 } else if let padding = value.toDouble() {
-                    tempView = AnyView(tempView.padding(padding))
+                    tempView = tempView.padding(padding)
                 } else {
                     break
                 }
