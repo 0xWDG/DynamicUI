@@ -116,14 +116,20 @@ extension View {
     ) -> some View {
         var view = content
 
-        if let string = modifiers?["color"]?.toString(),
-           let color = DynamicUIHelper.translateColor(string) {
-            view = view.foregroundStyle(color)
-        }
+        modifiers?.forEach { key, value in
+            switch key {
+             case "color", "foregroundStyle", "foregroundColor":
+                guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *),
+                      let string = value.toString(),
+                      let color = DynamicUIHelper.translateColor(string) else { break }
+                view = view.foregroundStyle(color)
 
-        if let string = modifiers?["background"]?.toString(),
-           let color = DynamicUIHelper.translateColor(string) {
-            view = view.background(color)
+            case "background", "backgroundColor", "backgroundStyle":
+                guard #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *),
+                      let string = value.toString(),
+                      let color = DynamicUIHelper.translateColor(string) else { break }
+                view = view.background(color)
+            }
         }
 
         view
