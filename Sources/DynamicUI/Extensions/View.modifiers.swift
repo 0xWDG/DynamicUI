@@ -112,7 +112,7 @@ extension View {
     @ViewBuilder
     func applyDynamicModifiers<Content: View>(
         to content: Content,
-        modifiers: [String: Any]?
+        modifiers: [String: AnyCodable]?
     ) -> some View {
         var view = content
 
