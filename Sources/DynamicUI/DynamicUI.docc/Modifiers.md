@@ -30,6 +30,7 @@ You can change the font weight of a component using the `fontWeight` modifier.
    }
 }
 ```
+
 ## Font Modifiers
 
 [TODO] You can customize the font of a component using the `font` modifier.
@@ -43,6 +44,47 @@ You can change the font weight of a component using the `fontWeight` modifier.
            "size": 16,
            "weight": "bold"
        }
+   }
+}
+```
+
+## Bold Modifier
+
+You can make the font of a component bold using the `bold` modifier.
+
+```json
+{
+   "type": "Text",
+   "title": "Title",
+   "modifiers": {
+       "bold": true
+   }
+}
+```
+
+## Italic Modifier
+
+You can make the font of a component italic using the `italic` modifier.
+
+```json
+{
+   "type": "Text",
+   "title": "Title",
+   "modifiers": {
+       "italic": true
+   }
+}
+```
+## Monospaced Modifier
+
+You can make the font of a component monospaced using the `monospaced` modifier.
+
+```json
+{
+   "type": "Text",
+   "title": "Title",
+   "modifiers": {
+       "monospaced": true
    }
 }
 ```

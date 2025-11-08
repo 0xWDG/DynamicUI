@@ -39,7 +39,7 @@ public struct DynamicUIComponent: Codable, Hashable {
     public let defaultValue: AnyCodable?
 
     /// Modifiers to components (not yet used)
-    public let modifiers: [String: AnyCodable]?
+    public var modifiers: [String: AnyCodable]?
 
     /// Parameters of component (not yet used)
     public let parameters: [String: AnyCodable]?
