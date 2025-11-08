@@ -9,6 +9,7 @@
 //  MIT LICENCE
 
 import SwiftUI
+import OSLog
 
 struct DynamicUIModifier: ViewModifier {
     /// The modifiers to apply
@@ -47,6 +48,18 @@ struct DynamicUIModifier: ViewModifier {
             case "font":
                 guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *) else { break }
                 tempView = AnyView(tempView.font(.none))
+
+            case "bold":
+                guard #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) else { break }
+                tempView = AnyView(tempView.bold(value.toBool() ?? true))
+
+            case "italic":
+                guard #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) else { break }
+                tempView = AnyView(tempView.italic(value.toBool() ?? true))
+
+            case "monospaced":
+                guard #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) else { break }
+                tempView = AnyView(tempView.monospaced(value.toBool() ?? true))
 
             case "frame":
                 guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *) else { break }
@@ -133,13 +146,18 @@ extension View {
     /// - Returns: The modified view
     func set(modifiers: DynamicUIComponent) -> some View {
         var tempView = AnyView(self)
+        var modifiers = modifiers
 
         if let identifier = modifiers.identifier {
             tempView = AnyView(tempView.id(identifier))
         }
 
         if let disabled = modifiers.disabled {
-            tempView = AnyView(tempView.disabled(disabled))
+            if modifiers.modifiers == nil {
+                modifiers.modifiers = ["disabled": .bool(disabled)]
+            } else {
+                modifiers.modifiers?.updateValue(.bool(disabled), forKey: "disabled")
+            }
         }
 
         return tempView.dynamicUIModifiers(modifiers.modifiers)
@@ -156,8 +174,15 @@ extension View {
                "title": "Title",
                "disabled": true,
                "modifiers": {
-                   "foregroundColor": "purple"
+                   "foregroundColor": "purple",
+                   "bold": true,
+                   "monospaced": true
                }
+            },
+            {
+                "type": "Button",
+                "title": "Button (disabled)",
+                "disabled": true
             }
         ]
     """
