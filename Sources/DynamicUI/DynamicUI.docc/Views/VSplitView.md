@@ -11,7 +11,7 @@ This example demonstrates how to define a `VSplitView` using DynamicUI's JSON sc
               "type": "Text",
               "title": "Content goes here",
             }
-         ]
+       ]
        }
     }
 ]
