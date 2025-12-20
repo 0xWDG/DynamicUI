@@ -8,11 +8,11 @@ This example demonstrates how to define a `DisclosureGroup` using DynamicUI's JS
        "type": "DisclosureGroup",
        "title": "Title",
        "children": [
-              {
-                "type": "Text",
-                "title": "Content goes here",
-              }
-        ]
+            {
+              "type": "Text",
+              "title": "Content goes here",
+            }
+       ]
     }
 ]
 ```
