@@ -12,8 +12,7 @@ This example demonstrates how to define a `DisclosureGroup` using DynamicUI's JS
                 "type": "Text",
                 "title": "Content goes here",
               }
-         ]
-       }
+        ]
     }
 ]
 ```
