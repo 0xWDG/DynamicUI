@@ -12,7 +12,6 @@ This example demonstrates how to define a `VStack` using DynamicUI's JSON schema
               "title": "Content goes here",
             }
        ]
-       }
     }
 ]
 ```
