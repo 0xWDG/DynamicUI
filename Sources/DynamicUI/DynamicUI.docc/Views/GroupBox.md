@@ -11,7 +11,7 @@ This example demonstrates how to define a `GroupBox` using DynamicUI's JSON sche
               "type": "Text",
               "title": "Content goes here",
             }
-        ]
+       ]
     }
 ]
 ```
