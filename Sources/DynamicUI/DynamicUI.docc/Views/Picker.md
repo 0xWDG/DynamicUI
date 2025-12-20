@@ -23,7 +23,7 @@ This example demonstrates how to define a `Picker` using DynamicUI's JSON schema
               "type": "Text",
               "title": "Item 3"
             }
-        ]
+       ]
     }
 ]
 ```
