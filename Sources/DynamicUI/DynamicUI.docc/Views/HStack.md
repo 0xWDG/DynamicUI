@@ -11,7 +11,7 @@ This example demonstrates how to define a `HStack` using DynamicUI's JSON schema
               "type": "Text",
               "title": "Content goes here",
             }
-        ]
+       ]
     }
 ]
 ```
