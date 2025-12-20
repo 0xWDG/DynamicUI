@@ -7,12 +7,11 @@ This example demonstrates how to define a `List` using DynamicUI's JSON schema.
     {
        "type": "List",
        "children": [
-              {
-                "type": "Text",
-                "title": "Content goes here",
-              }
-         ]
-       }
+            {
+              "type": "Text",
+              "title": "Content goes here",
+            }
+        ]
     }
 ]
 ```

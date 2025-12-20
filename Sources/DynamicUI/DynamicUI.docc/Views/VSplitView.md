@@ -7,10 +7,10 @@ This example demonstrates how to define a `VSplitView` using DynamicUI's JSON sc
     {
        "type": "VSplitView",
        "children": [
-              {
-                "type": "Text",
-                "title": "Content goes here",
-              }
+            {
+              "type": "Text",
+              "title": "Content goes here",
+            }
          ]
        }
     }

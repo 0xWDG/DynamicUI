@@ -7,24 +7,23 @@ This example demonstrates how to define a `Picker` using DynamicUI's JSON schema
     {
        "type": "Picker",
        "children": [
-              {
-                "identifier": "item1",
-                "type": "Text",
-                "title": "Item 1"
-              },
-              {
-                "identifier": "item2",
-                "type": "Text",
-                "title": "Item 2",
-                "disabled": true
-              },
-              {
-                "identifier": "item3",
-                "type": "Text",
-                "title": "Item 3"
-              }
-         ]
-       }
+            {
+              "identifier": "item1",
+              "type": "Text",
+              "title": "Item 1"
+            },
+            {
+              "identifier": "item2",
+              "type": "Text",
+              "title": "Item 2",
+              "disabled": true
+            },
+            {
+              "identifier": "item3",
+              "type": "Text",
+              "title": "Item 3"
+            }
+        ]
     }
 ]
 ```

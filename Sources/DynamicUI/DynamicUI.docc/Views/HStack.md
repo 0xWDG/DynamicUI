@@ -7,12 +7,11 @@ This example demonstrates how to define a `HStack` using DynamicUI's JSON schema
     {
        "type": "HStack",
        "children": [
-              {
-                "type": "Text",
-                "title": "Content goes here",
-              }
-         ]
-       }
+            {
+              "type": "Text",
+              "title": "Content goes here",
+            }
+        ]
     }
 ]
 ```

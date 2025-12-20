@@ -8,12 +8,11 @@ This example demonstrates how to define a `Section` using DynamicUI's JSON schem
        "type": "Section",
        "title": "Section Title",
        "children": [
-              {
-                "type": "Text",
-                "title": "Content goes here",
-              }
-         ]
-       }
+            {
+              "type": "Text",
+              "title": "Content goes here",
+            }
+        ]
     }
 ]
 ```

@@ -7,12 +7,11 @@ This example demonstrates how to define a `GroupBox` using DynamicUI's JSON sche
     {
        "type": "GroupBox",
        "children": [
-              {
-                "type": "Text",
-                "title": "Content goes here",
-              }
-         ]
-       }
+            {
+              "type": "Text",
+              "title": "Content goes here",
+            }
+        ]
     }
 ]
 ```
