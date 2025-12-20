@@ -12,7 +12,6 @@ This example demonstrates how to define a `ZStack` using DynamicUI's JSON schema
               "title": "Content goes here",
             }
        ]
-       }
     }
 ]
 ```
