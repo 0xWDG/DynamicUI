@@ -12,7 +12,7 @@ This example demonstrates how to define a `Section` using DynamicUI's JSON schem
               "type": "Text",
               "title": "Content goes here",
             }
-        ]
+       ]
     }
 ]
 ```
