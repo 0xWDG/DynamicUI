@@ -11,7 +11,7 @@ This example demonstrates how to define a `NavigationView` using DynamicUI's JSO
               "type": "Text",
               "title": "Content goes here",
             }
-        ]
+       ]
     }
 ]
 ```
