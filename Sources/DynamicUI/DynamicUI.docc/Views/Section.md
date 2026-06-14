@@ -10,7 +10,7 @@ This example demonstrates how to define a `Section` using DynamicUI's JSON schem
        "children": [
             {
               "type": "Text",
-              "title": "Content goes here",
+              "title": "Content goes here"
             }
        ]
     }

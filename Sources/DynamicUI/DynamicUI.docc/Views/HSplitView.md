@@ -9,7 +9,7 @@ This example demonstrates how to define a `HSplitView` using DynamicUI's JSON sc
        "children": [
             {
               "type": "Text",
-              "title": "Content goes here",
+              "title": "Content goes here"
             }
       ]
     }

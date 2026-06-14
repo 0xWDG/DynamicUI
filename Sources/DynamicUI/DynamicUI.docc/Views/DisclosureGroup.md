@@ -10,7 +10,7 @@ This example demonstrates how to define a `DisclosureGroup` using DynamicUI's JS
        "children": [
             {
               "type": "Text",
-              "title": "Content goes here",
+              "title": "Content goes here"
             }
        ]
     }

@@ -9,7 +9,7 @@ This example demonstrates how to define a `NavigationView` using DynamicUI's JSO
        "children": [
             {
               "type": "Text",
-              "title": "Content goes here",
+              "title": "Content goes here"
             }
        ]
     }
