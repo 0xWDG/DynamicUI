@@ -84,3 +84,40 @@ public struct DynamicUIComponent: Codable, Hashable {
     /// - Note: Do not init state in your UIComponent unless needed.
     public var state: AnyCodable?
 }
+
+extension DynamicUIComponent {
+    /// Returns a component with conditional string expressions resolved.
+    func resolvingStrings(values: [String: AnyCodable]) -> DynamicUIComponent {
+        DynamicUIComponent(
+            type: type,
+            title: title.map { DynamicUIExpression.resolve($0, values: values) },
+            text: text.map { DynamicUIExpression.resolve($0, values: values) },
+            identifier: identifier,
+            eventHandler: eventHandler,
+            defaultValue: defaultValue,
+            modifiers: modifiers?.mapValues { $0.resolvingStrings(values: values) },
+            parameters: parameters?.mapValues { $0.resolvingStrings(values: values) },
+            url: url.map { DynamicUIExpression.resolve($0, values: values) },
+            children: children?.map { $0.resolvingStrings(values: values) },
+            minimum: minimum.map { DynamicUIExpression.resolve($0, values: values) },
+            minimumValue: minimumValue,
+            maximum: maximum.map { DynamicUIExpression.resolve($0, values: values) },
+            maximumValue: maximumValue,
+            disabled: disabled,
+            state: state
+        )
+    }
+}
+
+private extension AnyCodable {
+    func resolvingStrings(values: [String: AnyCodable]) -> AnyCodable {
+        switch self {
+        case .string(let value):
+            return .string(DynamicUIExpression.resolve(value, values: values))
+        case .dictionary(let value):
+            return .dictionary(value.mapValues { $0.resolvingStrings(values: values) })
+        default:
+            return self
+        }
+    }
+}

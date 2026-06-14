@@ -32,23 +32,18 @@ struct DynamicButton: View {
     /// Internal: dynamicUIEnvironment
     private var dynamicUIEnvironment
 
-    /// The state of the Button
-    @State
-    private var state: Double
-
     /// The component to display
     private let component: DynamicUIComponent
 
     /// Initialize the DynamicButton
     init(_ component: DynamicUIComponent) {
-        self.state = component.defaultValue?.toDouble() ?? 0
         self.component = component
     }
 
     /// Generated body for SwiftUI
     var body: some View {
         Button(action: {
-            dynamicUIEnvironment.component = component
+            dynamicUIEnvironment.sendUpdate(component)
         }, label: {
             Text(component.title ?? "Button")
         })

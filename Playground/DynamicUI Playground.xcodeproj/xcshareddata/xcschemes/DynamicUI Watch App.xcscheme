@@ -84,7 +84,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2BEC27002E942FE9002A29EF"
             BuildableName = "DynamicUI Watch App.app"
-            BlueprintName = "DynamicUI Watch App"
             ReferencedContainer = "container:DynamicUI Playground.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -101,7 +100,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2BEC27002E942FE9002A29EF"
             BuildableName = "DynamicUI Watch App.app"
-            BlueprintName = "DynamicUI Watch App"
             ReferencedContainer = "container:DynamicUI Playground.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

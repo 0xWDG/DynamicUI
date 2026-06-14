@@ -2,11 +2,90 @@ import XCTest
 @testable import DynamicUI
 
 final class DynamicUITests: XCTestCase {
-    func testExample() throws {
-        // XCTest Documentation
-        // https://developer.apple.com/documentation/xctest
+    func testAnyCodableRoundTripsNaturalJSONValues() throws {
+        let json = """
+            {
+                "string": "value",
+                "int": 42,
+                "double": 4.5,
+                "bool": true,
+                "dictionary": {
+                    "nested": "value"
+                },
+                "none": null
+            }
+            """
+        let data = Data(json.utf8)
 
-        // Defining Test Cases and Test Methods
-        // https://developer.apple.com/documentation/xctest/defining_test_cases_and_test_methods
+        let decoded = try JSONDecoder().decode([String: AnyCodable].self, from: data)
+        let encoded = try JSONEncoder().encode(decoded)
+        let roundTripped = try JSONDecoder().decode([String: AnyCodable].self, from: encoded)
+
+        XCTAssertEqual(roundTripped, decoded)
+    }
+
+    func testComponentDecodesNestedChildrenAndModifiers() throws {
+        let json = """
+            {
+                "type": "VStack",
+                "modifiers": {
+                    "padding": true
+                },
+                "children": [
+                    {
+                        "type": "Text",
+                        "title": "Hello"
+                    }
+                ]
+            }
+            """
+
+        let component = try JSONDecoder().decode(
+            DynamicUIComponent.self,
+            from: Data(json.utf8)
+        )
+
+        XCTAssertEqual(component.type, "VStack")
+        XCTAssertEqual(component.modifiers?["padding"], .bool(true))
+        XCTAssertEqual(component.children?.first?.title, "Hello")
+    }
+
+    func testConditionalExpressionSelectsValueUsingIdentifierState() {
+        let expression = "{$myIdentifier ? star.fill : star}"
+
+        XCTAssertEqual(
+            DynamicUIExpression.resolve(expression, values: ["myIdentifier": .bool(true)]),
+            "star.fill"
+        )
+        XCTAssertEqual(
+            DynamicUIExpression.resolve(expression, values: ["myIdentifier": .bool(false)]),
+            "star"
+        )
+    }
+
+    func testConditionalExpressionDefaultsToFalseValueForMissingIdentifier() {
+        XCTAssertEqual(
+            DynamicUIExpression.resolve("{$missing ? Visible : Hidden}", values: [:]),
+            "Hidden"
+        )
+    }
+
+    func testComponentResolvesConditionalStringsRecursively() throws {
+        let json = """
+            {
+                "type": "Label",
+                "title": "{$myIdentifier ? Shine : Dim}",
+                "url": "{$myIdentifier ? star.fill : star}"
+            }
+            """
+        let component = try JSONDecoder().decode(
+            DynamicUIComponent.self,
+            from: Data(json.utf8)
+        )
+
+        let resolved = component.resolvingStrings(values: ["myIdentifier": .bool(true)])
+
+        XCTAssertEqual(resolved.title, "Shine")
+        XCTAssertEqual(resolved.url, "star.fill")
     }
 }

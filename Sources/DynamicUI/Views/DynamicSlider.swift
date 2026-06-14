@@ -37,32 +37,40 @@ struct DynamicSlider: View {
 
     /// The component to display
     private let component: DynamicUIComponent
+    private let range: ClosedRange<Double>
 
     /// Initialize the DynamicSlider
     init(_ component: DynamicUIComponent) {
-        self.state = component.defaultValue?.toDouble() ?? 0
+        let minimum = component.minimumValue ?? 0
+        let maximum = max(component.maximumValue ?? 1, minimum.nextUp)
+        let initialValue = component.defaultValue?.toDouble() ?? minimum
+
+        self._state = State(initialValue: min(max(initialValue, minimum), maximum))
         self.component = component
+        self.range = minimum...maximum
     }
 
     /// Generated body for SwiftUI
     var body: some View {
 #if !os(tvOS)
-        Slider(value: $state.onChange({ newState in
-            var newComponent = component
-            newComponent.state = .double(newState)
-
-            dynamicUIEnvironment.component = newComponent
-        })) {
+        Slider(value: $state, in: range) {
             Text("\(component.title ?? "")")
         } minimumValueLabel: {
             Text("\(component.minimum ?? "")")
         } maximumValueLabel: {
             Text("\(component.maximum ?? "")")
         }
+        .onChange(of: state, perform: sendUpdate)
         .set(modifiers: component)
 #else
         EmptyView()
 #endif
+    }
+
+    private func sendUpdate(_ state: Double) {
+        var updatedComponent = component
+        updatedComponent.state = .double(state)
+        dynamicUIEnvironment.sendUpdate(updatedComponent)
     }
 }
 

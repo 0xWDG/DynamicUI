@@ -41,14 +41,14 @@ struct DynamicHSplitView: View {
 #if os(macOS)
         HSplitView {
             if let children = component.children {
-                AnyView(dynamicUIEnvironment.buildView(for: children))
+                dynamicUIEnvironment.buildView(for: children)
             }
         }
         .set(modifiers: component)
 #else
         HStack {
             if let children = component.children {
-                AnyView(dynamicUIEnvironment.buildView(for: children))
+                dynamicUIEnvironment.buildView(for: children)
             }
         }
         .set(modifiers: component)

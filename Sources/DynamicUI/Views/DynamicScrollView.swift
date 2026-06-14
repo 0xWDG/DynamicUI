@@ -41,7 +41,7 @@ struct DynamicScrollView: View {
     var body: some View {
         ScrollView {
             if let children = component.children {
-                AnyView(dynamicUIEnvironment.buildView(for: children))
+                dynamicUIEnvironment.buildView(for: children)
             }
         }
         .set(modifiers: component)

@@ -41,7 +41,7 @@ struct DynamicForm: View {
     var body: some View {
         Form {
             if let children = component.children {
-                AnyView(dynamicUIEnvironment.buildView(for: children))
+                dynamicUIEnvironment.buildView(for: children)
             }
         }
         .set(modifiers: component)

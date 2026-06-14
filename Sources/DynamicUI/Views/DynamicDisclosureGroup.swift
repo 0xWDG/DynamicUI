@@ -42,7 +42,7 @@ struct DynamicDisclosureGroup: View {
 #if !os(tvOS) && !os(watchOS)
         DisclosureGroup("\(component.title ?? "")") {
             if let children = component.children {
-                AnyView(dynamicUIEnvironment.buildView(for: children))
+                dynamicUIEnvironment.buildView(for: children)
             }
         }
         .set(modifiers: component)

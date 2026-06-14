@@ -41,7 +41,7 @@ struct DynamicSection: View {
     @ViewBuilder
     private var childrenView: some View {
         if let children = component.children {
-            AnyView(dynamicUIEnvironment.buildView(for: children))
+            dynamicUIEnvironment.buildView(for: children)
         }
     }
 
