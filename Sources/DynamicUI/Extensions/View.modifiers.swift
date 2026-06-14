@@ -46,8 +46,8 @@ struct DynamicUIModifier: ViewModifier {
                 tempView = AnyView(tempView.fontWeight(weight))
 
             case "font":
-                guard #available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *) else { break }
-                tempView = AnyView(tempView.font(.none))
+                guard let font = DynamicUIHelper.translateFont(value) else { break }
+                tempView = AnyView(tempView.font(font))
 
             case "bold":
                 guard #available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *) else { break }
@@ -108,13 +108,35 @@ struct DynamicUIModifier: ViewModifier {
                 tempView = AnyView(tempView.disabled(disabled))
 
             case "padding":
-                if value.toBool() != nil {
+                if let edges = value.toDictionary() {
+                    tempView = AnyView(tempView.padding(DynamicUIHelper.translateEdgeInsets(edges)))
+                } else if value.toBool() == true {
                     tempView = AnyView(tempView.padding())
                 } else if let padding = value.toDouble() {
                     tempView = AnyView(tempView.padding(padding))
                 } else {
                     break
                 }
+
+            case "margin":
+                guard let edges = value.toDictionary() else { break }
+                tempView = AnyView(tempView.padding(DynamicUIHelper.translateEdgeInsets(edges)))
+
+            case "shadow":
+                guard let shadow = value.toDictionary(),
+                      let radius = shadow["radius"]?.toDouble() else { break }
+                let color = shadow["color"]?.toString()
+                    .flatMap(DynamicUIHelper.translateColor) ?? .black
+                let horizontalOffset = shadow["x"]?.toDouble() ?? 0
+                let verticalOffset = shadow["y"]?.toDouble() ?? 0
+                tempView = AnyView(
+                    tempView.shadow(
+                        color: color,
+                        radius: radius,
+                        x: horizontalOffset,
+                        y: verticalOffset
+                    )
+                )
 
             default:
                 break

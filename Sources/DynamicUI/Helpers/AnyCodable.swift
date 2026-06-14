@@ -82,13 +82,16 @@ extension AnyCodable {
     }
 
     /// Convert value to Double
-    /// - Returns: value if it is a double
+    /// - Returns: value if it is a double or integer
     public func toDouble() -> Double? {
-        if case let .double(double) = self {
+        switch self {
+        case .double(let double):
             return double
+        case .int(let int):
+            return Double(int)
+        default:
+            return nil
         }
-
-        return nil
     }
 
     /// Convert value to Bool

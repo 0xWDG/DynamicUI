@@ -9,7 +9,7 @@ Create a SwiftUI user interface through a JSON file. The JSON file will contain 
 ## Requirements
 
 - Swift 5.9+ (Xcode 15+)
-- iOS 15+, macOS 12+, tvOS 14+, watchOS 7+, macCatalyst 15+, visionOS 1.0+
+- iOS 15+, macOS 12+, tvOS 14+, watchOS 8+, macCatalyst 15+, visionOS 1.0+
 
 ## Installation
 
