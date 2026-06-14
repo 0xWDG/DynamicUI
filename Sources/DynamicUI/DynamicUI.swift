@@ -246,8 +246,11 @@ public struct DynamicUI: View {
             case "Picker":
                 DynamicPicker(component)
 
-            // NavigationSplitView
-            // TabView
+            case "NavigationSplitView":
+                DynamicNavigationSplitView(component)
+
+            case "TabView":
+                DynamicTabView(component)
 
             default:
                 EmptyView()

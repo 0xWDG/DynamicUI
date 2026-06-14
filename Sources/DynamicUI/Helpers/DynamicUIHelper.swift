@@ -148,6 +148,63 @@ class DynamicUIHelper {
             return .center
         }
     }
+
+    /// Translate a dynamic font value to a native ``Font``.
+    ///
+    /// - Parameter input: A text style string or dictionary containing `size` and optional `weight`.
+    /// - Returns: Translated ``Font``, or `nil` for an unsupported value.
+    static func translateFont(_ input: AnyCodable) -> Font? {
+        if let style = input.toString() {
+            switch style {
+            case "largeTitle":
+                return .largeTitle
+            case "title":
+                return .title
+            case "title2":
+                return .title2
+            case "title3":
+                return .title3
+            case "headline":
+                return .headline
+            case "subheadline":
+                return .subheadline
+            case "body":
+                return .body
+            case "callout":
+                return .callout
+            case "footnote":
+                return .footnote
+            case "caption":
+                return .caption
+            case "caption2":
+                return .caption2
+            default:
+                return nil
+            }
+        }
+
+        guard let font = input.toDictionary(),
+              let size = font["size"]?.toDouble() else {
+            return nil
+        }
+
+        let weight = font["weight"]?.toString()
+            .flatMap(translateFontWeight) ?? .regular
+        return .system(size: size, weight: weight)
+    }
+
+    /// Translate a dictionary of edge values to native ``EdgeInsets``.
+    ///
+    /// - Parameter input: Edge values keyed by `top`, `leading`, `bottom`, and `trailing`.
+    /// - Returns: Translated ``EdgeInsets``.
+    static func translateEdgeInsets(_ input: [String: AnyCodable]) -> EdgeInsets {
+        EdgeInsets(
+            top: input["top"]?.toDouble() ?? 0,
+            leading: input["leading"]?.toDouble() ?? 0,
+            bottom: input["bottom"]?.toDouble() ?? 0,
+            trailing: input["trailing"]?.toDouble() ?? 0
+        )
+    }
 }
 
 /// Resolves conditional expressions used in string values from the JSON layout.
