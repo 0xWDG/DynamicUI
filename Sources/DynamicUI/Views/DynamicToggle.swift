@@ -49,15 +49,17 @@ struct DynamicToggle: View {
 
     /// Generated body for SwiftUI
     var body: some View {
-        Toggle(isOn: $state.onChange({ newState in
-            var newComponent = component
-            newComponent.state = .bool(newState)
-
-            dynamicUIEnvironment.component = newComponent
-        })) {
+        Toggle(isOn: $state) {
             Text(title)
         }
+        .onChange(of: state, perform: sendUpdate)
         .set(modifiers: component)
+    }
+
+    private func sendUpdate(_ state: Bool) {
+        var updatedComponent = component
+        updatedComponent.state = .bool(state)
+        dynamicUIEnvironment.sendUpdate(updatedComponent)
     }
 }
 

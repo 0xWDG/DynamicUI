@@ -47,13 +47,15 @@ struct DynamicTextField: View {
     var body: some View {
         TextField(
             "\(component.title ?? "")",
-            text: $state.onChange({ _ in
-                var newComponent = component
-                newComponent.state = .string(state)
-
-                dynamicUIEnvironment.component = newComponent
-            })
+            text: $state
         )
+        .onChange(of: state, perform: sendUpdate)
         .set(modifiers: component)
+    }
+
+    private func sendUpdate(_ state: String) {
+        var updatedComponent = component
+        updatedComponent.state = .string(state)
+        dynamicUIEnvironment.sendUpdate(updatedComponent)
     }
 }

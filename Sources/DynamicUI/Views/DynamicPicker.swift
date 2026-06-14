@@ -39,22 +39,30 @@ struct DynamicPicker: View {
 
     /// Initialize the DynamicPicker
     init(_ component: DynamicUIComponent) {
-        self.state = component.defaultValue?.toDouble() ?? 0
+        let lastIndex = Double(max((component.children?.count ?? 1) - 1, 0))
+        let initialValue = component.defaultValue?.toDouble() ?? 0
+
+        self._state = State(initialValue: min(max(initialValue, 0), lastIndex))
         self.component = component
     }
 
     /// Generated body for SwiftUI
     var body: some View {
-        Picker(component.title ?? "", selection: $state.onChange({ newState in
-            var newComponent = component
-            newComponent.state = .double(newState)
-
-            dynamicUIEnvironment.component = newComponent
-        })) {
+        Picker(component.title ?? "", selection: $state) {
             if let children = component.children {
-                AnyView(dynamicUIEnvironment.buildView(for: children))
+                ForEach(children.indices, id: \.self) { index in
+                    dynamicUIEnvironment.buildView(for: [children[index]])
+                        .tag(Double(index))
+                }
             }
         }
+        .onChange(of: state, perform: sendUpdate)
         .set(modifiers: component)
+    }
+
+    private func sendUpdate(_ state: Double) {
+        var updatedComponent = component
+        updatedComponent.state = .double(state)
+        dynamicUIEnvironment.sendUpdate(updatedComponent)
     }
 }

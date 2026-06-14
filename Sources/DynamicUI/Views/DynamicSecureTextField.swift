@@ -49,6 +49,13 @@ struct DynamicSecureField: View {
             "\(component.title ?? "")",
             text: $state
         )
+        .onChange(of: state, perform: sendUpdate)
         .set(modifiers: component)
+    }
+
+    private func sendUpdate(_ state: String) {
+        var updatedComponent = component
+        updatedComponent.state = .string(state)
+        dynamicUIEnvironment.sendUpdate(updatedComponent)
     }
 }

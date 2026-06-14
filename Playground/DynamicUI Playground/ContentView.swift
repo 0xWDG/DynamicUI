@@ -31,7 +31,7 @@ struct ContentView: View {
                     {
                         "type": "Toggle",
                         "title": "Toggle me",
-                        "identifier": "my.toggle.1"
+                        "identifier": "myIdentifier"
                     },
                     {
                         "type": "Text",
@@ -44,7 +44,12 @@ struct ContentView: View {
                     {
                         "type": "Label",
                         "title": "Shine",
-                        "url": "star"
+                        "url": "{$myIdentifier ? star.fill : star}"
+                    },
+                    {
+                        "type": "Label",
+                        "title": "{$myIdentifier ? Ready to party : Waiting}",
+                        "url": "{$myIdentifier ? balloon.fill : balloon}"
                     }
                 ]
             }

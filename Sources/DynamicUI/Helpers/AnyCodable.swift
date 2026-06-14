@@ -123,41 +123,44 @@ extension AnyCodable {
 }
 
 extension AnyCodable: Codable, Equatable, Hashable {
-    enum CodingKeys: String, CodingKey {
-        case string, int, data, double, bool, dictionary
-    }
-
     /// Decode the values
     ///
     /// - Parameter decoder:
     public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+
+        if container.decodeNil() {
+            self = .none
+            return
+        }
+
         // Try to decode in order of most specific/common JSON types.
-        if let int = try? decoder.singleValueContainer().decode(Int.self) {
+        if let int = try? container.decode(Int.self) {
             self = .int(int)
             return
         }
 
-        if let string = try? decoder.singleValueContainer().decode(String.self) {
+        if let string = try? container.decode(String.self) {
             self = .string(string)
             return
         }
 
-        if let data = try? decoder.singleValueContainer().decode(Data.self) {
+        if let data = try? container.decode(Data.self) {
             self = .data(data)
             return
         }
 
-        if let double = try? decoder.singleValueContainer().decode(Double.self) {
+        if let double = try? container.decode(Double.self) {
             self = .double(double)
             return
         }
 
-        if let bool = try? decoder.singleValueContainer().decode(Bool.self) {
+        if let bool = try? container.decode(Bool.self) {
             self = .bool(bool)
             return
         }
 
-        if let dict = try? decoder.singleValueContainer().decode([String: AnyCodable].self) {
+        if let dict = try? container.decode([String: AnyCodable].self) {
             self = .dictionary(dict)
             return
         }
@@ -171,29 +174,29 @@ extension AnyCodable: Codable, Equatable, Hashable {
     ///
     /// - Parameter encoder: Encoder
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.singleValueContainer()
 
         switch self {
         case .string(let value):
-            try container.encode(value, forKey: .string)
+            try container.encode(value)
 
         case .int(let value):
-            try container.encode(value, forKey: .int)
+            try container.encode(value)
 
         case .data(let value):
-            try container.encode(value, forKey: .data)
+            try container.encode(value)
 
         case .double(let value):
-            try container.encode(value, forKey: .double)
+            try container.encode(value)
 
         case .bool(let value):
-            try container.encode(value, forKey: .bool)
+            try container.encode(value)
 
         case .dictionary(let value):
-            try container.encode(value, forKey: .dictionary)
+            try container.encode(value)
 
         case .none:
-            _ = ""
+            try container.encodeNil()
         }
     }
 

@@ -150,4 +150,57 @@ class DynamicUIHelper {
     }
 }
 
+/// Resolves conditional expressions used in string values from the JSON layout.
+enum DynamicUIExpression {
+    /// Resolve an expression such as `{$toggle ? star.fill : star}`.
+    ///
+    /// - Parameters:
+    ///   - input: The string that may contain a conditional expression.
+    ///   - values: Current component values keyed by identifier.
+    /// - Returns: The selected conditional value, or the original input when it is not an expression.
+    static func resolve(_ input: String, values: [String: AnyCodable]) -> String {
+        guard input.hasPrefix("{$"),
+              input.hasSuffix("}"),
+              let questionMark = input.firstIndex(of: "?"),
+              let colon = input[questionMark...].firstIndex(of: ":") else {
+            return input
+        }
+
+        let identifierStart = input.index(input.startIndex, offsetBy: 2)
+        let identifier = input[identifierStart..<questionMark].trimmingCharacters(in: .whitespacesAndNewlines)
+        let trueValueStart = input.index(after: questionMark)
+        let trueValue = input[trueValueStart..<colon].trimmingCharacters(in: .whitespacesAndNewlines)
+        let falseValueStart = input.index(after: colon)
+        let falseValueEnd = input.index(before: input.endIndex)
+        let falseValue = input[falseValueStart..<falseValueEnd].trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !identifier.isEmpty, !trueValue.isEmpty, !falseValue.isEmpty else {
+            return input
+        }
+
+        return values[identifier]?.isTruthy == true ? trueValue : falseValue
+    }
+}
+
+private extension AnyCodable {
+    var isTruthy: Bool {
+        switch self {
+        case .bool(let value):
+            return value
+        case .int(let value):
+            return value != 0
+        case .double(let value):
+            return value != 0
+        case .string(let value):
+            return !value.isEmpty
+        case .data(let value):
+            return !value.isEmpty
+        case .dictionary(let value):
+            return !value.isEmpty
+        case .none:
+            return false
+        }
+    }
+}
+
 // swiftlint:enable cyclomatic_complexity function_body_length

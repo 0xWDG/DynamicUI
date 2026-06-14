@@ -27,10 +27,6 @@ import SwiftUI
 /// - Note: This is a internal view, you should not use this directly. \
 ///         Use ``DynamicUI`` instead.
 struct DynamicProgressView: View {
-    @Environment(\.internalDynamicUIEnvironment)
-    /// Internal: dynamicUIEnvironment
-    private var dynamicUIEnvironment
-
     /// The component to display
     private let component: DynamicUIComponent
 

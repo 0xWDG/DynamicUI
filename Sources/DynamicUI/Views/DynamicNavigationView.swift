@@ -41,7 +41,7 @@ struct DynamicNavigationView: View {
     var body: some View {
         NavigationView {
             if let children = component.children {
-                AnyView(dynamicUIEnvironment.buildView(for: children))
+                dynamicUIEnvironment.buildView(for: children)
             }
         }
         .set(modifiers: component)

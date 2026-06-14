@@ -46,15 +46,17 @@ struct DynamicTextEditor: View {
     /// Generated body for SwiftUI
     var body: some View {
 #if os(iOS) || os(macOS)
-        TextEditor(text: $state.onChange({ _ in
-            var newComponent = component
-            newComponent.state = .string(state)
-
-            dynamicUIEnvironment.component = newComponent
-        }))
+        TextEditor(text: $state)
+        .onChange(of: state, perform: sendUpdate)
         .set(modifiers: component)
 #else
         DynamicTextField(component)
 #endif
+    }
+
+    private func sendUpdate(_ state: String) {
+        var updatedComponent = component
+        updatedComponent.state = .string(state)
+        dynamicUIEnvironment.sendUpdate(updatedComponent)
     }
 }
