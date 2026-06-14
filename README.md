@@ -1,6 +1,8 @@
 # DynamicUI
 
-Create a SwiftUI user interface through a JSON file. The JSON file will contain the structure of the user interface, and the program will create the user interface based on the JSON file.
+Create SwiftUI interfaces from JSON component trees. DynamicUI supports nested layouts,
+interactive controls, runtime value updates, conditional strings, and a focused set of SwiftUI
+modifiers.
 
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F0xWDG%2FDynamicUI%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/0xWDG/DynamicUI) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F0xWDG%2FDynamicUI%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/0xWDG/DynamicUI)
 [![Swift Package Manager](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://swift.org/package-manager)
@@ -13,7 +15,7 @@ Create a SwiftUI user interface through a JSON file. The JSON file will contain 
 
 ## Installation
 
-Install using Swift Package Manager
+Add DynamicUI using Swift Package Manager:
 
 ```swift
 dependencies: [
@@ -57,7 +59,7 @@ struct ContentView: View {
             "identifier": "my.toggle.1"
         }
     ]
-    """.data(using: .utf8)
+    """
 
     @State private var component: DynamicUIComponent?
     @State private var error: Error?
@@ -92,7 +94,22 @@ Conditional expressions can select a string value using another component's curr
 The syntax is `{$identifier ? valueWhenTrue : valueWhenFalse}`. It works in string-valued
 component fields, including `title`, `text`, `url`, modifiers, and parameters.
 
-## Usage (Legacy)
+## Handle interactions
+
+The `component` binding receives the latest interacted-with component. Stateful controls include
+their new value in `state`; `identifier` and `eventHandler` let your application route the update.
+
+```swift
+.onChange(of: component) { component in
+    guard let component else { return }
+
+    print(component.identifier as Any)
+    print(component.eventHandler as Any)
+    print(component.state as Any)
+}
+```
+
+You can use a callback instead of a binding:
 
 ```swift
 import SwiftUI
@@ -117,7 +134,7 @@ struct ContentView: View {
             "identifier": "my.toggle.1"
         }
     ]
-    """.data(using: .utf8)
+    """
 
     @State private var error: Error?
 
@@ -134,14 +151,35 @@ struct ContentView: View {
 }
 ```
 
-### Playground Application:
+## JSON schema
 
-In the directory `Playground` is a Xcode project to build the [Playground Application](#Playground)
-The playground application is available for macOS, iOS, watchOS, tvOS and visionOS.
+Every component requires a case-sensitive `type`. Common optional fields are:
 
-## Supported SwiftUI Views
+| Field | Purpose |
+| --- | --- |
+| `title` | Label, title, placeholder, or accessibility label |
+| `identifier` | Stable key for updates and conditional expressions |
+| `eventHandler` | Application-defined event name returned on interaction |
+| `defaultValue` | Initial value for stateful controls |
+| `children` | Nested component array for containers |
+| `url` | SF Symbol name for images, labels, and tab labels |
+| `disabled` | Disables the component |
+| `modifiers` | Visual and behavioral modifiers |
+| `minimumValue`, `maximumValue` | Numeric bounds for sliders and progress views |
 
-See the list in the [documentation over here](https://0xwdg.github.io/DynamicUI)
+Unknown component types render no view. Decode failures are written to the optional `error`
+binding and display a fallback error view.
+
+## Playground application
+
+The `Playground` directory contains an Xcode project with basic and exhaustive JSON examples. It
+is available for macOS, iOS, watchOS, tvOS, and visionOS.
+
+## Supported SwiftUI views
+
+DynamicUI supports content views, controls, layouts, containers, navigation, tabs, and split
+views. See the complete schema, platform behavior, component examples, and modifier reference in
+the [documentation](https://0xwdg.github.io/DynamicUI).
 
 ## Images
 
