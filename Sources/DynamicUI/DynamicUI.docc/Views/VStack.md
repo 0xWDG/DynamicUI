@@ -9,7 +9,7 @@ This example demonstrates how to define a `VStack` using DynamicUI's JSON schema
        "children": [
             {
               "type": "Text",
-              "title": "Content goes here",
+              "title": "Content goes here"
             }
        ]
     }
