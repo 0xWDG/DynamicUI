@@ -72,6 +72,26 @@ struct ContentView: View {
 }
 ```
 
+Conditional expressions can select a string value using another component's current state:
+
+```json
+[
+    {
+        "type": "Toggle",
+        "title": "Toggle me",
+        "identifier": "myIdentifier"
+    },
+    {
+        "type": "Label",
+        "title": "Shine",
+        "url": "{$myIdentifier ? star.fill : star}"
+    }
+]
+```
+
+The syntax is `{$identifier ? valueWhenTrue : valueWhenFalse}`. It works in string-valued
+component fields, including `title`, `text`, `url`, modifiers, and parameters.
+
 ## Usage (Legacy)
 
 ```swift

@@ -19,10 +19,7 @@ public struct DynamicUI: View {
     public typealias Callback = (DynamicUIComponent) -> Void
 
     /// JSON data to generate the interface from
-    private var json: Data?
-
-    /// Legacy callback support
-    private var legacyCallback: Callback?
+    private let json: Data
 
     /// Callback for interactions with the DynamicUIComponents
     @Binding
@@ -34,15 +31,15 @@ public struct DynamicUI: View {
 
     /// Internal error state
     @State
-    private var internalError: Error? {
-        didSet {
-            error = internalError
-        }
-    }
+    private var internalError: Error?
 
     /// This state is used to store the layout
     @State
     private var layout: [DynamicUIComponent]?
+
+    /// Current component values keyed by identifier.
+    @State
+    private var values: [String: AnyCodable] = [:]
 
     /// Initialize DynamicUI
     ///
@@ -61,7 +58,7 @@ public struct DynamicUI: View {
     /// - Parameter component: Binding for the dynamic UI element
     /// - Parameter error: Error message
     public init(json: String, component: Binding<DynamicUIComponent?>, error: Binding<Error?>? = nil) {
-        self.json = json.data(using: .utf8)
+        self.json = Data(json.utf8)
         self._component = component
         self._error = error ?? .constant(nil)
     }
@@ -73,7 +70,6 @@ public struct DynamicUI: View {
     /// - Parameter error: Error message
     public init(json: Data, callback: @escaping Callback, error: Binding<Error?>? = nil) {
         self.json = json
-        self.legacyCallback = callback
         self._component = Binding<DynamicUIComponent?>(
             get: { nil },
             set: { value in
@@ -91,8 +87,7 @@ public struct DynamicUI: View {
     /// - Parameter callback: Callback handler for updates
     /// - Parameter error: Error message
     public init(json: String, callback: @escaping Callback, error: Binding<Error?>? = nil) {
-        self.json = json.data(using: .utf8)
-        self.legacyCallback = callback
+        self.json = Data(json.utf8)
         self._component = Binding<DynamicUIComponent?>(
             get: { nil },
             set: { value in
@@ -109,6 +104,8 @@ public struct DynamicUI: View {
         VStack {
             if let layout = layout {
                 buildView(for: layout)
+                    .id(json)
+                    .environment(\.internalDynamicUIEnvironment, self)
             } else if let error = internalError {
                 Image(systemName: "exclamationmark.arrow.triangle.2.circlepath")
                     .resizable()
@@ -133,24 +130,26 @@ public struct DynamicUI: View {
                 Text("Generating interface...")
             }
         }
-        .onAppear {
+        .task(id: json) {
             decodeJSON()
         }
     }
 
     /// Decode the JSON data
     private func decodeJSON() {
-        self.internalError = nil
+        internalError = nil
+        error = nil
 
         do {
-            if let json = json {
-                self.layout = try JSONDecoder().decode(
-                    [DynamicUIComponent].self,
-                    from: json
-                )
-            }
+            layout = try JSONDecoder().decode(
+                [DynamicUIComponent].self,
+                from: json
+            )
+            values = initialValues(in: layout ?? [])
         } catch {
-            self.internalError = error
+            layout = nil
+            internalError = error
+            self.error = error
 #if DEBUG
             print(error)
 #endif
@@ -162,111 +161,90 @@ public struct DynamicUI: View {
     /// - Returns: A SwiftUI View
     func buildView(for components: [DynamicUIComponent]) -> some View {
         // swiftlint:disable:previous cyclomatic_complexity function_body_length
-        return ForEach(components, id: \.self) { component in
+        ForEach(components.indices, id: \.self) { index in
+            let component = components[index].resolvingStrings(values: values)
+
             switch component.type {
             case "Button":
                 DynamicButton(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "VStack":
                 DynamicVStack(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "HStack":
                 DynamicHStack(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "ZStack":
                 DynamicZStack(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "List":
                 DynamicList(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "ScrollView":
                 DynamicScrollView(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "NavigationView":
                 DynamicNavigationView(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Form":
                 DynamicForm(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Text":
                 DynamicText(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Image":
                 DynamicImage(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Divider":
-                Divider()
-                    .environment(\.internalDynamicUIEnvironment, self)
+                DynamicDivider(component)
 
             case "Spacer":
-                Spacer()
-                    .environment(\.internalDynamicUIEnvironment, self)
+                DynamicSpacer(component)
 
             case "Section":
                 DynamicSection(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Label":
                 DynamicLabel(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "TextField":
                 DynamicTextField(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "SecureField":
                 DynamicSecureField(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "TextEditor":
                 DynamicTextEditor(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Toggle":
                 DynamicToggle(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Gauge":
                 DynamicGauge(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "ProgressView":
                 DynamicProgressView(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Slider":
                 DynamicSlider(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "GroupBox":
                 DynamicGroupBox(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
+
+            case "Group":
+                DynamicGroup(component)
 
             case "DisclosureGroup":
                 DynamicDisclosureGroup(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "HSplitView":
                 DynamicHSplitView(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "VSplitView":
                 DynamicVSplitView(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             case "Picker":
                 DynamicPicker(component)
-                    .environment(\.internalDynamicUIEnvironment, self)
 
             // NavigationSplitView
             // TabView
@@ -276,10 +254,30 @@ public struct DynamicUI: View {
             }
         }
     }
+
+    /// Store a component update and forward it to the public binding or callback.
+    func sendUpdate(_ updatedComponent: DynamicUIComponent) {
+        if let identifier = updatedComponent.identifier,
+           let state = updatedComponent.state {
+            values[identifier] = state
+        }
+
+        component = updatedComponent
+    }
+
+    private func initialValues(in components: [DynamicUIComponent]) -> [String: AnyCodable] {
+        components.reduce(into: [:]) { values, component in
+            if let identifier = component.identifier {
+                values[identifier] = component.state ?? component.defaultValue ?? .bool(false)
+            }
+
+            values.merge(initialValues(in: component.children ?? [])) { _, newValue in newValue }
+        }
+    }
 }
 
 private struct InternalDynamicUIKey: EnvironmentKey {
-    static let defaultValue: DynamicUI = defaultValue
+    static let defaultValue = DynamicUI(json: Data(), component: .constant(nil))
 }
 
 extension EnvironmentValues {

@@ -28,20 +28,15 @@ import SwiftUI
 /// - Note: This is a internal view, you should not use this directly. \
 ///         Use ``DynamicUI`` instead.
 struct DynamicGauge: View {
-    @Environment(\.internalDynamicUIEnvironment)
-    /// Internal: dynamicUIEnvironment
-    private var dynamicUIEnvironment
-
     /// The component to display
     private let component: DynamicUIComponent
 
-    @State
-    /// The state of the Gauge
-    private var state: Double
+    /// The value of the Gauge
+    private let value: Double
 
     /// Initialize the DynamicGauge
     init(_ component: DynamicUIComponent) {
-        self.state = component.defaultValue?.toDouble() ?? 0
+        self.value = component.defaultValue?.toDouble() ?? 0
         self.component = component
     }
 
@@ -49,7 +44,7 @@ struct DynamicGauge: View {
     var body: some View {
 #if !os(tvOS)
         if #available(macOS 13.0, iOS 16.0, *) {
-            Gauge(value: state) {
+            Gauge(value: value) {
                 Text("\(component.title ?? "")")
             }
             .set(modifiers: component)
