@@ -33,7 +33,7 @@ You can change the font weight of a component using the `fontWeight` modifier.
 
 ## Font Modifiers
 
-[TODO] You can customize the font of a component using the `font` modifier.
+You can customize the font of a component using a SwiftUI text style name or a dictionary containing a size and optional weight.
 
 ```json
 {
@@ -47,6 +47,9 @@ You can change the font weight of a component using the `fontWeight` modifier.
    }
 }
 ```
+
+Supported text style names include `largeTitle`, `title`, `title2`, `title3`, `headline`,
+`subheadline`, `body`, `callout`, `footnote`, `caption`, and `caption2`.
 
 ## Bold Modifier
 
@@ -159,7 +162,7 @@ A custom value:
 }
 ```
 
-[TODO] You can specify padding for specific edges:
+You can specify padding for specific edges:
 
 ```json
 {
@@ -178,7 +181,7 @@ A custom value:
 
 ## Padding and Margins
 
-[TODO] You can add padding and margins to components using the `padding` and `margin` modifiers.
+You can add padding and margins to components using the `padding` and `margin` modifiers.
 
 ```json
 {
@@ -203,7 +206,7 @@ A custom value:
 
 ## Shadow
 
-[TODO] You can add a shadow effect to components using the `shadow` modifier.
+You can add a shadow effect to components using the `shadow` modifier.
 
 ```json
 {
