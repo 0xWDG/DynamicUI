@@ -146,6 +146,35 @@ struct DynamicUIModifier: ViewModifier {
     }
 }
 
+struct DynamicUIAccessibilityModifier: ViewModifier {
+    let component: DynamicUIComponent
+
+    func body(content: Content) -> some View {
+        var view = AnyView(content)
+
+        if let label = component.accessibilityLabel, !label.isEmpty {
+            view = AnyView(view.accessibilityLabel(label))
+        }
+        if let value = component.accessibilityValue, !value.isEmpty {
+            view = AnyView(view.accessibilityValue(value))
+        }
+        if let hint = component.accessibilityHint, !hint.isEmpty {
+            view = AnyView(view.accessibilityHint(hint))
+        }
+        if let identifier = component.accessibilityIdentifier, !identifier.isEmpty {
+            view = AnyView(view.accessibilityIdentifier(identifier))
+        }
+        if let hidden = component.accessibilityHidden {
+            view = AnyView(view.accessibilityHidden(hidden))
+        }
+        if let inputLabels = component.accessibilityInputLabels, !inputLabels.isEmpty {
+            view = AnyView(view.accessibilityInputLabels(inputLabels))
+        }
+
+        return view
+    }
+}
+
 extension View {
     /// Observe a value with the modern `onChange` API while retaining support for older systems.
     @ViewBuilder
@@ -196,7 +225,9 @@ extension View {
             }
         }
 
-        return tempView.dynamicUIModifiers(modifiers.modifiers)
+        return tempView
+            .dynamicUIModifiers(modifiers.modifiers)
+            .modifier(DynamicUIAccessibilityModifier(component: modifiers))
     }
 }
 

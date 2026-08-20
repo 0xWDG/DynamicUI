@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 echo "package.dependencies.append(" >> Package.swift
 echo "  .package(url: \"https://github.com/apple/swift-docc-plugin\", from: \"1.0.0\")" >> Package.swift
 echo ")" >> Package.swift
