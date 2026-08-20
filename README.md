@@ -6,10 +6,14 @@ DynamicUI turns versioned JSON component trees into native SwiftUI views. Use it
 configurable extension interfaces, feature-driven layouts, and rapid prototypes without giving up
 native controls or accessibility semantics.
 
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F0xWDG%2FDynamicUI%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/0xWDG/DynamicUI)
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F0xWDG%2FDynamicUI%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/0xWDG/DynamicUI)
+[![Supported Swift versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F0xWDG%2FDynamicUI%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/0xWDG/DynamicUI)
+[![Supported platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F0xWDG%2FDynamicUI%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/0xWDG/DynamicUI)
 [![Swift Package Manager](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://swift.org/package-manager)
-[![Tests](https://github.com/0xWDG/DynamicUI/actions/workflows/test-macOS.yml/badge.svg)](https://github.com/0xWDG/DynamicUI/actions/workflows/test-macOS.yml)
+[![Run tests on macOS](https://github.com/0xWDG/DynamicUI/actions/workflows/test-macOS.yml/badge.svg)](https://github.com/0xWDG/DynamicUI/actions/workflows/test-macOS.yml)
+[![Run tests on iOS](https://github.com/0xWDG/DynamicUI/actions/workflows/build-iOS.yml/badge.svg)](https://github.com/0xWDG/DynamicUI/actions/workflows/build-iOS.yml)
+[![Run tests on visionOS](https://github.com/0xWDG/DynamicUI/actions/workflows/build-visionOS.yml/badge.svg)](https://github.com/0xWDG/DynamicUI/actions/workflows/build-visionOS.yml)
+[![Run tests on Apple TV](https://github.com/0xWDG/DynamicUI/actions/workflows/build-tvOS.yml/badge.svg)](https://github.com/0xWDG/DynamicUI/actions/workflows/build-tvOS.yml)
+[![Run tests on Watch OS](https://github.com/0xWDG/DynamicUI/actions/workflows/build-watchOS.yml/badge.svg)](https://github.com/0xWDG/DynamicUI/actions/workflows/build-watchOS.yml)
 [![License](https://img.shields.io/github/license/0xWDG/DynamicUI)](LICENCE.md)
 
 <img width="804" alt="DynamicUI playground rendering a JSON-defined SwiftUI interface" src="https://github.com/user-attachments/assets/cfd7ba02-88b1-410d-a6ba-54c9ebee06e0">
