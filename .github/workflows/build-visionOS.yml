@@ -1,12 +1,17 @@
 name: Build for visionOS
 on:
   pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
   build_visionOS:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Swift build (visionOS)
         run: xcrun xcodebuild clean build -quiet -scheme DynamicUI -destination generic/platform=xrOS
