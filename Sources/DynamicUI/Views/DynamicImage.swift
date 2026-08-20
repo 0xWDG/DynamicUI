@@ -44,3 +44,18 @@ struct DynamicImage: View {
             .set(modifiers: component)
     }
 }
+
+#if DEBUG
+#Preview("Image") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "Image",
+            "title": "Favorite",
+            "url": "star.fill",
+            "modifiers": {
+                "foregroundStyle": "yellow"
+            }
+        }
+        """)
+}
+#endif

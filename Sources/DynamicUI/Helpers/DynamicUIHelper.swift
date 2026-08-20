@@ -10,6 +10,12 @@
 
 import SwiftUI
 
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
 // swiftlint:disable cyclomatic_complexity function_body_length
 /// DynamicUIHelper
 ///
@@ -22,6 +28,10 @@ class DynamicUIHelper {
     ///
     /// - Returns: SwiftUI ``Color``
     static func translateColor(_ input: String) -> Color? {
+        if let color = translateHexColor(input) {
+            return color
+        }
+
         switch input.lowercased() {
         case "red":
             return .red
@@ -95,6 +105,53 @@ class DynamicUIHelper {
         default:
             return .primary
         }
+    }
+
+    /// Translate a SwiftUI color to an eight-digit hexadecimal RGBA string.
+    static func hexadecimalString(from color: Color) -> String? {
+#if canImport(UIKit)
+        let platformColor = UIColor(color)
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        guard platformColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha) else {
+            return nil
+        }
+#elseif canImport(AppKit)
+        guard let platformColor = NSColor(color).usingColorSpace(.sRGB) else {
+            return nil
+        }
+        let red = platformColor.redComponent
+        let green = platformColor.greenComponent
+        let blue = platformColor.blueComponent
+        let alpha = platformColor.alphaComponent
+#else
+        return nil
+#endif
+
+        return String(
+            format: "#%02X%02X%02X%02X",
+            Int(round(red * 255)),
+            Int(round(green * 255)),
+            Int(round(blue * 255)),
+            Int(round(alpha * 255))
+        )
+    }
+
+    private static func translateHexColor(_ input: String) -> Color? {
+        let hex = input.trimmingCharacters(in: CharacterSet(charactersIn: "#"))
+        guard hex.count == 6 || hex.count == 8,
+              let value = UInt64(hex, radix: 16) else {
+            return nil
+        }
+
+        let hasAlpha = hex.count == 8
+        let red = Double((value >> (hasAlpha ? 24 : 16)) & 0xFF) / 255
+        let green = Double((value >> (hasAlpha ? 16 : 8)) & 0xFF) / 255
+        let blue = Double((value >> (hasAlpha ? 8 : 0)) & 0xFF) / 255
+        let alpha = hasAlpha ? Double(value & 0xFF) / 255 : 1
+        return Color(red: red, green: green, blue: blue, opacity: alpha)
     }
 
     /// Translate a string font weight to a native ``Font.Weight``

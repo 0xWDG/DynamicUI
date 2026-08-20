@@ -167,8 +167,9 @@ Every component requires a case-sensitive `type`. Common optional fields are:
 | `modifiers` | Visual and behavioral modifiers |
 | `minimumValue`, `maximumValue` | Numeric bounds for sliders and progress views |
 
-Unknown component types render no view. Decode failures are written to the optional `error`
-binding and display a fallback error view.
+Unknown component types are logged and skipped, allowing valid sibling components to keep rendering.
+Decode failures are written to the optional `error` binding and display a fallback error view.
+Objects without a string `type` field are treated as metadata and silently ignored in component arrays.
 
 ## Playground application
 

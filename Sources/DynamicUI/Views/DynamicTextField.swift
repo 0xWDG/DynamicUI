@@ -49,7 +49,7 @@ struct DynamicTextField: View {
             "\(component.title ?? "")",
             text: $state
         )
-        .onChange(of: state, perform: sendUpdate)
+        .dynamicUIOnChange(of: state, action: sendUpdate)
         .set(modifiers: component)
     }
 
@@ -59,3 +59,15 @@ struct DynamicTextField: View {
         dynamicUIEnvironment.sendUpdate(updatedComponent)
     }
 }
+
+#if DEBUG
+#Preview("TextField") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "TextField",
+            "title": "Name",
+            "defaultValue": "Wesley"
+        }
+        """)
+}
+#endif

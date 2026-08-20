@@ -51,3 +51,18 @@ struct DynamicVSplitView: View {
 #endif
     }
 }
+
+#if DEBUG
+#Preview("VSplitView") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "VSplitView",
+            "children": [
+                { "type": "Text", "title": "Top" },
+                { "type": "Text", "title": "Bottom" }
+            ],
+            "modifiers": { "frame": { "height": 120 } }
+        }
+        """)
+}
+#endif

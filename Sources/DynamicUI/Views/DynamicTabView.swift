@@ -58,3 +58,18 @@ struct DynamicTabView: View {
         .set(modifiers: component)
     }
 }
+
+#if DEBUG
+#Preview("TabView") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "TabView",
+            "children": [
+                { "type": "Text", "title": "Home", "url": "house" },
+                { "type": "Text", "title": "Favorites", "url": "star" }
+            ],
+            "modifiers": { "frame": { "height": 160 } }
+        }
+        """)
+}
+#endif

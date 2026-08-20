@@ -45,12 +45,13 @@ contains the new value for controls such as toggles, text fields, pickers, and s
 
 ## Component Schema
 
-Every object requires a case-sensitive `type`. All other fields are optional and are used only
-by components that support them.
+Every component object requires a case-sensitive string `type`. Objects without a string `type`
+are treated as metadata and ignored, including inside `children`. All other fields are optional
+and are used only by components that support them.
 
 | Field | JSON type | Purpose |
 | --- | --- | --- |
-| `type` | String | SwiftUI view type to render. Unknown types render no view. |
+| `type` | String | SwiftUI view type to render. Unknown types are logged and render no view. |
 | `title` | String | Label, title, placeholder, or accessibility label, depending on the view. |
 | `text` | String | Additional string value available to components. |
 | `identifier` | String | Stable key used in interaction updates and conditional expressions. |
@@ -112,41 +113,56 @@ select the false branch.
 
 ### Content
 
-- <doc:Views/Text>
-- <doc:Views/Label>
-- <doc:Views/Image>
-- <doc:Views/Divider>
-- <doc:Views/Spacer>
+- <doc:Text>
+- <doc:Label>
+- <doc:Image>
+- <doc:AsyncImage>
+- <doc:Divider>
+- <doc:Spacer>
+- <doc:Link>
 
 ### Controls
 
-- <doc:Views/Button>
-- <doc:Views/Toggle>
-- <doc:Views/TextField>
-- <doc:Views/SecureField>
-- <doc:Views/TextEditor>
-- <doc:Views/Picker>
-- <doc:Views/Slider>
-- <doc:Views/Gauge>
-- <doc:Views/ProgressView>
+- <doc:Button>
+- <doc:Toggle>
+- <doc:TextField>
+- <doc:SecureField>
+- <doc:TextEditor>
+- <doc:Picker>
+- <doc:Slider>
+- <doc:Gauge>
+- <doc:ProgressView>
+- <doc:DatePicker>
+- <doc:Stepper>
+- <doc:ColorPicker>
+- <doc:Menu>
+- <doc:ShareLink>
 
 ### Containers
 
-- <doc:Views/VStack>
-- <doc:Views/HStack>
-- <doc:Views/ZStack>
-- <doc:Views/Group>
-- <doc:Views/GroupBox>
-- <doc:Views/DisclosureGroup>
-- <doc:Views/List>
-- <doc:Views/Form>
-- <doc:Views/Section>
-- <doc:Views/ScrollView>
-- <doc:Views/NavigationView>
-- <doc:Views/NavigationSplitView>
-- <doc:Views/TabView>
-- <doc:Views/HSplitView>
-- <doc:Views/VSplitView>
+- <doc:VStack>
+- <doc:HStack>
+- <doc:ZStack>
+- <doc:LazyVStack>
+- <doc:LazyHStack>
+- <doc:LazyVGrid>
+- <doc:LazyHGrid>
+- <doc:Grid>
+- <doc:GridRow>
+- <doc:Group>
+- <doc:GroupBox>
+- <doc:DisclosureGroup>
+- <doc:List>
+- <doc:Form>
+- <doc:Section>
+- <doc:ScrollView>
+- <doc:NavigationView>
+- <doc:NavigationStack>
+- <doc:NavigationLink>
+- <doc:NavigationSplitView>
+- <doc:TabView>
+- <doc:HSplitView>
+- <doc:VSplitView>
 
 ## Platform Behavior
 
@@ -157,6 +173,13 @@ Some views adapt when their SwiftUI equivalent is unavailable:
 | `NavigationSplitView` | Uses `NavigationView` before iOS 16, macOS 13, and tvOS 16, and on watchOS. |
 | `HSplitView` | Uses `HStack` outside macOS. |
 | `VSplitView` | Renders only on macOS. |
+| `NavigationStack` | Uses `NavigationView` before iOS 16, macOS 13, tvOS 16, and watchOS 9. |
+| `Grid`, `GridRow` | Use stack-based layouts before iOS 16, macOS 13, tvOS 16, and watchOS 9. |
+| `Menu` | Uses an accessible vertical group where native menus are unavailable. |
+| `ShareLink` | Uses `Link` on tvOS and older systems. |
+| `ColorPicker` | Renders only on iOS and macOS. |
+| `DatePicker` | Renders no control on tvOS and requires watchOS 10. |
+| `Stepper` | Renders no control on tvOS and requires watchOS 9. |
 | `DisclosureGroup`, `Group`, `GroupBox` | Use `VStack` on tvOS and watchOS. |
 | `TextEditor` | Uses `TextField` outside iOS and macOS. |
 | `Slider` | Renders no view on tvOS. |

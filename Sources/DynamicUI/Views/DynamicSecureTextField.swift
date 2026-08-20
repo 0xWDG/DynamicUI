@@ -49,7 +49,7 @@ struct DynamicSecureField: View {
             "\(component.title ?? "")",
             text: $state
         )
-        .onChange(of: state, perform: sendUpdate)
+        .dynamicUIOnChange(of: state, action: sendUpdate)
         .set(modifiers: component)
     }
 
@@ -59,3 +59,15 @@ struct DynamicSecureField: View {
         dynamicUIEnvironment.sendUpdate(updatedComponent)
     }
 }
+
+#if DEBUG
+#Preview("SecureField") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "SecureField",
+            "title": "Password",
+            "defaultValue": "secret"
+        }
+        """)
+}
+#endif

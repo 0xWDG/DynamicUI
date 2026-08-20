@@ -47,3 +47,24 @@ struct DynamicScrollView: View {
         .set(modifiers: component)
     }
 }
+
+#if DEBUG
+#Preview("ScrollView") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "ScrollView",
+            "children": [
+                {
+                    "type": "VStack",
+                    "children": [
+                        { "type": "Text", "title": "First row" },
+                        { "type": "Text", "title": "Second row" },
+                        { "type": "Text", "title": "Third row" }
+                    ]
+                }
+            ],
+            "modifiers": { "frame": { "height": 120 } }
+        }
+        """)
+}
+#endif

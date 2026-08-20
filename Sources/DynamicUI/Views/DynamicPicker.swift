@@ -56,7 +56,7 @@ struct DynamicPicker: View {
                 }
             }
         }
-        .onChange(of: state, perform: sendUpdate)
+        .dynamicUIOnChange(of: state, action: sendUpdate)
         .set(modifiers: component)
     }
 
@@ -66,3 +66,20 @@ struct DynamicPicker: View {
         dynamicUIEnvironment.sendUpdate(updatedComponent)
     }
 }
+
+#if DEBUG
+#Preview("Picker") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "Picker",
+            "title": "Selection",
+            "defaultValue": 1,
+            "children": [
+                { "type": "Text", "title": "First" },
+                { "type": "Text", "title": "Second" },
+                { "type": "Text", "title": "Third" }
+            ]
+        }
+        """)
+}
+#endif
