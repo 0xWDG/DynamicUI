@@ -10,11 +10,17 @@
 //  MIT LICENCE
 
 import SwiftUI
+import OSLog
 
 /// DynamicUI
 ///
 /// DynamicUI is a SwiftUI View that can be used to display an interface based on JSON.
 public struct DynamicUI: View {
+    private static let logger = Logger(
+        subsystem: "nl.wesleydegroot.DynamicUI",
+        category: "Rendering"
+    )
+
     /// DynamicUIComponent state change handler
     public typealias Callback = (DynamicUIComponent) -> Void
 
@@ -130,7 +136,10 @@ public struct DynamicUI: View {
                 Text("Generating interface...")
             }
         }
-        .task(id: json) {
+        .onAppear {
+            decodeJSON()
+        }
+        .dynamicUIOnChange(of: json) { _ in
             decodeJSON()
         }
     }
@@ -141,11 +150,9 @@ public struct DynamicUI: View {
         error = nil
 
         do {
-            layout = try JSONDecoder().decode(
-                [DynamicUIComponent].self,
-                from: json
-            )
-            values = initialValues(in: layout ?? [])
+            let decodedLayout = try DynamicUILayoutDecoder.decode(from: json)
+            layout = decodedLayout
+            values = initialValues(in: decodedLayout)
         } catch {
             layout = nil
             internalError = error
@@ -161,101 +168,152 @@ public struct DynamicUI: View {
     /// - Returns: A SwiftUI View
     func buildView(for components: [DynamicUIComponent]) -> some View {
         // swiftlint:disable:previous cyclomatic_complexity function_body_length
-        ForEach(components.indices, id: \.self) { index in
-            let component = components[index].resolvingStrings(values: values)
+        let visibleComponents = components.filter { $0.shouldRender(values: values) }
+        return ForEach(visibleComponents.indices, id: \.self) { index in
+            let component = visibleComponents[index].resolvingStrings(values: values)
 
-            switch component.type {
-            case "Button":
+            switch DynamicUIViewType(rawValue: component.type) {
+            case .asyncImage:
+                DynamicAsyncImage(component)
+
+            case .button:
                 DynamicButton(component)
 
-            case "VStack":
+            case .colorPicker:
+                DynamicColorPicker(component)
+
+            case .datePicker:
+                DynamicDatePicker(component)
+
+            case .vStack:
                 DynamicVStack(component)
 
-            case "HStack":
+            case .hStack:
                 DynamicHStack(component)
 
-            case "ZStack":
+            case .zStack:
                 DynamicZStack(component)
 
-            case "List":
+            case .list:
                 DynamicList(component)
 
-            case "ScrollView":
+            case .scrollView:
                 DynamicScrollView(component)
 
-            case "NavigationView":
+            case .navigationView:
                 DynamicNavigationView(component)
 
-            case "Form":
+            case .navigationStack:
+                DynamicNavigationStack(component)
+
+            case .navigationLink:
+                DynamicNavigationLink(component)
+
+            case .form:
                 DynamicForm(component)
 
-            case "Text":
+            case .text:
                 DynamicText(component)
 
-            case "Image":
+            case .image:
                 DynamicImage(component)
 
-            case "Divider":
+            case .divider:
                 DynamicDivider(component)
 
-            case "Spacer":
+            case .spacer:
                 DynamicSpacer(component)
 
-            case "Section":
+            case .section:
                 DynamicSection(component)
 
-            case "Label":
+            case .label:
                 DynamicLabel(component)
 
-            case "TextField":
+            case .textField:
                 DynamicTextField(component)
 
-            case "SecureField":
+            case .secureField:
                 DynamicSecureField(component)
 
-            case "TextEditor":
+            case .textEditor:
                 DynamicTextEditor(component)
 
-            case "Toggle":
+            case .toggle:
                 DynamicToggle(component)
 
-            case "Gauge":
+            case .gauge:
                 DynamicGauge(component)
 
-            case "ProgressView":
+            case .progressView:
                 DynamicProgressView(component)
 
-            case "Slider":
+            case .slider:
                 DynamicSlider(component)
 
-            case "GroupBox":
+            case .stepper:
+                DynamicStepper(component)
+
+            case .groupBox:
                 DynamicGroupBox(component)
 
-            case "Group":
+            case .group:
                 DynamicGroup(component)
 
-            case "DisclosureGroup":
+            case .disclosureGroup:
                 DynamicDisclosureGroup(component)
 
-            case "HSplitView":
+            case .hSplitView:
                 DynamicHSplitView(component)
 
-            case "VSplitView":
+            case .vSplitView:
                 DynamicVSplitView(component)
 
-            case "Picker":
+            case .picker:
                 DynamicPicker(component)
 
-            case "NavigationSplitView":
+            case .navigationSplitView:
                 DynamicNavigationSplitView(component)
 
-            case "TabView":
+            case .tabView:
                 DynamicTabView(component)
 
-            default:
-                EmptyView()
+            case .link:
+                DynamicLink(component)
+
+            case .menu:
+                DynamicMenu(component)
+
+            case .shareLink:
+                DynamicShareLink(component)
+
+            case .lazyVStack:
+                DynamicLazyVStack(component)
+
+            case .lazyHStack:
+                DynamicLazyHStack(component)
+
+            case .lazyVGrid:
+                DynamicLazyVGrid(component)
+
+            case .lazyHGrid:
+                DynamicLazyHGrid(component)
+
+            case .grid:
+                DynamicGrid(component)
+
+            case .gridRow:
+                DynamicGridRow(component)
+
+            case nil:
+                unsupportedView(for: component.type)
             }
         }
+    }
+
+    private func unsupportedView(for type: String) -> EmptyView {
+        Self.logger.error("Unsupported DynamicUI view type: \(type, privacy: .public)")
+        return EmptyView()
     }
 
     /// Store a component update and forward it to the public binding or callback.
@@ -289,3 +347,18 @@ extension EnvironmentValues {
         set { self[InternalDynamicUIKey.self] = newValue }
     }
 }
+
+#if DEBUG
+#Preview("DynamicUI") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "VStack",
+            "children": [
+                { "type": "Text", "title": "DynamicUI preview" },
+                { "type": "Button", "title": "Action" },
+                { "type": "Toggle", "title": "Enabled", "defaultValue": true }
+            ]
+        }
+        """)
+}
+#endif

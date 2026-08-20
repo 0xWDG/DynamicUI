@@ -72,3 +72,22 @@ struct DynamicNavigationSplitView: View {
         .set(modifiers: component)
     }
 }
+
+#if DEBUG
+#Preview("NavigationSplitView") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "NavigationSplitView",
+            "children": [
+                {
+                    "type": "List",
+                    "children": [
+                        { "type": "Label", "title": "Sidebar", "url": "sidebar.left" }
+                    ]
+                },
+                { "type": "Text", "title": "Detail content" }
+            ]
+        }
+        """)
+}
+#endif
