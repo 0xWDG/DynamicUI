@@ -136,7 +136,10 @@ public struct DynamicUI: View {
                 Text("Generating interface...")
             }
         }
-        .task(id: json) {
+        .onAppear {
+            decodeJSON()
+        }
+        .dynamicUIOnChange(of: json) { _ in
             decodeJSON()
         }
     }
