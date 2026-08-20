@@ -47,7 +47,7 @@ struct DynamicTextEditor: View {
     var body: some View {
 #if os(iOS) || os(macOS)
         TextEditor(text: $state)
-        .onChange(of: state, perform: sendUpdate)
+        .dynamicUIOnChange(of: state, action: sendUpdate)
         .set(modifiers: component)
 #else
         DynamicTextField(component)
@@ -60,3 +60,15 @@ struct DynamicTextEditor: View {
         dynamicUIEnvironment.sendUpdate(updatedComponent)
     }
 }
+
+#if DEBUG
+#Preview("TextEditor") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "TextEditor",
+            "defaultValue": "Editable multiline text",
+            "modifiers": { "frame": { "height": 100 } }
+        }
+        """)
+}
+#endif

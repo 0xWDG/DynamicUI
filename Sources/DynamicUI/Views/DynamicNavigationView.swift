@@ -47,3 +47,16 @@ struct DynamicNavigationView: View {
         .set(modifiers: component)
     }
 }
+
+#if DEBUG
+#Preview("NavigationView") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "NavigationView",
+            "children": [
+                { "type": "Text", "title": "Navigation content" }
+            ]
+        }
+        """)
+}
+#endif
