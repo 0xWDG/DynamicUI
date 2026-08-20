@@ -213,3 +213,56 @@ Some views adapt when their SwiftUI equivalent is unavailable:
 ### Styling
 
 - <doc:Modifiers>
+
+### Content Views
+
+- <doc:Text>
+- <doc:Label>
+- <doc:Image>
+- <doc:AsyncImage>
+- <doc:Divider>
+- <doc:Spacer>
+- <doc:Link>
+
+### Control Views
+
+- <doc:Button>
+- <doc:Toggle>
+- <doc:TextField>
+- <doc:SecureField>
+- <doc:TextEditor>
+- <doc:Picker>
+- <doc:Slider>
+- <doc:Gauge>
+- <doc:ProgressView>
+- <doc:DatePicker>
+- <doc:Stepper>
+- <doc:ColorPicker>
+- <doc:Menu>
+- <doc:ShareLink>
+
+### Container Views
+
+- <doc:VStack>
+- <doc:HStack>
+- <doc:ZStack>
+- <doc:LazyVStack>
+- <doc:LazyHStack>
+- <doc:LazyVGrid>
+- <doc:LazyHGrid>
+- <doc:Grid>
+- <doc:GridRow>
+- <doc:Group>
+- <doc:GroupBox>
+- <doc:DisclosureGroup>
+- <doc:List>
+- <doc:Form>
+- <doc:Section>
+- <doc:ScrollView>
+- <doc:NavigationView>
+- <doc:NavigationStack>
+- <doc:NavigationLink>
+- <doc:NavigationSplitView>
+- <doc:TabView>
+- <doc:HSplitView>
+- <doc:VSplitView>
