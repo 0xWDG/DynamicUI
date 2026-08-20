@@ -1,8 +1,8 @@
 # DynamicUI
 
 Create SwiftUI interfaces from JSON component trees. DynamicUI supports nested layouts,
-interactive controls, runtime value updates, conditional strings, and a focused set of SwiftUI
-modifiers.
+interactive controls, runtime value updates, conditional strings and views, and a focused set of
+SwiftUI modifiers.
 
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F0xWDG%2FDynamicUI%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/0xWDG/DynamicUI) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F0xWDG%2FDynamicUI%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/0xWDG/DynamicUI)
 [![Swift Package Manager](https://img.shields.io/badge/SPM-compatible-brightgreen.svg)](https://swift.org/package-manager)
@@ -87,12 +87,20 @@ Conditional expressions can select a string value using another component's curr
         "type": "Label",
         "title": "Shine",
         "url": "{$myIdentifier ? star.fill : star}"
+    },
+    {
+        "type": "Text",
+        "title": "The toggle is enabled",
+        "if": "$myIdentifier"
     }
 ]
 ```
 
 The syntax is `{$identifier ? valueWhenTrue : valueWhenFalse}`. It works in string-valued
 component fields, including `title`, `text`, `url`, modifiers, and parameters.
+
+Set `"if": "$identifier"` to render an entire component only while the referenced value is
+truthy. Missing identifiers and empty, zero, `false`, or `null` values hide the component.
 
 ## Handle interactions
 
@@ -158,6 +166,7 @@ Every component requires a case-sensitive `type`. Common optional fields are:
 | Field | Purpose |
 | --- | --- |
 | `title` | Label, title, placeholder, or accessibility label |
+| `if` | Identifier condition such as `$myIdentifier` that controls whether the component renders |
 | `identifier` | Stable key for updates and conditional expressions |
 | `eventHandler` | Application-defined event name returned on interaction |
 | `defaultValue` | Initial value for stateful controls |
@@ -167,8 +176,9 @@ Every component requires a case-sensitive `type`. Common optional fields are:
 | `modifiers` | Visual and behavioral modifiers |
 | `minimumValue`, `maximumValue` | Numeric bounds for sliders and progress views |
 
-Unknown component types render no view. Decode failures are written to the optional `error`
-binding and display a fallback error view.
+Unknown component types are logged and skipped, allowing valid sibling components to keep rendering.
+Decode failures are written to the optional `error` binding and display a fallback error view.
+Objects without a string `type` field are treated as metadata and silently ignored in component arrays.
 
 ## Playground application
 

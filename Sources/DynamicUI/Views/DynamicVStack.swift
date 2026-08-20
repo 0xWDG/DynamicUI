@@ -47,3 +47,18 @@ struct DynamicVStack: View {
         .set(modifiers: component)
     }
 }
+
+#if DEBUG
+#Preview("VStack") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "VStack",
+            "children": [
+                { "type": "Text", "title": "First" },
+                { "type": "Text", "title": "Second" },
+                { "type": "Text", "title": "Third" }
+            ]
+        }
+        """)
+}
+#endif

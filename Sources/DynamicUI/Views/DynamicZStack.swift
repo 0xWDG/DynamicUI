@@ -47,3 +47,25 @@ struct DynamicZStack: View {
         .set(modifiers: component)
     }
 }
+
+#if DEBUG
+#Preview("ZStack") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "ZStack",
+            "children": [
+                {
+                    "type": "Text",
+                    "title": "Background",
+                    "modifiers": { "background": "blue", "padding": 20 }
+                },
+                {
+                    "type": "Text",
+                    "title": "Foreground",
+                    "modifiers": { "foregroundStyle": "white" }
+                }
+            ]
+        }
+        """)
+}
+#endif

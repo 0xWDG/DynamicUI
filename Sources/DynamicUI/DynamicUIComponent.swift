@@ -12,6 +12,26 @@ import SwiftUI
 
 /// This struct constructs a UI Component from JSON.
 public struct DynamicUIComponent: Codable, Hashable {
+    private enum CodingKeys: String, CodingKey {
+        case type
+        case title
+        case text
+        case condition = "if"
+        case identifier
+        case eventHandler
+        case defaultValue
+        case modifiers
+        case parameters
+        case url
+        case children
+        case minimum
+        case minimumValue
+        case maximum
+        case maximumValue
+        case disabled
+        case state
+    }
+
     /// Type of component
     ///
     /// This is the evaqulent of a SwiftUI View
@@ -22,6 +42,9 @@ public struct DynamicUIComponent: Codable, Hashable {
 
     /// Text within component (if any)
     public let text: String?
+
+    /// Identifier expression that determines whether the component is rendered.
+    public let condition: String?
 
     /// Component identifier
     ///
@@ -53,25 +76,25 @@ public struct DynamicUIComponent: Codable, Hashable {
     // TODO: Find a way to move this to parameters
     /// Minimum value description
     ///
-    /// - Note: This may be removed in the future in favor of ``UIComponent.parameters``
+    /// - Note: This may be removed in the future in favor of ``parameters``.
     public let minimum: String?
 
     // TODO: Find a way to move this to parameters
     /// Minumum value
     ///
-    /// - Note: This may be removed in the future in favor of ``UIComponent.parameters``
+    /// - Note: This may be removed in the future in favor of ``parameters``.
     public let minimumValue: Double?
 
     // TODO: Find a way to move this to parameters
     /// Maximum value description
     ///
-    /// - Note: This may be removed in the future in favor of ``UIComponent.parameters``
+    /// - Note: This may be removed in the future in favor of ``parameters``.
     public let maximum: String?
 
     // TODO: Find a way to move this to parameters
     /// Maximum value
     ///
-    /// - Note: This may be removed in the future in favor of ``UIComponent.parameters``
+    /// - Note: This may be removed in the future in favor of ``parameters``.
     public let maximumValue: Double?
 
     /// Is the component disabled?
@@ -86,12 +109,70 @@ public struct DynamicUIComponent: Codable, Hashable {
 }
 
 extension DynamicUIComponent {
+    /// Decode a component and discard metadata-only entries from its children.
+    ///
+    /// - Parameter decoder: Decoder containing a DynamicUI component object.
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        type = try container.decode(String.self, forKey: .type)
+        title = try container.decodeIfPresent(String.self, forKey: .title)
+        text = try container.decodeIfPresent(String.self, forKey: .text)
+        condition = try container.decodeIfPresent(String.self, forKey: .condition)
+        identifier = try container.decodeIfPresent(String.self, forKey: .identifier)
+        eventHandler = try container.decodeIfPresent(String.self, forKey: .eventHandler)
+        defaultValue = try container.decodeIfPresent(AnyCodable.self, forKey: .defaultValue)
+        modifiers = try container.decodeIfPresent([String: AnyCodable].self, forKey: .modifiers)
+        parameters = try container.decodeIfPresent([String: AnyCodable].self, forKey: .parameters)
+        url = try container.decodeIfPresent(String.self, forKey: .url)
+        children = try container.decodeIfPresent(
+            [DynamicUIComponentEntry].self,
+            forKey: .children
+        )?.compactMap(\.component)
+        minimum = try container.decodeIfPresent(String.self, forKey: .minimum)
+        minimumValue = try container.decodeIfPresent(Double.self, forKey: .minimumValue)
+        maximum = try container.decodeIfPresent(String.self, forKey: .maximum)
+        maximumValue = try container.decodeIfPresent(Double.self, forKey: .maximumValue)
+        disabled = try container.decodeIfPresent(Bool.self, forKey: .disabled)
+        state = try container.decodeIfPresent(AnyCodable.self, forKey: .state)
+    }
+}
+
+/// Decodes a component only when an array entry declares a string `type` discriminator.
+struct DynamicUIComponentEntry: Decodable {
+    let component: DynamicUIComponent?
+
+    private enum CodingKeys: String, CodingKey {
+        case type
+    }
+
+    init(from decoder: Decoder) throws {
+        guard let container = try? decoder.container(keyedBy: CodingKeys.self),
+              (try? container.decode(String.self, forKey: .type)) != nil else {
+            component = nil
+            return
+        }
+
+        component = try DynamicUIComponent(from: decoder)
+    }
+}
+
+enum DynamicUILayoutDecoder {
+    static func decode(from data: Data) throws -> [DynamicUIComponent] {
+        try JSONDecoder()
+            .decode([DynamicUIComponentEntry].self, from: data)
+            .compactMap(\.component)
+    }
+}
+
+extension DynamicUIComponent {
     /// Returns a component with conditional string expressions resolved.
     func resolvingStrings(values: [String: AnyCodable]) -> DynamicUIComponent {
         DynamicUIComponent(
             type: type,
             title: title.map { DynamicUIExpression.resolve($0, values: values) },
             text: text.map { DynamicUIExpression.resolve($0, values: values) },
+            condition: condition,
             identifier: identifier,
             eventHandler: eventHandler,
             defaultValue: defaultValue,
@@ -106,6 +187,15 @@ extension DynamicUIComponent {
             disabled: disabled,
             state: state
         )
+    }
+
+    /// Returns whether this component should be included in the rendered hierarchy.
+    func shouldRender(values: [String: AnyCodable]) -> Bool {
+        guard let condition else {
+            return true
+        }
+
+        return DynamicUIExpression.evaluateCondition(condition, values: values)
     }
 }
 
