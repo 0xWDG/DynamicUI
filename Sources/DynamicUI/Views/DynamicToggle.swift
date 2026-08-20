@@ -52,7 +52,7 @@ struct DynamicToggle: View {
         Toggle(isOn: $state) {
             Text(title)
         }
-        .onChange(of: state, perform: sendUpdate)
+        .dynamicUIOnChange(of: state, action: sendUpdate)
         .set(modifiers: component)
     }
 

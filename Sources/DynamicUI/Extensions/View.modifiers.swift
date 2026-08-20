@@ -9,7 +9,6 @@
 //  MIT LICENCE
 
 import SwiftUI
-import OSLog
 
 struct DynamicUIModifier: ViewModifier {
     /// The modifiers to apply
@@ -148,6 +147,21 @@ struct DynamicUIModifier: ViewModifier {
 }
 
 extension View {
+    /// Observe a value with the modern `onChange` API while retaining support for older systems.
+    @ViewBuilder
+    func dynamicUIOnChange<Value: Equatable>(
+        of value: Value,
+        action: @escaping (Value) -> Void
+    ) -> some View {
+        if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+            onChange(of: value) { _, newValue in
+                action(newValue)
+            }
+        } else {
+            onChange(of: value, perform: action)
+        }
+    }
+
     /// DynamicUIModifiers
     ///
     /// This function adds modifiers to a DynamicUIView

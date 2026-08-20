@@ -46,3 +46,15 @@ struct DynamicLabel: View {
         }
     }
 }
+
+#if DEBUG
+#Preview("Label") {
+    DynamicUIPreviewFixtures.view("""
+        {
+            "type": "Label",
+            "title": "Favorites",
+            "url": "star.fill"
+        }
+        """)
+}
+#endif
