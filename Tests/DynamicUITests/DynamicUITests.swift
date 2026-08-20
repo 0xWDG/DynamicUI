@@ -225,4 +225,5 @@ final class DynamicUITests: XCTestCase {
         XCTAssertEqual(resolved.title, "Shine")
         XCTAssertEqual(resolved.url, "star.fill")
     }
+
 }

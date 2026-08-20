@@ -52,7 +52,7 @@ and are used only by components that support them.
 | Field | JSON type | Purpose |
 | --- | --- | --- |
 | `type` | String | SwiftUI view type to render. Unknown types are logged and render no view. |
-| `title` | String | Label, title, placeholder, or accessibility label, depending on the view. |
+| `title` | String | Label, title, placeholder, or image description, depending on the view. |
 | `text` | String | Additional string value available to components. |
 | `if` | String | Renders the component only when the referenced identifier is truthy. |
 | `identifier` | String | Stable key used in interaction updates and conditional expressions. |
@@ -66,8 +66,54 @@ and are used only by components that support them.
 | `parameters` | Object | Additional application-defined values returned with the component. |
 | `minimum`, `maximum` | String | Visible endpoint labels for `Slider`. |
 | `minimumValue`, `maximumValue` | Number | Numeric bounds for `Slider`; `maximumValue` is also the total for `ProgressView`. |
+| `accessibilityLabel` | String | Concise, speakable name for assistive technologies. |
+| `accessibilityHint` | String | Describes the result of interacting with the component. |
+| `accessibilityValue` | String | Accessible state or formatted value. |
+| `accessibilityIdentifier` | String | Stable identifier for UI automation. |
+| `accessibilityHidden` | Boolean | Hides decorative content from assistive technologies. |
+| `accessibilityInputLabels` | Array | Alternative spoken names for Voice Control. |
 
 > Important: JSON component types and field names are case-sensitive.
+
+## Versioned Layouts
+
+Production payloads can use an envelope with a schema version:
+
+```json
+{
+    "schemaVersion": 1,
+    "components": [
+        { "type": "Text", "title": "A validated layout" }
+    ]
+}
+```
+
+Legacy top-level arrays remain supported. Decode and validate either representation with
+``DynamicUILayout`` before rendering.
+
+## Custom Components
+
+Supply `customViewRenderer` to render application-defined component types. Return an `AnyView` for
+recognized types and `nil` otherwise. DynamicUI applies supported modifiers and accessibility
+metadata to the returned view.
+
+```swift
+DynamicUI(
+    json: json,
+    component: $component,
+    customViewRenderer: { component in
+        guard component.type == "ProductCard" else { return nil }
+        return AnyView(ProductCard(component: component))
+    }
+)
+```
+
+## Accessibility
+
+Use explicit accessibility fields when a component's visible title does not provide enough
+context. Labels should be concise and speakable, values should describe current state, and hints
+should explain the result of an interaction. `accessibilityInputLabels` supplies shorter spoken
+aliases for Voice Control. Use `accessibilityHidden` only for decorative content.
 
 ## Handle Interactions
 

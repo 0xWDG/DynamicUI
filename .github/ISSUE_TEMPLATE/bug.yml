@@ -1,0 +1,72 @@
+name: Bug report
+description: Report reproducible incorrect behavior in DynamicUI.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping improve DynamicUI. Please remove sensitive data from JSON examples.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the expected and actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: json
+    attributes:
+      label: Minimal JSON payload
+      description: Provide the smallest payload that reproduces the issue.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      placeholder: |
+        1. Render the payload with …
+        2. Interact with …
+        3. Observe …
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: DynamicUI version
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      multiple: true
+      options:
+        - iOS
+        - macOS
+        - tvOS
+        - watchOS
+        - Mac Catalyst
+        - visionOS
+    validations:
+      required: true
+  - type: input
+    id: toolchain
+    attributes:
+      label: Xcode and OS version
+      placeholder: Xcode 18.0, iOS 27.0
+    validations:
+      required: true
+  - type: textarea
+    id: accessibility
+    attributes:
+      label: Accessibility impact
+      description: Note any impact on VoiceOver, Voice Control, Switch Control, keyboard use, or Dynamic Type.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Add relevant output or images. Do not include secrets or private data.

@@ -1,0 +1,38 @@
+name: Feature request
+description: Propose a focused component, schema, accessibility, or tooling improvement.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What use case is difficult or impossible today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Include example Swift or JSON when helpful.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Describe workarounds or API shapes you considered.
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility and accessibility
+      description: Note schema-version, platform, VoiceOver, Voice Control, keyboard, or Dynamic Type implications.
+    validations:
+      required: true
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      options:
+        - label: I would be willing to help implement this feature.

@@ -16,7 +16,7 @@ import OSLog
 ///
 /// DynamicUI is a SwiftUI View that can be used to display an interface based on JSON.
 public struct DynamicUI: View {
-    private static let logger = Logger(
+    static let logger = Logger(
         subsystem: "nl.wesleydegroot.DynamicUI",
         category: "Rendering"
     )
@@ -24,8 +24,17 @@ public struct DynamicUI: View {
     /// DynamicUIComponent state change handler
     public typealias Callback = (DynamicUIComponent) -> Void
 
+    /// Renders an application-defined component type.
+    ///
+    /// Return `nil` when the renderer does not recognize the component. DynamicUI applies the
+    /// component's modifiers and accessibility metadata to returned views.
+    public typealias CustomViewRenderer = (DynamicUIComponent) -> AnyView?
+
     /// JSON data to generate the interface from
     private let json: Data
+
+    /// Optional renderer for application-defined component types.
+    let customViewRenderer: CustomViewRenderer?
 
     /// Callback for interactions with the DynamicUIComponents
     @Binding
@@ -52,10 +61,17 @@ public struct DynamicUI: View {
     /// - Parameter json: JSON Data
     /// - Parameter component: Binding for the dynamic UI element
     /// - Parameter error: Error message
-    public init(json: Data, component: Binding<DynamicUIComponent?>, error: Binding<Error?>? = nil) {
+    /// - Parameter customViewRenderer: Optional renderer for application-defined component types
+    public init(
+        json: Data,
+        component: Binding<DynamicUIComponent?>,
+        error: Binding<Error?>? = nil,
+        customViewRenderer: CustomViewRenderer? = nil
+    ) {
         self.json = json
         self._component = component
         self._error = error ?? .constant(nil)
+        self.customViewRenderer = customViewRenderer
     }
 
     /// Initialize DynamicUI
@@ -63,10 +79,17 @@ public struct DynamicUI: View {
     /// - Parameter json: JSON String
     /// - Parameter component: Binding for the dynamic UI element
     /// - Parameter error: Error message
-    public init(json: String, component: Binding<DynamicUIComponent?>, error: Binding<Error?>? = nil) {
+    /// - Parameter customViewRenderer: Optional renderer for application-defined component types
+    public init(
+        json: String,
+        component: Binding<DynamicUIComponent?>,
+        error: Binding<Error?>? = nil,
+        customViewRenderer: CustomViewRenderer? = nil
+    ) {
         self.json = Data(json.utf8)
         self._component = component
         self._error = error ?? .constant(nil)
+        self.customViewRenderer = customViewRenderer
     }
 
     /// Initialize DynamicUI
@@ -74,7 +97,13 @@ public struct DynamicUI: View {
     /// - Parameter json: JSON Data
     /// - Parameter callback: Callback handler for updates
     /// - Parameter error: Error message
-    public init(json: Data, callback: @escaping Callback, error: Binding<Error?>? = nil) {
+    /// - Parameter customViewRenderer: Optional renderer for application-defined component types
+    public init(
+        json: Data,
+        callback: @escaping Callback,
+        error: Binding<Error?>? = nil,
+        customViewRenderer: CustomViewRenderer? = nil
+    ) {
         self.json = json
         self._component = Binding<DynamicUIComponent?>(
             get: { nil },
@@ -85,6 +114,7 @@ public struct DynamicUI: View {
             }
         )
         self._error = error ?? .constant(nil)
+        self.customViewRenderer = customViewRenderer
     }
 
     /// Initialize DynamicUI
@@ -92,7 +122,13 @@ public struct DynamicUI: View {
     /// - Parameter json: JSON String
     /// - Parameter callback: Callback handler for updates
     /// - Parameter error: Error message
-    public init(json: String, callback: @escaping Callback, error: Binding<Error?>? = nil) {
+    /// - Parameter customViewRenderer: Optional renderer for application-defined component types
+    public init(
+        json: String,
+        callback: @escaping Callback,
+        error: Binding<Error?>? = nil,
+        customViewRenderer: CustomViewRenderer? = nil
+    ) {
         self.json = Data(json.utf8)
         self._component = Binding<DynamicUIComponent?>(
             get: { nil },
@@ -103,6 +139,7 @@ public struct DynamicUI: View {
             }
         )
         self._error = error ?? .constant(nil)
+        self.customViewRenderer = customViewRenderer
     }
 
     /// Initialize the DynamicUI
@@ -117,6 +154,7 @@ public struct DynamicUI: View {
                     .resizable()
                     .frame(width: 150, height: 150)
                     .padding(.vertical)
+                    .accessibilityHidden(true)
 
                 Text("Failed to generate interface...")
                     .font(.title)
@@ -132,8 +170,10 @@ public struct DynamicUI: View {
                     .controlSize(.large)
 #endif
                     .padding()
+                    .accessibilityLabel("Generating interface")
 
                 Text("Generating interface...")
+                    .accessibilityHidden(true)
             }
         }
         .onAppear {
@@ -306,14 +346,9 @@ public struct DynamicUI: View {
                 DynamicGridRow(component)
 
             case nil:
-                unsupportedView(for: component.type)
+                customView(for: component)
             }
         }
-    }
-
-    private func unsupportedView(for type: String) -> EmptyView {
-        Self.logger.error("Unsupported DynamicUI view type: \(type, privacy: .public)")
-        return EmptyView()
     }
 
     /// Store a component update and forward it to the public binding or callback.

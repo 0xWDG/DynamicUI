@@ -30,6 +30,12 @@ public struct DynamicUIComponent: Codable, Hashable {
         case maximumValue
         case disabled
         case state
+        case accessibilityLabel
+        case accessibilityHint
+        case accessibilityValue
+        case accessibilityIdentifier
+        case accessibilityHidden
+        case accessibilityInputLabels
     }
 
     /// Type of component
@@ -106,6 +112,24 @@ public struct DynamicUIComponent: Codable, Hashable {
     ///
     /// - Note: Do not init state in your UIComponent unless needed.
     public var state: AnyCodable?
+
+    /// A concise, speakable name for assistive technologies.
+    public let accessibilityLabel: String?
+
+    /// Additional guidance describing the result of interacting with the component.
+    public let accessibilityHint: String?
+
+    /// The component's accessible value, such as a status or formatted measurement.
+    public let accessibilityValue: String?
+
+    /// A stable identifier for accessibility automation.
+    public let accessibilityIdentifier: String?
+
+    /// Whether assistive technologies should ignore the component.
+    public let accessibilityHidden: Bool?
+
+    /// Alternative speakable names used by Voice Control.
+    public let accessibilityInputLabels: [String]?
 }
 
 extension DynamicUIComponent {
@@ -135,6 +159,18 @@ extension DynamicUIComponent {
         maximumValue = try container.decodeIfPresent(Double.self, forKey: .maximumValue)
         disabled = try container.decodeIfPresent(Bool.self, forKey: .disabled)
         state = try container.decodeIfPresent(AnyCodable.self, forKey: .state)
+        accessibilityLabel = try container.decodeIfPresent(String.self, forKey: .accessibilityLabel)
+        accessibilityHint = try container.decodeIfPresent(String.self, forKey: .accessibilityHint)
+        accessibilityValue = try container.decodeIfPresent(String.self, forKey: .accessibilityValue)
+        accessibilityIdentifier = try container.decodeIfPresent(
+            String.self,
+            forKey: .accessibilityIdentifier
+        )
+        accessibilityHidden = try container.decodeIfPresent(Bool.self, forKey: .accessibilityHidden)
+        accessibilityInputLabels = try container.decodeIfPresent(
+            [String].self,
+            forKey: .accessibilityInputLabels
+        )
     }
 }
 
@@ -159,9 +195,7 @@ struct DynamicUIComponentEntry: Decodable {
 
 enum DynamicUILayoutDecoder {
     static func decode(from data: Data) throws -> [DynamicUIComponent] {
-        try JSONDecoder()
-            .decode([DynamicUIComponentEntry].self, from: data)
-            .compactMap(\.component)
+        try decodeLayout(from: data).components
     }
 }
 
@@ -185,7 +219,21 @@ extension DynamicUIComponent {
             maximum: maximum.map { DynamicUIExpression.resolve($0, values: values) },
             maximumValue: maximumValue,
             disabled: disabled,
-            state: state
+            state: state,
+            accessibilityLabel: accessibilityLabel.map {
+                DynamicUIExpression.resolve($0, values: values)
+            },
+            accessibilityHint: accessibilityHint.map {
+                DynamicUIExpression.resolve($0, values: values)
+            },
+            accessibilityValue: accessibilityValue.map {
+                DynamicUIExpression.resolve($0, values: values)
+            },
+            accessibilityIdentifier: accessibilityIdentifier,
+            accessibilityHidden: accessibilityHidden,
+            accessibilityInputLabels: accessibilityInputLabels?.map {
+                DynamicUIExpression.resolve($0, values: values)
+            }
         )
     }
 
