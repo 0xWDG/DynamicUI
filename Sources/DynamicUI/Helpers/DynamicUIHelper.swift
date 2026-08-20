@@ -266,6 +266,26 @@ class DynamicUIHelper {
 
 /// Resolves conditional expressions used in string values from the JSON layout.
 enum DynamicUIExpression {
+    /// Evaluate a component condition such as `$toggle`.
+    ///
+    /// - Parameters:
+    ///   - input: An identifier prefixed with `$`.
+    ///   - values: Current component values keyed by identifier.
+    /// - Returns: Whether the referenced value is truthy.
+    static func evaluateCondition(_ input: String, values: [String: AnyCodable]) -> Bool {
+        let expression = input.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard expression.hasPrefix("$") else {
+            return false
+        }
+
+        let identifier = expression.dropFirst().trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !identifier.isEmpty else {
+            return false
+        }
+
+        return values[identifier]?.isTruthy == true
+    }
+
     /// Resolve an expression such as `{$toggle ? star.fill : star}`.
     ///
     /// - Parameters:

@@ -16,6 +16,7 @@ public struct DynamicUIComponent: Codable, Hashable {
         case type
         case title
         case text
+        case condition = "if"
         case identifier
         case eventHandler
         case defaultValue
@@ -41,6 +42,9 @@ public struct DynamicUIComponent: Codable, Hashable {
 
     /// Text within component (if any)
     public let text: String?
+
+    /// Identifier expression that determines whether the component is rendered.
+    public let condition: String?
 
     /// Component identifier
     ///
@@ -114,6 +118,7 @@ extension DynamicUIComponent {
         type = try container.decode(String.self, forKey: .type)
         title = try container.decodeIfPresent(String.self, forKey: .title)
         text = try container.decodeIfPresent(String.self, forKey: .text)
+        condition = try container.decodeIfPresent(String.self, forKey: .condition)
         identifier = try container.decodeIfPresent(String.self, forKey: .identifier)
         eventHandler = try container.decodeIfPresent(String.self, forKey: .eventHandler)
         defaultValue = try container.decodeIfPresent(AnyCodable.self, forKey: .defaultValue)
@@ -167,6 +172,7 @@ extension DynamicUIComponent {
             type: type,
             title: title.map { DynamicUIExpression.resolve($0, values: values) },
             text: text.map { DynamicUIExpression.resolve($0, values: values) },
+            condition: condition,
             identifier: identifier,
             eventHandler: eventHandler,
             defaultValue: defaultValue,
@@ -181,6 +187,15 @@ extension DynamicUIComponent {
             disabled: disabled,
             state: state
         )
+    }
+
+    /// Returns whether this component should be included in the rendered hierarchy.
+    func shouldRender(values: [String: AnyCodable]) -> Bool {
+        guard let condition else {
+            return true
+        }
+
+        return DynamicUIExpression.evaluateCondition(condition, values: values)
     }
 }
 

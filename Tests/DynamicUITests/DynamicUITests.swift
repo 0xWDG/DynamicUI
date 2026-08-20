@@ -174,6 +174,39 @@ final class DynamicUITests: XCTestCase {
         )
     }
 
+    func testComponentConditionUsesIdentifierState() throws {
+        let json = """
+            {
+                "type": "Text",
+                "title": "Conditional view",
+                "if": "$myIdentifier"
+            }
+            """
+        let component = try JSONDecoder().decode(
+            DynamicUIComponent.self,
+            from: Data(json.utf8)
+        )
+
+        XCTAssertEqual(component.condition, "$myIdentifier")
+        XCTAssertTrue(component.shouldRender(values: ["myIdentifier": .bool(true)]))
+        XCTAssertFalse(component.shouldRender(values: ["myIdentifier": .bool(false)]))
+        XCTAssertFalse(component.shouldRender(values: [:]))
+
+        let encoded = try JSONEncoder().encode(component)
+        let roundTripped = try JSONDecoder().decode(DynamicUIComponent.self, from: encoded)
+        XCTAssertEqual(roundTripped.condition, "$myIdentifier")
+    }
+
+    func testComponentWithoutConditionRenders() throws {
+        let json = #"{"type":"Text","title":"Always visible"}"#
+        let component = try JSONDecoder().decode(
+            DynamicUIComponent.self,
+            from: Data(json.utf8)
+        )
+
+        XCTAssertTrue(component.shouldRender(values: [:]))
+    }
+
     func testComponentResolvesConditionalStringsRecursively() throws {
         let json = """
             {

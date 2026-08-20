@@ -10,34 +10,39 @@ import DynamicUI
 
 struct ContentView: View {
     @State
-    var text: String = """
+    private var text: String = """
     [
         {
             "type": "VStack",
             "children": [
-            {
-                "type": "Button",
-                "title": "Click me",
-                "eventHandler": "customHandler"
-            },
-            {
-                "type": "Toggle",
-                "title": "Toggle me",
-                "identifier": "my.toggle.1"
-            },
-            {
-                "type": "Text",
-                "title": "_Wait_, am i generating views from JSON?",
-                "modifiers": {
-                    "foregroundStyle": "red",
-                    "opacity": 0.5
+                {
+                    "type": "Button",
+                    "title": "Click me",
+                    "eventHandler": "customHandler"
                 },
-            },
-            {
-                "type": "Label",
-                "title": "Shine",
-                "url": "star"
-            }
+                {
+                    "type": "Toggle",
+                    "title": "Toggle me",
+                    "identifier": "myIdentifier"
+                },
+                {
+                    "type": "Text",
+                    "title": "_Wait_, am i generating views from JSON?",
+                    "modifiers": {
+                        "foregroundStyle": "red",
+                        "opacity": 0.5
+                    }
+                },
+                {
+                    "type": "Label",
+                    "title": "Shine",
+                    "url": "{$myIdentifier ? star.fill : star}"
+                },
+                {
+                    "type": "Text",
+                    "title": "The toggle is enabled",
+                    "if": "$myIdentifier"
+                }
             ]
         }
     ]
