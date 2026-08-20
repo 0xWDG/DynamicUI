@@ -163,6 +163,11 @@ private enum Demo: String, CaseIterable, Identifiable {
                             "type": "Label",
                             "title": "{$myIdentifier ? Ready to party : Waiting}",
                             "url": "{$myIdentifier ? balloon.fill : balloon}"
+                        },
+                        {
+                            "type": "Text",
+                            "title": "This view is shown conditionally",
+                            "if": "$myIdentifier"
                         }
                     ]
                 }
@@ -861,7 +866,8 @@ private enum Demo: String, CaseIterable, Identifiable {
                                 },
                                 {
                                     "type": "Text",
-                                    "title": "Conditional expression: {$toggle ? enabled : disabled}"
+                                    "title": "Conditional expression: {$toggle ? enabled : disabled}",
+                                    "if": "$toggle"
                                 }
                             ],
                             "modifiers": {

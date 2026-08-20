@@ -165,8 +165,9 @@ public struct DynamicUI: View {
     /// - Returns: A SwiftUI View
     func buildView(for components: [DynamicUIComponent]) -> some View {
         // swiftlint:disable:previous cyclomatic_complexity function_body_length
-        ForEach(components.indices, id: \.self) { index in
-            let component = components[index].resolvingStrings(values: values)
+        let visibleComponents = components.filter { $0.shouldRender(values: values) }
+        return ForEach(visibleComponents.indices, id: \.self) { index in
+            let component = visibleComponents[index].resolvingStrings(values: values)
 
             switch DynamicUIViewType(rawValue: component.type) {
             case .asyncImage:

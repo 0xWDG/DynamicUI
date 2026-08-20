@@ -54,6 +54,7 @@ and are used only by components that support them.
 | `type` | String | SwiftUI view type to render. Unknown types are logged and render no view. |
 | `title` | String | Label, title, placeholder, or accessibility label, depending on the view. |
 | `text` | String | Additional string value available to components. |
+| `if` | String | Renders the component only when the referenced identifier is truthy. |
 | `identifier` | String | Stable key used in interaction updates and conditional expressions. |
 | `eventHandler` | String | Application-defined event name returned with the component. |
 | `defaultValue` | String, number, Boolean, or object | Initial value for stateful controls. |
@@ -108,6 +109,22 @@ The syntax is `{$identifier ? valueWhenTrue : valueWhenFalse}`. Expressions must
 entire string. They work in `title`, `text`, `url`, `minimum`, `maximum`, and string values nested
 in `modifiers` or `parameters`. Missing identifiers and empty, zero, `false`, or `null` values
 select the false branch.
+
+## Conditional Views
+
+Use `if` with an identifier prefixed by `$` to include a component only while that identifier's
+current value is truthy:
+
+```json
+{
+    "type": "Text",
+    "title": "The option is enabled",
+    "if": "$enabled"
+}
+```
+
+Missing identifiers and empty, zero, `false`, or `null` values hide the component. Omitting `if`
+renders the component normally.
 
 ## Supported Views
 
