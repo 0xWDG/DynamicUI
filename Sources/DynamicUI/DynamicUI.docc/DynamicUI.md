@@ -89,7 +89,23 @@ Production payloads can use an envelope with a schema version:
 ```
 
 Legacy top-level arrays remain supported. Decode and validate either representation with
-``DynamicUILayout`` before rendering.
+``DynamicUILayout`` before rendering. Its `String` and `Data` initializers validate recursively:
+
+```swift
+do {
+    let layout = try DynamicUILayout(json: json)
+    print("Validated \(layout.components.count) components")
+} catch let error as DynamicUISchemaError {
+    print(error.localizedDescription)
+} catch {
+    print("Invalid JSON: \(error.localizedDescription)")
+}
+```
+
+Validation rejects unsupported schema versions, empty component types or identifiers, duplicate
+identifiers anywhere in the component tree, and conditions that do not reference an identifier.
+``DynamicUI`` performs the same validation before rendering and writes failures to its optional
+`error` binding.
 
 ## Custom Components
 
@@ -255,6 +271,11 @@ Some views adapt when their SwiftUI equivalent is unavailable:
 - ``DynamicUI``
 - ``DynamicUIComponent``
 - ``AnyCodable``
+
+### Layout Validation
+
+- ``DynamicUILayout``
+- ``DynamicUISchemaError``
 
 ### Styling
 
