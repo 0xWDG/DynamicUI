@@ -21,10 +21,15 @@ struct DynamicAsyncImage: View {
     @ViewBuilder
     var body: some View {
         if let url = remoteURL {
-            AsyncImage(url: url) { phase in
-                image(for: phase)
+#if os(tvOS)
+            if #available(tvOS 15.0, *) {
+                remoteImage(url: url)
+            } else {
+                unavailableImage
             }
-            .set(modifiers: component)
+#else
+            remoteImage(url: url)
+#endif
         } else {
             Label(component.title ?? "Invalid image URL", systemImage: "photo")
                 .accessibilityHint("The remote image URL is invalid")
@@ -32,7 +37,16 @@ struct DynamicAsyncImage: View {
         }
     }
 
+    @available(tvOS 15.0, *)
+    private func remoteImage(url: URL) -> some View {
+        AsyncImage(url: url) { phase in
+            image(for: phase)
+        }
+        .set(modifiers: component)
+    }
+
     @ViewBuilder
+    @available(tvOS 15.0, *)
     private func image(for phase: AsyncImagePhase) -> some View {
         switch phase {
         case .empty:
@@ -51,6 +65,12 @@ struct DynamicAsyncImage: View {
         @unknown default:
             EmptyView()
         }
+    }
+
+    private var unavailableImage: some View {
+        Label(component.title ?? "Image unavailable", systemImage: "photo")
+            .accessibilityHint("Remote images require tvOS 15 or newer")
+            .set(modifiers: component)
     }
 
     private var remoteURL: URL? {
