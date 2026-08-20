@@ -39,3 +39,18 @@ struct DynamicTEMPLATE: View {
             .set(modifiers: component)
     }
 }
+
+#if DEBUG
+#Preview("Template") {
+    if let component = DynamicUIPreviewFixtures.component("""
+        {
+            "type": "TEMPLATE",
+            "title": "Template"
+        }
+        """) {
+        DynamicTEMPLATE(component)
+    } else {
+        Text("Invalid template preview")
+    }
+}
+#endif

@@ -25,6 +25,14 @@ struct ContentView: View {
     @State
     private var error: Error?
 
+    private var editorPreviewLayout: AnyLayout {
+        if selectedDemo == .custom {
+            AnyLayout(HStackLayout(spacing: 1))
+        } else {
+            AnyLayout(VStackLayout(spacing: 1))
+        }
+    }
+
     var body: some View {
         VStack(spacing: 1) {
             Picker("Demo", selection: $selectedDemo) {
@@ -36,9 +44,10 @@ struct ContentView: View {
             .pickerStyle(.segmented)
             .padding()
 
-            HStack(spacing: 1) {
+            editorPreviewLayout {
                 TextEditor(text: $text)
                     .frame(maxWidth: .infinity)
+                    .frame(height: selectedDemo == .custom ? nil : 100)
                     .border(error == nil ? .green : .red)
 
                 Divider()
@@ -75,6 +84,7 @@ struct ContentView: View {
 // The exhaustive JSON fixture intentionally makes this enum longer than production types.
 // swiftlint:disable type_body_length
 private enum Demo: String, CaseIterable, Identifiable {
+    case custom
     case basic
     case allSupportedOptions
 
@@ -84,6 +94,8 @@ private enum Demo: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
+        case .custom:
+            return "Custom"
         case .basic:
             return "Basic"
         case .allSupportedOptions:
@@ -93,12 +105,23 @@ private enum Demo: String, CaseIterable, Identifiable {
 
     var json: String {
         switch self {
+        case .custom:
+            return Self.customJSON
         case .basic:
             return Self.basicJSON
         case .allSupportedOptions:
             return Self.allSupportedOptionsJSON
         }
     }
+
+    private static let customJSON = """
+    [
+        {
+            "type": "Text",
+            "title": "Hello DynamicUI"
+        }
+    ]
+    """
 
     private static let basicJSON = """
     [
@@ -181,6 +204,36 @@ private enum Demo: String, CaseIterable, Identifiable {
                                     }
                                 },
                                 {
+                                    "type": "AsyncImage",
+                                    "title": "Remote avatar",
+                                    "url": "https://wesleydegroot.nl/assets/avatar/avatar.webp",
+                                    "parameters": {
+                                        "contentMode": "fit"
+                                    },
+                                    "modifiers": {
+                                        "frame": {
+                                            "width": 80,
+                                            "height": 80
+                                        }
+                                    }
+                                },
+                                {
+                                    "type": "Link",
+                                    "title": "Open DynamicUI",
+                                    "url": "https://github.com/0xWDG/DynamicUI",
+                                    "parameters": {
+                                        "systemImage": "link"
+                                    }
+                                },
+                                {
+                                    "type": "ShareLink",
+                                    "title": "Share DynamicUI",
+                                    "url": "https://github.com/0xWDG/DynamicUI",
+                                    "parameters": {
+                                        "systemImage": "square.and.arrow.up"
+                                    }
+                                },
+                                {
                                     "type": "Divider"
                                 },
                                 {
@@ -210,6 +263,23 @@ private enum Demo: String, CaseIterable, Identifiable {
                                     "title": "Button",
                                     "identifier": "button",
                                     "eventHandler": "buttonPressed"
+                                },
+                                {
+                                    "type": "Menu",
+                                    "title": "Actions",
+                                    "url": "ellipsis.circle",
+                                    "children": [
+                                        {
+                                            "type": "Button",
+                                            "title": "Duplicate",
+                                            "eventHandler": "duplicatePressed"
+                                        },
+                                        {
+                                            "type": "Button",
+                                            "title": "Delete",
+                                            "eventHandler": "deletePressed"
+                                        }
+                                    ]
                                 },
                                 {
                                     "type": "Toggle",
@@ -248,6 +318,35 @@ private enum Demo: String, CaseIterable, Identifiable {
                                     "maximum": "100",
                                     "maximumValue": 100,
                                     "defaultValue": 35
+                                },
+                                {
+                                    "type": "Stepper",
+                                    "title": "Guests",
+                                    "identifier": "guests",
+                                    "defaultValue": 2,
+                                    "minimumValue": 1,
+                                    "maximumValue": 10,
+                                    "parameters": {
+                                        "step": 1
+                                    }
+                                },
+                                {
+                                    "type": "DatePicker",
+                                    "title": "Starts",
+                                    "identifier": "startDate",
+                                    "defaultValue": "2026-08-20T09:00:00Z",
+                                    "parameters": {
+                                        "displayedComponents": "dateAndTime"
+                                    }
+                                },
+                                {
+                                    "type": "ColorPicker",
+                                    "title": "Accent color",
+                                    "identifier": "accentColor",
+                                    "defaultValue": "#3366FFFF",
+                                    "parameters": {
+                                        "supportsOpacity": true
+                                    }
                                 },
                                 {
                                     "type": "Picker",
@@ -375,6 +474,130 @@ private enum Demo: String, CaseIterable, Identifiable {
                                     ]
                                 },
                                 {
+                                    "type": "LazyVStack",
+                                    "parameters": {
+                                        "alignment": "leading",
+                                        "spacing": 8
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "Text",
+                                            "title": "LazyVStack first"
+                                        },
+                                        {
+                                            "type": "Text",
+                                            "title": "LazyVStack second"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "LazyHStack",
+                                    "parameters": {
+                                        "alignment": "center",
+                                        "spacing": 12
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "Text",
+                                            "title": "LazyHStack first"
+                                        },
+                                        {
+                                            "type": "Text",
+                                            "title": "LazyHStack second"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "LazyVGrid",
+                                    "parameters": {
+                                        "columns": 2,
+                                        "spacing": 12
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "Text",
+                                            "title": "VGrid one"
+                                        },
+                                        {
+                                            "type": "Text",
+                                            "title": "VGrid two"
+                                        },
+                                        {
+                                            "type": "Text",
+                                            "title": "VGrid three"
+                                        },
+                                        {
+                                            "type": "Text",
+                                            "title": "VGrid four"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "LazyHGrid",
+                                    "parameters": {
+                                        "rows": 2,
+                                        "spacing": 12
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "Text",
+                                            "title": "HGrid one"
+                                        },
+                                        {
+                                            "type": "Text",
+                                            "title": "HGrid two"
+                                        },
+                                        {
+                                            "type": "Text",
+                                            "title": "HGrid three"
+                                        },
+                                        {
+                                            "type": "Text",
+                                            "title": "HGrid four"
+                                        }
+                                    ],
+                                    "modifiers": {
+                                        "frame": {
+                                            "height": 80
+                                        }
+                                    }
+                                },
+                                {
+                                    "type": "Grid",
+                                    "parameters": {
+                                        "horizontalSpacing": 16,
+                                        "verticalSpacing": 8
+                                    },
+                                    "children": [
+                                        {
+                                            "type": "GridRow",
+                                            "children": [
+                                                {
+                                                    "type": "Text",
+                                                    "title": "Name"
+                                                },
+                                                {
+                                                    "type": "Text",
+                                                    "title": "Value"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "GridRow",
+                                            "children": [
+                                                {
+                                                    "type": "Text",
+                                                    "title": "Status"
+                                                },
+                                                {
+                                                    "type": "Text",
+                                                    "title": "Ready"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
                                     "type": "List",
                                     "children": [
                                         {
@@ -434,6 +657,27 @@ private enum Demo: String, CaseIterable, Identifiable {
                                         {
                                             "type": "Text",
                                             "title": "NavigationView content"
+                                        }
+                                    ],
+                                    "modifiers": {
+                                        "frame": {
+                                            "height": 80
+                                        }
+                                    }
+                                },
+                                {
+                                    "type": "NavigationStack",
+                                    "children": [
+                                        {
+                                            "type": "NavigationLink",
+                                            "title": "Open details",
+                                            "url": "chevron.right",
+                                            "children": [
+                                                {
+                                                    "type": "Text",
+                                                    "title": "NavigationStack detail"
+                                                }
+                                            ]
                                         }
                                     ],
                                     "modifiers": {
